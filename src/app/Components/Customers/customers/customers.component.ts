@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CostumersService } from 'src/app/Services/Customers-Service/costumers.service';
 
@@ -8,7 +8,7 @@ import { CostumersService } from 'src/app/Services/Customers-Service/costumers.s
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css']
 })
-export class CustomersComponent {
+export class CustomersComponent implements OnInit {
   public result : any[]=[];
     
   constructor(
