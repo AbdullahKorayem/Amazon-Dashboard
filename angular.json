@@ -61,10 +61,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Amazon-Dashboard-Angular:build:production"
+              "buildTarget": "Amazon-Dashboard-Angular:build:production"
             },
             "development": {
-              "browserTarget": "Amazon-Dashboard-Angular:build:development"
+              "buildTarget": "Amazon-Dashboard-Angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -72,7 +72,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Amazon-Dashboard-Angular:build"
+            "buildTarget": "Amazon-Dashboard-Angular:build"
           }
         },
         "test": {

@@ -1,1 +1,53 @@
-<p>overview works!</p>
+<div class="grid grid-cols-10 px-5 pb-10">
+    <div *ngFor="let item of errorMsg">
+        {{item}}
+    </div>
+    <!-- <div class="mt-5">
+        <h2 class="text-3xl font-bold tracking-tight">Overview</h2>
+        <p class="text-sm text-neutral-500 font-light">
+            Welcome to the dashboard and stay up-to-date with the latest information.
+        </p>
+    </div> -->
+    <div class="col-span-6 justify-items-center items-stretch mt-8 bg-white rounded-lg border flex flex-wrap ">
+        
+            <a routerLink="/products" class="bg-white items-stretch px-4 pt-4 rounded-lg border-t">
+                <div class="flex flex-wrap justify-around grid justify-items-center">
+                    <!-- <i class="text-[2.5em] font-bold text-[#321fdb]  fa-solid fa-fire"></i> -->
+                    <div>
+                        <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Products</span>
+                        <p class="text-[2em] text-right">{{product.length}}</p>
+                    </div>
+                </div>
+                <!-- <div class="flex items-center gap-3 text-sm text-neutral-500  py-2">
+                    <i class="fa-solid fa-star"></i>
+                    New Arrivals
+                </div> -->
+            </a>
+        
+        <a routerLink="/orders" class="bg-white  px-4 pt-4 rounded-lg border-t">
+            <div class="flex flex-wrap justify-around ">
+                <!-- <i class="text-[2.5em] font-bold text-[#39f] fa-solid fa-dollar-sign"></i> -->
+                <div>
+                    <span class="text-[#9a9a9a] font-light text-[16px] leading-6"> Total Orders</span>
+                    <p class="text-[2em] text-right">{{nbOrders}}</p>
+                </div>
+            </div>
+            <!-- <div class="flex items-center gap-3 text-sm text-neutral-500 border-t py-2">
+                <i class="fa-solid fa-calendar-days"></i>
+                Pending Orders
+            </div> -->
+        </a>
+        <a routerLink="/customers" class="bg-white px-4 pt-4 rounded-lg border-t">
+            <div class="flex flex-wrap justify-around ">
+                <!-- <i class="text-[2.5em] font-bold text-[#f9b115] fa-solid fa-calendar-day"></i> -->
+                <div>
+                    <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Customers</span>
+                    <p class="text-[2em] text-right">{{Costumers.length}}</p>
+                </div>
+            </div>
+            <!-- <div class="flex items-center gap-3 text-sm text-neutral-500 border-t py-2">
+                <i class="fa-solid fa-heart"></i>
+                New Customers
+            </div> -->
+        </a>
+</div>
