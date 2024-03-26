@@ -26,6 +26,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 // import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import { environment } from './environment';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +53,8 @@ import { ChartjsModule } from '@coreui/angular-chartjs';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    provideFirestore(() => getFirestore()),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     HttpClientModule,
     BrowserAnimationsModule,
     MatTableModule,

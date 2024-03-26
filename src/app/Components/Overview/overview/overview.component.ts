@@ -29,9 +29,9 @@ export class OverviewComponent implements OnInit {
 
   public cats: any[] = [];
 
-  public tags: any[] = [];
+  // public tags: any[] = [];
 
-  public comments: any[] = [];
+  // public comments: any[] = [];
 
   constructor(
     private productService: ProductServiceService,
@@ -59,7 +59,7 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.fetchProducts();
+    // this.fetchProducts();
 
     this.fetchCostumers();
 
@@ -73,13 +73,18 @@ export class OverviewComponent implements OnInit {
 
 
     this.chart = new Chart('canvas', {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [
           {
             label: '# of Votes',
             data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1,
+          },
+          {
+            label: '# of Votes',
+            data: [1, 2, 3, 9, 7, 3],
             borderWidth: 1,
           },
         ],
@@ -140,13 +145,13 @@ export class OverviewComponent implements OnInit {
 
 
   //fetch prods
-  public fetchProducts() {
-    this.productService.getProducts().subscribe(res => {
+  // public fetchProducts() {
+  //   this.productService.getProducts().subscribe(res => {
 
-      this.product = res.data;
+  //     this.product = res.data;
 
-    })
-  }
+  //   })
+  // }
 
   //fetch costumers
   public fetchCostumers() {
@@ -181,27 +186,28 @@ export class OverviewComponent implements OnInit {
   }
 
   //deleting a product by id
-  public deleteProductById(id: string) {
-    this.productService.deleteProductById(id).subscribe(
-      (res) => {
+  // public deleteProductById(id: string) {
+  //   this.productService.deleteProductById(id).subscribe(
+  //     (res) => {
 
-        console.log(res);
-        this.fetchProducts();
+  //       console.log(res);
+  //       this.fetchProducts();
 
-      },
-      (err) => {
-        console.log(err);
+  //     },
+  //     (err) => {
+  //       console.log(err);
 
 
-      }
-    );
+  //     }
+  //   );
 
-    this.productService.getProducts().subscribe(res => {
+  //   this.product = this.productService.getProducts()
+  //   //.subscribe(res => {
 
-      this.product = res.data;
+  //   //   this.product = res.data;
 
-    })
-  }
+  //   // })
+  // }
 
   //date formateur
   public formatReadableDate(dateString: any) {

@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
 
 @Component({
@@ -11,6 +12,14 @@ import { ProductServiceService } from 'src/app/Services/Product-Service/product-
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
+  products$!: Observable<any[]>;
+  // robots: any;
+
+  async readProducts() {
+    this.products = await this.productService.getProducts();
+    console.log(this.products);
+  }
+  
   displayedColumns: string[] = [
     '_id',
     'image',
@@ -39,7 +48,7 @@ export class ProductsComponent implements OnInit {
     private router: Router,
     private productService: ProductServiceService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   //routing
   navigateToProduct(productId: string) {
@@ -53,9 +62,9 @@ export class ProductsComponent implements OnInit {
 
   }
 
-  public  formatReadableDate(dateString:any) {
+  public formatReadableDate(dateString: any) {
 
-    const options:any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
 
     const date = new Date(dateString);
 
@@ -67,23 +76,23 @@ export class ProductsComponent implements OnInit {
     return updatedDate === firstDate ? 'text-black' : 'font-medium text-green-600';
 
   }
-  
+
   //price formatteur
-  public formatPrice(price:any) {
+  public formatPrice(price: any) {
     if (typeof price === 'string') {
-      
+
       if (price.includes('$')) {
-       
+
         return price.replace('$', '') + '$';
       } else {
-        
+
         return price + '$';
       }
     } else if (typeof price === 'number') {
-      
+
       return price.toString() + '$';
     } else {
-      
+
       return 'N/A';
     }
   }
@@ -91,6 +100,13 @@ export class ProductsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // const firebaseConfig = this.productService.getFirebaseConfig();
+    // console.log(firebaseConfig);
+
+    // console.log(this.readProducts)
+
+    this.products$ = this.productService.getProductsFromFirestore();
+
     this.route.url.subscribe((urlSegments) => {
 
       const path = urlSegments.map((segment) => segment.path).join('/');
@@ -98,23 +114,23 @@ export class ProductsComponent implements OnInit {
 
     });
 
-    this.productService.getProducts().subscribe(
-      (res) => {
+    // this.productService.getProducts().subscribe(
+    //   (res) => {
 
-        console.log(res);
+    //     console.log(res);
 
-        this.products = res.data;
+    //     this.products = res.data;
 
-        this.dataSource.data = this.products;
+    //     this.dataSource.data = this.products;
 
-        this.dataSource.paginator = this.paginator;
+    //     this.dataSource.paginator = this.paginator;
 
-        this.dataSource.sort = this.sort;
+    //     this.dataSource.sort = this.sort;
 
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
+    //   },
+    //   (err) => {
+    //     console.error(err);
+    //   }
+    // );
   }
 }
