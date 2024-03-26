@@ -30,7 +30,6 @@ import { environment } from './environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
-
 @NgModule({
   declarations: [
     AppComponent,

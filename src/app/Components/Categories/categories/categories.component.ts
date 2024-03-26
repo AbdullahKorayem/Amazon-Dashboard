@@ -13,23 +13,23 @@ export class CategoriesComponent implements OnInit {
   public myForm!: FormGroup;
   public editMode: boolean = false;
   public categories: any[] = [];
-  private baseUrl = 'http://localhost:3000/api/v1/categories';
+  private baseUrl = '';
   private editCat: any;
   public loading: boolean = false;
-  public imageUrl: string = '';
+  public thumbnails: string = '';
   constructor(
-      private formBuilder: FormBuilder,
-       private http: HttpClient, 
-       private catService: CategoriesService,
-       private router:Router
-    ) { }
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private catService: CategoriesService,
+    private router: Router
+  ) { }
 
   onImageChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.imageUrl = reader.result as string;
+        this.thumbnails = reader.result as string;
       };
       reader.readAsDataURL(file);
     }
@@ -45,42 +45,51 @@ export class CategoriesComponent implements OnInit {
     this.myForm = this.formBuilder.group({
       header: ['', Validators.required],
       description: ['', Validators.required],
-      image: ['']
+      thumbnails: ['']
     });
 
     this.getAllcategories();
   }
 
+  // getAllcategories() {
+  //   this.catService.getAllCategories().subscribe(
+  //     (data: any[]) => {
+  //       this.categories = data;
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
+
   getAllcategories() {
-    this.catService.getAllCategories().subscribe(
-      (data: any[]) => {
-        this.categories = data;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    this.catService.getAllCategories().then(categories => {
+      this.categories = categories;
+      console.log(this.categories);
+    },).catch(error => {
+      console.error('Error fetching products:', error);
+    });
   }
 
-  public update(id: string) {
-    this.editMode = true;
-    this.catService.getCategoryById(id).subscribe(
-      (data: any) => {
-        this.editCat = data;
-        this.myForm.patchValue({
-          header: this.editCat.name,
-          description: this.editCat.description
+  // public update(id: string) {
+  //   this.editMode = true;
+  //   this.catService.getCategoryById(id).subscribe(
+  //     (data: any) => {
+  //       this.editCat = data;
+  //       this.myForm.patchValue({
+  //         header: this.editCat.name,
+  //         description: this.editCat.description
 
-        });
+  //       });
 
-        this.imageUrl = this.editCat.image;
+  //       this.thumbnails = this.editCat.image;
 
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
 
   onSubmit() {
     if (this.myForm.valid) {
@@ -88,7 +97,7 @@ export class CategoriesComponent implements OnInit {
         const updatedData = {
           name: this.myForm.value.header,
           description: this.myForm.value.description,
-          image: this.imageUrl,
+          thumbnails: this.thumbnails,
         };
 
         this.catService.updateCategoryById(this.editCat._id, updatedData).subscribe(
@@ -108,7 +117,7 @@ export class CategoriesComponent implements OnInit {
         const cat = {
           name: this.myForm.value.header,
           description: this.myForm.value.description,
-          image: this.imageUrl,
+          thumbnails: this.thumbnails,
         };
         this.catService.createCategory(cat).subscribe(
           (data) => {
@@ -116,7 +125,7 @@ export class CategoriesComponent implements OnInit {
             this.loading = false;
             this.getAllcategories();
             this.myForm.reset();
-            this.imageUrl = "";
+            this.thumbnails = "";
           },
           (error) => {
             console.error(error);
@@ -139,36 +148,36 @@ export class CategoriesComponent implements OnInit {
     );
   }
 
-  public formatPrice(price:any) {
+  public formatPrice(price: any) {
     if (typeof price === 'string') {
-     
+
       if (price.includes('$')) {
-        
+
         return price.replace('$', '') + '$';
       } else {
-        
+
         return price + '$';
       }
     } else if (typeof price === 'number') {
-      
+
       return price.toString() + '$';
     } else {
-     
+
       return 'N/A';
     }
   }
 
-  public  formatReadableDate(dateString:any) {
-    const options:any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+  public formatReadableDate(dateString: any) {
+    const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
 
     const date = new Date(dateString);
 
     return date.toLocaleString('en-US', options);
   }
 
-  public navigateTo(id:string){
+  public navigateTo(id: string) {
 
-    this.router.navigate(['customers',id]);
-    
+    this.router.navigate(['customers', id]);
+
   }
 }

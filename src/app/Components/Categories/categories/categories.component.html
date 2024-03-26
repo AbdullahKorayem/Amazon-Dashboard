@@ -16,7 +16,9 @@
               <input type="text" id="Title" formControlName="header" class="bg-gray-50 border-2 border-gray-300 text-gray-900
                           text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-2 "
                 placeholder="Enter a Title" />
+                
             </div>
+
             <div class="form-group mb-3">
               <textarea id="description" formControlName="description" class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm h-[50px] rounded-lg 
                           focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3"
@@ -32,8 +34,8 @@
               <div (click)="openImage()" class="cursor-pointer relative bg-gray-50 border-2
                          border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] 
                          focus:border-[#321fdb] w-full overflow-hidden  h-[150px] flex justify-center items-center">
-                <ng-container *ngIf="imageUrl; else noImage">
-                  <img [src]="imageUrl" [alt]="imageUrl" class="w-full h-full object-cover" />
+                <ng-container *ngIf="thumbnails; else noImage">
+                  <img [src]="thumbnails" [alt]="thumbnails" class="w-full h-full object-cover" />
                 </ng-container>
                 <ng-template #noImage>
                   <img src="../../assets/download.png" alt="preview" class=" w-full h-full object-contain opacity-40" />
@@ -49,8 +51,9 @@
           <div class="cursor-pointer relative bg-gray-50 border-2
                 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] 
                 focus:border-[#321fdb] w-full overflow-hidden  h-[150px] flex justify-center items-center">
-            <img [src]="cat.image" [alt]="cat.name" class="w-full h-full object-cover" />
+            <img [src]="cat.thumbnails" [alt]="cat.name" class="w-full h-full object-cover" />
           </div>
+          
           <div class="info flex-1 pb-2 border-b flex flex-col">
             <h1 class="text-xl font-medium">{{cat.name}}</h1>
             <p class="text-lg font-light text-slate-600">{{cat.description}}</p>
@@ -58,7 +61,9 @@
           <div class="flex justify-between items-center pt-2">
             <span class="text-xs text-slate-500">{{formatReadableDate(cat.createdAt)}}</span>
             <div class="flex items-center gap-3">
-              <button class="p-2 bg-green-500 rounded-md text-white font-bold" (click)="update(cat._id)"><i
+              <!-- <button class="p-2 bg-green-500 rounded-md text-white font-bold" (click)="update(cat._id)">  -->
+              <button class="p-2 bg-green-500 rounded-md text-white font-bold" > 
+                <i
                   class="fa-solid fa-pen-to-square"></i></button>
               <button class="p-2 bg-red-500 rounded-md text-white font-bold" (click)="delete(cat._id)"><i
                   class="fa-solid fa-trash"></i></button>
@@ -68,3 +73,4 @@
       </div>
     </div>
   </div>
+  

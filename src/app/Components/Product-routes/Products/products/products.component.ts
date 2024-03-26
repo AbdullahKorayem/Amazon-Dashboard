@@ -97,6 +97,7 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  
 
 
   ngOnInit(): void {
@@ -105,7 +106,11 @@ export class ProductsComponent implements OnInit {
 
     // console.log(this.readProducts)
 
-    this.products$ = this.productService.getProductsFromFirestore();
+    this.productService.getProducts().then(products => {
+      console.log('Products:', products);
+    }).catch(error => {
+      console.error('Error fetching products:', error);
+    });
 
     this.route.url.subscribe((urlSegments) => {
 
@@ -132,5 +137,21 @@ export class ProductsComponent implements OnInit {
     //     console.error(err);
     //   }
     // );
+
+
+    this.productService.getProducts().then(products => {
+      console.log('Products:', products);
+      console.log(products);
+  
+      this.products = products;
+
+      this.dataSource.data = this.products;
+
+      this.dataSource.paginator = this.paginator;
+
+      this.dataSource.sort = this.sort;
+    }).catch(error => {
+      console.error('Error fetching products:', error);
+    });
   }
 }

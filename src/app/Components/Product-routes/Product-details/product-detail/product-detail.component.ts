@@ -51,22 +51,22 @@ export class ProductDetailComponent implements OnInit {
   }
 
   //get all cattegories
-  getAllcategories() {
+  // getAllcategories() {
 
-    this.catS.getAllCategories().subscribe(
+  //   this.catS.getAllCategories().subscribe(
 
-      (data: any[]) => {
+  //     (data: any[]) => {
 
-        this.categories = data;
+  //       this.categories = data;
 
-      },
-      (error) => {
+  //     },
+  //     (error) => {
 
-        console.error(error);
+  //       console.error(error);
 
-      }
-    );
-  }
+  //     }
+  //   );
+  // }
 
   //get all tags
   // getAllTgas() {
@@ -87,7 +87,7 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
 
 
-    this.getAllcategories();
+    // this.getAllcategories();
 
     this.route.paramMap.subscribe(params => {
 

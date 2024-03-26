@@ -65,9 +65,9 @@ export class OverviewComponent implements OnInit {
 
     this.fetchOrders();
 
-    this.fetchCats();
+    // this.fetchCats();
 
-    this.fetchCats();
+    // this.fetchCats();
 
     // Chart
 
@@ -131,16 +131,16 @@ export class OverviewComponent implements OnInit {
 
 
   //fetch acts
-  public fetchCats() {
-    this.catS.getAllCategories().subscribe(
-      (data: any[]) => {
-        this.cats = data;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
+  // public fetchCats() {
+  //   this.catS.getAllCategories().subscribe(
+  //     (data: any[]) => {
+  //       this.cats = data;
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
 
 
 
@@ -344,7 +344,7 @@ export class OverviewComponent implements OnInit {
       (data) => {
 
         console.log(data);
-        this.fetchCats();
+        // this.fetchCats();
 
       },
       (error) => {

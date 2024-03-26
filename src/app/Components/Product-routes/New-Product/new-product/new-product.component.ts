@@ -43,26 +43,26 @@ export class NewProductComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.getAllcategories();
+    // this.getAllcategories();
 
   }
 
 
   //get all categories
-  getAllcategories() {
-    this.catS.getAllCategories().subscribe(
-      (data: any[]) => {
+  // getAllcategories() {
+  //   this.catS.getAllCategories().subscribe(
+  //     (data: any[]) => {
 
-        this.categories = data;
+  //       this.categories = data;
 
-      },
-      (error) => {
+  //     },
+  //     (error) => {
 
-        console.error(error);
+  //       console.error(error);
 
-      }
-    );
-  }
+  //     }
+  //   );
+  // }
 
   // //get all tags
   // getAllTgas() {

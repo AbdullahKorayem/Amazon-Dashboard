@@ -4,7 +4,6 @@ import { Observable, catchError } from 'rxjs';
 import { throwError } from 'rxjs'; // Import throwError
 import { Firestore, addDoc, collection, getDocs, query } from '@angular/fire/firestore';
 import { environment } from 'src/app/environment';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -15,14 +14,11 @@ export class ProductServiceService {
 
   private apiUrl = 'https://fakestoreapi.com/products?limit=5';
   
-  private productsCollection: AngularFirestoreCollection<any>;
-
-  constructor(private firestore:AngularFirestore,private http: HttpClient) {
-    this.productsCollection = this.firestore.collection<any>('products');
-   }
+  // 
+  constructor(private firestore:Firestore,private http: HttpClient) { }
 
   async getProducts(): Promise<any[]> {
-    const querySnapshot = await getDocs(query(collection(this.firestore, 'Product')));
+    const querySnapshot = await getDocs(query(collection(this.firestore, 'Products')));
     return querySnapshot.docs.map(Product => Product.data());
   }
 
@@ -31,11 +27,7 @@ export class ProductServiceService {
   }
 
 
-  getProductsFromFirestore(): Observable<any[]> {
-    return this.productsCollection.valueChanges();
-  }
-
-
+  
   // async getProducts() {
   //   return (
   //    await getDocs(query(collection(this.firestore, 'Product')))

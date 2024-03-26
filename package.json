@@ -29,6 +29,7 @@
     "angular-material-data-table": "^0.10.10",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
+    "firebase": "^10.9.0",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
