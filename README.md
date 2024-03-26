@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # AmazonDashboardAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.12.
@@ -94,7 +94,4 @@ The PickMe Dashboard provides a comprehensive set of tools to manage various asp
    ```bash
    npm install
 
-=======
-# Amazon-Dashboard-clone
-Amazon-Dashboard-using angular
->>>>>>> bc546ad37eea3c6310d4388ed1e55ce783d56cf0
+
