@@ -1,53 +1,200 @@
-<div class="grid grid-cols-10 px-5 pb-10">
+<div class="grid grid-cols-10 gap-5 px-5 py-5">
     <div *ngFor="let item of errorMsg">
-        {{item}}
+        {{ item }}
     </div>
-    <!-- <div class="mt-5">
+    <div class="col-span-7 mt-5">
         <h2 class="text-3xl font-bold tracking-tight">Overview</h2>
-        <p class="text-sm text-neutral-500 font-light">
+        <p class="text-sm font-light text-neutral-500">
             Welcome to the dashboard and stay up-to-date with the latest information.
         </p>
-    </div> -->
-    <div class="col-span-6 justify-items-center items-stretch mt-8 bg-white rounded-lg border flex flex-wrap ">
-        
-            <a routerLink="/products" class="bg-white items-stretch px-4 pt-4 rounded-lg border-t">
-                <div class="flex flex-wrap justify-around grid justify-items-center">
-                    <!-- <i class="text-[2.5em] font-bold text-[#321fdb]  fa-solid fa-fire"></i> -->
-                    <div>
-                        <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Products</span>
-                        <p class="text-[2em] text-right">{{product.length}}</p>
+    </div>
+
+    <!-- First Container (6 columns) -->
+    <div class="col-span-7 ">
+        <!-- First Component -->
+        <div class="grid grid-cols-3 col-span-6 p-10 bg-white border shadow-md rounded-xl">
+            <!-- Content of the first grid container -->
+            <ng-container>
+                <a routerLink="/products" class="px-4 pt-4">
+                    <div class="flex items-center justify-start">
+                        <div class="p-1 bg-[#D1FFD8] rounded-xl inline-flex items-center justify-center">
+                            <img src="assets/chart.line.uptrend.xyaxis.svg" class="h-auto max-h-[4em] p-1" alt="" />
+                        </div>
+                        <div class="ml-4">
+                            <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Products</span>
+                            <p class="text-[2em] text-right">{{ product.length }}</p>
+                        </div>
+                    </div>
+                </a>
+            </ng-container>
+
+            <ng-container>
+                <a routerLink="/orders" class="px-4 pt-4">
+                    <div class="flex items-center justify-start">
+                        <div class="inline-flex items-center justify-center p-1 bg-white rounded-xl">
+                            <img src="assets/Frame 1597881674.svg" class="h-auto max-h-[3em] p-1" alt="" />
+                        </div>
+                        <div class="ml-4">
+                            <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Orders</span>
+                            <p class="text-[2em] text-right">{{ nbOrders }}</p>
+                        </div>
+                    </div>
+                </a>
+            </ng-container>
+
+            <ng-container>
+                <a routerLink="/customers" class="px-4 pt-4">
+                    <div class="flex items-center justify-start">
+                        <div class="p-1 bg-[#FFF3E1] rounded-xl inline-flex items-center justify-center">
+                            <img src="assets/shopping-cart.svg" class="h-auto max-h-[4em] p-1" alt="" />
+                        </div>
+                        <div class="ml-4">
+                            <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Customers</span>
+                            <p class="text-[2em] text-right">{{ Costumers.length }}</p>
+                        </div>
+                    </div>
+                </a>
+            </ng-container>
+        </div>
+
+        <!-- Second Component -->
+        <div class="grid col-span-6 p-10 my-5 bg-white border shadow-md rounded-xl">
+            <!-- Content of the second grid container -->
+            <div class="col-span-6">
+                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
+                    Status of amazon growth
+                </h1>
+            </div>
+
+            <div class="col-span-6">
+                <canvas id="canvas">{{ chart }}</canvas>
+            </div>
+        </div>
+
+        <!-- Third Component -->
+        <div class="col-span-6 p-10 bg-white border shadow-md rounded-xl">
+            <div class="flex justify-between col-span-6">
+                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
+                    Last Orders
+                </h1>
+                <!-- search -->
+                <div class="flex justify-between col-span-5 align-baseline">
+                    <input type="text" name="q"
+                        class="w-full h-12 p-4 mr-4 border rounded-full shadow focus:border-transparent focus:ring-0"
+                        placeholder="search" />
+                    <button type="submit">
+                        <svg class="text-teal-400 h-5 w-5 absolute top-3.5 right-3 fill-current"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background: new 0 0 56.966 56.966"
+                            xml:space="preserve">
+                            <path
+                                d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div
+                        class="w-[100px] h-10 px-3.5 py-2.5 bg-white rounded-xl border border-zinc-200 justify-center items-center gap-2 inline-flex">
+                        <button class="relative flex items-center gap-2">
+                            <img src="assets/slider.svg" alt="" />
+                            <div class="text-zinc-500 text-sm font-normal font-['Arial']">
+                                Filters
+                            </div>
+                        </button>
                     </div>
                 </div>
-                <!-- <div class="flex items-center gap-3 text-sm text-neutral-500  py-2">
-                    <i class="fa-solid fa-star"></i>
-                    New Arrivals
-                </div> -->
-            </a>
-        
-        <a routerLink="/orders" class="bg-white  px-4 pt-4 rounded-lg border-t">
-            <div class="flex flex-wrap justify-around ">
-                <!-- <i class="text-[2.5em] font-bold text-[#39f] fa-solid fa-dollar-sign"></i> -->
-                <div>
-                    <span class="text-[#9a9a9a] font-light text-[16px] leading-6"> Total Orders</span>
-                    <p class="text-[2em] text-right">{{nbOrders}}</p>
-                </div>
             </div>
-            <!-- <div class="flex items-center gap-3 text-sm text-neutral-500 border-t py-2">
-                <i class="fa-solid fa-calendar-days"></i>
-                Pending Orders
-            </div> -->
-        </a>
-        <a routerLink="/customers" class="bg-white px-4 pt-4 rounded-lg border-t">
-            <div class="flex flex-wrap justify-around ">
-                <!-- <i class="text-[2.5em] font-bold text-[#f9b115] fa-solid fa-calendar-day"></i> -->
-                <div>
-                    <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Customers</span>
-                    <p class="text-[2em] text-right">{{Costumers.length}}</p>
-                </div>
+
+            <!-- header -->
+            <div class="flex justify-around grid-cols-5 mt-5 border-b-2">
+                <h1 *ngFor="let order of LastOrders" class="mb-1 font-semibold">
+                    {{ order }}
+                </h1>
             </div>
-            <!-- <div class="flex items-center gap-3 text-sm text-neutral-500 border-t py-2">
-                <i class="fa-solid fa-heart"></i>
-                New Customers
-            </div> -->
-        </a>
-</div>
+            <!-- content -->
+            <div class="flex justify-around grid-cols-5 my-3 border-b-2">
+                <h1>#s</h1>
+                <h1>Abdullah</h1>
+                <h1>22/3/2024</h1>
+                <h1 class="p-2 bg-red-200 rounded-xl text-[##F3A847]">Delivered</h1>
+                <h1>5</h1>
+            </div>
+        </div>
+
+        <!-- Second Container (4 columns) -->
+
+    </div>
+
+    <div class="col-span-3">
+        <!-- Additional content goes here -->
+
+        <div class="p-10 my-5 bg-white border shadow-md rounded-xl">
+            <div class="">
+                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
+                    Top Products
+                </h1>
+                <h5 class="text-[##8B909A]">
+                    Total 9.5k Sellers
+                </h5>
+            </div>
+            <div class="gap-5 mt-5">
+                <div class="flex justify-around ">
+                    <img class="rounded-md w-[50px]"
+                        src="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/mobizil.com/wp-content/uploads/2023/09/iPhone-15-3.jpg"
+                        alt="">
+                    <div>
+                        <h1>
+                            Iphone 15
+                        </h1>
+                        <h5> rating</h5>
+                    </div>
+                    <div>$352</div>
+                </div>
+                <div class="flex justify-around ">
+                    <img class="rounded-md w-[50px]"
+                        src="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/mobizil.com/wp-content/uploads/2023/09/iPhone-15-3.jpg"
+                        alt="">
+                    <div>
+                        <h1>
+                            Iphone 15
+                        </h1>
+                        <h5> rating ⭐:</h5>
+                    </div>
+                    <div>$352</div>
+                </div>
+                <div class="flex justify-around ">
+                    <img class="rounded-md w-[50px]"
+                        src="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/mobizil.com/wp-content/uploads/2023/09/iPhone-15-3.jpg"
+                        alt="">
+                    <div>
+                        <h1>
+                            Iphone 15
+                        </h1>
+                        <h5> rating</h5>
+                    </div>
+                    <div>$352</div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- Countries -->
+
+
+
+        <div class="p-10 my-5 bg-white border shadow-md rounded-xl">
+            <div class="">
+                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
+                    Top Countries
+                </h1>
+                <div>
+                    <h1>Customers</h1>
+                    <h2>234252</h2>
+                </div>
+
+
+                <canvas id="canvas2" width="400" height="400"></canvas>
+            </div>
+
+        </div>
+    </div>

@@ -1,6 +1,6 @@
-<Header class="relative py-3 shadow-sm z-40 ">
+<Header class="relative z-40 py-3 shadow-sm ">
     <div class="px-5 mx-auto">
-        <div class="w-full flex justify-between items-center">
+        <div class="flex items-center justify-between w-full">
             <div class="relative items-center space-x-40">
                 <i class="absolute text-muted-foreground top-[50%] translate-y-[-50%]
                  left-[166px] fa-solid fa-magnifying-glass"></i>
@@ -9,19 +9,19 @@
                     file:border-0 file:bg-transparent file:text-sm
                     file:font-medium placeholder:text-muted-foreground
                     focus-visible:outline-none pr-6" type="text" placeholder="Search...">
-                
+
             </div>
             <div class="flex items-center space-x-4">
                 <span (click)="togglePosition()"
-                    class="h-10   relative w-10 grid rounded-full place-content-center cursor-pointer bg-black ">
+                    class="relative grid w-10 h-10 bg-black rounded-full cursor-pointer place-content-center ">
                     <i class="text-xl text-white text-muted-foreground fa-solid fa-bell"></i>
-                    <span class="fly-item bg-red-500">{{errorMsg.length}}</span>
+                    <span class="bg-red-500 fly-item">{{errorMsg.length}}</span>
                     <div class="z-1  absolute errors transition-all right-0  xs:w-[150px] w-[270px] p-3
                      bg-black
                      rounded-lg " [style.top]="divTop">
                         <ul>
                             <li class="my-1" *ngFor="let err of errorMsg">
-                                <a class="text-white font-medium flex gap-2 items-center"
+                                <a class="flex items-center gap-2 font-medium text-white"
                                     [routerLink]="['/products', err.id]">
                                     <img [src]="err.image" class="h-[30px] w-[30px]" alt="">
                                     reaches 0 in stock
@@ -30,7 +30,7 @@
                         </ul>
                     </div>
                 </span>
-                <span class="h-10 relative w-10 grid rounded-full place-content-center bg-black  ">
+                <span class="relative grid w-10 h-10 bg-black rounded-full place-content-center ">
                     <i class="text-xl text-white text-muted-foreground fa-solid fa-user"></i>
                 </span>
             </div>
