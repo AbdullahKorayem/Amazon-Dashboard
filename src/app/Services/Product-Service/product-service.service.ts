@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { throwError } from 'rxjs'; // Import throwError
-import { Firestore, addDoc, collection, getDocs, query } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc } from '@angular/fire/firestore';
 import { environment } from 'src/app/environment';
 
 
@@ -19,8 +19,38 @@ export class ProductServiceService {
 
   async getProducts(): Promise<any[]> {
     const querySnapshot = await getDocs(query(collection(this.firestore, 'Products')));
-    return querySnapshot.docs.map(Product => Product.data());
+    const products = querySnapshot.docs.map(Product => Product.data());
+    return products;
   }
+
+ 
+  async getProductByIdFirebase(id: string): Promise<any | null> {
+    const productRef = doc(this.firestore, 'Products', id);
+    const productSnapshot = await getDoc(productRef);
+
+    if (productSnapshot.exists()) {
+      return { id: productSnapshot.id, ...productSnapshot.data() };
+    } else {
+      return null; // Product with given id not found
+    }
+  }
+
+  async deleteProductByIdFirebase(id: string): Promise<void> {
+    const productRef = doc(this.firestore, 'Products', id);
+    await deleteDoc(productRef);
+  }
+
+  async updateProductByIdFirebase(id: string, newData: any): Promise<void> {
+    const productRef = doc(this.firestore, 'Products', id);
+    await updateDoc(productRef, newData);
+  }
+
+
+
+
+
+
+
 
   getFirebaseConfig() {
     return environment.firebase; // Return Firebase config

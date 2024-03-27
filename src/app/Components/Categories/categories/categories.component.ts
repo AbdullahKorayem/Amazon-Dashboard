@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { from } from 'rxjs';
 import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
 
 @Component({
@@ -51,45 +52,20 @@ export class CategoriesComponent implements OnInit {
     this.getAllcategories();
   }
 
-  // getAllcategories() {
-  //   this.catService.getAllCategories().subscribe(
-  //     (data: any[]) => {
-  //       this.categories = data;
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //     }
-  //   );
-  // }
+  
 
-  getAllcategories() {
-    this.catService.getAllCategories().then(categories => {
-      this.categories = categories;
-      console.log(this.categories);
-    },).catch(error => {
-      console.error('Error fetching products:', error);
-    });
+  getAllcategories(): void {
+    from(this.catService.getAllCategories()).subscribe(
+      (res: any[]) => {
+        this.categories = res;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
 
-  // public update(id: string) {
-  //   this.editMode = true;
-  //   this.catService.getCategoryById(id).subscribe(
-  //     (data: any) => {
-  //       this.editCat = data;
-  //       this.myForm.patchValue({
-  //         header: this.editCat.name,
-  //         description: this.editCat.description
 
-  //       });
-
-  //       this.thumbnails = this.editCat.image;
-
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //     }
-  //   );
-  // }
 
   onSubmit() {
     if (this.myForm.valid) {
@@ -180,4 +156,46 @@ export class CategoriesComponent implements OnInit {
     this.router.navigate(['customers', id]);
 
   }
+
+  // getAllcategories() {
+  //   this.catService.getAllCategories().subscribe(
+  //     (data: any[]) => {
+  //       this.categories = data;
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
+
+
+  // getAllcategories() {
+  //   this.catService.getAllCategories().then(categories => {
+  //     this.categories = categories;
+  //     console.log(this.categories);
+  //   },).catch(error => {
+  //     console.error('Error fetching categories:', error);
+  //   });
+  // }
+
+  // public update(id: string) {
+  //   this.editMode = true;
+  //   this.catService.getCategoryById(id).subscribe(
+  //     (data: any) => {
+  //       this.editCat = data;
+  //       this.myForm.patchValue({
+  //         header: this.editCat.name,
+  //         description: this.editCat.description
+
+  //       });
+
+  //       this.thumbnails = this.editCat.image;
+
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
+
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Firestore, addDoc, collection, getDocs, query } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from '@angular/fire/firestore';
 import { environment } from 'src/app/environment';
 
 @Injectable({
@@ -13,9 +13,6 @@ export class CategoriesService {
 
   constructor(private firestore:Firestore,private http: HttpClient) { }
 
-  // getAllCategories(): Observable<any[]> {
-  //   return this.http.get<any[]>(`${this.baseUrl}`);
-  // }
 
   async getAllCategories(): Promise<any[]> {
     const querySnapshot = await getDocs(query(collection(this.firestore, 'Categories')));
@@ -25,6 +22,33 @@ export class CategoriesService {
     const querySnapshot = await getDocs(query(collection(this.firestore, 'Categories')));
     return querySnapshot.docs.map(Categories => Categories.data());
   }
+
+
+
+  async deleteCategoryByIdFirebase(id: string): Promise<void> {
+    const categoryRef = doc(this.firestore, 'Categories', id);
+    await deleteDoc(categoryRef);
+  }
+
+  async updateCategoryByIdFirebase(id: string, newData: any): Promise<void> {
+    const categoryRef = doc(this.firestore, 'Categories', id);
+    await updateDoc(categoryRef, newData);
+  }
+
+
+
+
+
+
+
+
+  // getAllCategories(): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.baseUrl}`);
+  // }
+
+
+
+
   // getCategoryById(id: string): Observable<any> {
   //   return this.http.get<any>(`${this.baseUrl}/${id}`);
   // }

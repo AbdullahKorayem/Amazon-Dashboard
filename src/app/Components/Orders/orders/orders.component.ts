@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { OrdersService } from 'src/app/Services/Orders-Service/orders.service';
 import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-orders',
@@ -10,29 +11,47 @@ import { ProductServiceService } from 'src/app/Services/Product-Service/product-
 })
 export class OrdersComponent implements OnInit {
   orders: any;
+  FirebaseOrders: any;
   statusOrder:boolean = false;
   constructor(
     private http: HttpClient,
-    private orderS:OrdersService,
+    private orderService:OrdersService,
     private productS:ProductServiceService
+
   ){};
-
   ngOnInit(): void {
-    
-      this.orderS.getOrders().subscribe(
-      (res) => {
 
-        this.orders = res;
-        console.log(this.orders);
-        this.statusOrder = true;
 
+    this.getOrdersData();
+
+  }
+
+
+
+  getOrdersData(): void {
+    from(this.orderService.getAllOrdersFirebase()).subscribe(
+      (res: any[]) => {
+        this.FirebaseOrders = res;
       },
-      (error) => {
-        console.error('Error fetching orders:', error);
+      (err: any) => {
+        console.log(err);
       }
     );
   }
 
+
+
+
+
+
+
+
+
+
+
+  //---------------------------------------------------------------RedLine------------------- 
+
+  
   
   selectedOrder: any;
 
@@ -54,7 +73,7 @@ export class OrdersComponent implements OnInit {
   }
 
   public deleteAllOrders() {
-    this.orderS.deleteAllOrders().subscribe(
+    this.orderService.deleteAllOrders().subscribe(
       (res) => {
         console.log(res);
         
@@ -111,7 +130,7 @@ export class OrdersComponent implements OnInit {
       const currentStatus = orderToUpdate.status;
       const newStatus = !currentStatus;
   
-      this.orderS?.updateOrderStatusById(id, newStatus).subscribe(
+      this.orderService?.updateOrderStatusById(id, newStatus).subscribe(
         (res) => {
           console.log(res);
           orderToUpdate.status = newStatus;
@@ -125,7 +144,7 @@ export class OrdersComponent implements OnInit {
   }
   
   public deleteOrderById(id: string) {
-    this.orderS.deleteOrderById(id).subscribe(
+    this.orderService.deleteOrderById(id).subscribe(
       (res) => {
         console.log(res);
         
