@@ -115,7 +115,21 @@
                 <h1>#s</h1>
                 <h1>Abdullah</h1>
                 <h1>22/3/2024</h1>
-                <h1 class="p-2 bg-red-200 rounded-xl text-[##F3A847]">Delivered</h1>
+                <form class="">
+                    <select id="countries"
+                        class="  text-gray-900 text-md font-semibold shadow-md rounded-lg  block w-full p-2.5     outline-none ring-0"
+                        [ngClass]="{
+      'text-[#73c0f3]] bg-[#d7ecfb] ': selectedValue === 'Pending',
+      'bg-[#E4FFE8] text-[#58D46B ]': selectedValue === 'delivered',
+      'bg-[#FFF3E1] text-[#F3A847]': selectedValue === 'shipping'
+    }" (change)="onSelectChange($event)">
+                        <option value="Pending">Pending</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="shipping">Shipping</option>
+                    </select>
+
+                </form>
+
                 <h1>5</h1>
             </div>
         </div>
@@ -136,43 +150,20 @@
                     Total 9.5k Sellers
                 </h5>
             </div>
-            <div class="gap-5 mt-5">
-                <div class="flex justify-around ">
-                    <img class="rounded-md w-[50px]"
-                        src="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/mobizil.com/wp-content/uploads/2023/09/iPhone-15-3.jpg"
-                        alt="">
-                    <div>
-                        <h1>
-                            Iphone 15
-                        </h1>
-                        <h5> rating</h5>
+            <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10 ">
+
+            <div class="gap-5 mt-5 ">
+                <ng-container *ngFor="let item of Top5Products">
+                    <div class="flex justify-around py-3">
+                        <img class="w-[46px] h-[46px] rounded-lg" [src]="item.thumbnail" alt="">
+                        <div class="flex flex-col">
+                            <h1 class="truncate w-[150px] font-semibold">{{ item.en.title }}</h1>
+                            <h5 class="text-xs ">Rating ⭐: {{ item.rating }} <span>({{item.ratingQuantity}})</span></h5>
+                        </div>
+                        <div>${{ item.price }} </div>
                     </div>
-                    <div>$352</div>
-                </div>
-                <div class="flex justify-around ">
-                    <img class="rounded-md w-[50px]"
-                        src="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/mobizil.com/wp-content/uploads/2023/09/iPhone-15-3.jpg"
-                        alt="">
-                    <div>
-                        <h1>
-                            Iphone 15
-                        </h1>
-                        <h5> rating ⭐:</h5>
-                    </div>
-                    <div>$352</div>
-                </div>
-                <div class="flex justify-around ">
-                    <img class="rounded-md w-[50px]"
-                        src="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/mobizil.com/wp-content/uploads/2023/09/iPhone-15-3.jpg"
-                        alt="">
-                    <div>
-                        <h1>
-                            Iphone 15
-                        </h1>
-                        <h5> rating</h5>
-                    </div>
-                    <div>$352</div>
-                </div>
+                </ng-container>
+
 
             </div>
 
@@ -191,6 +182,7 @@
                     <h1>Customers</h1>
                     <h2>234252</h2>
                 </div>
+                <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10 ">
 
 
                 <canvas id="canvas2" width="400" height="400"></canvas>
