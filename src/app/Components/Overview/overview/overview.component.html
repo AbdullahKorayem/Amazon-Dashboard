@@ -112,27 +112,29 @@
                 </h1>
             </div>
             <!-- content -->
-            <div class="flex justify-around grid-cols-5 my-3 border-b-2">
-                <h1>#s</h1>
-                <h1>Abdullah</h1>
-                <h1>22/3/2024</h1>
+            <div class="flex justify-around grid-cols-5 my-3 border-b-2" *ngFor="let order of nbOrders , index as i">
+                <h1 class="p-5 truncate"># {{i+1}} </h1>
+                <h1 class="p-5 truncate">{{order.UserId}}</h1>
+                <h1 class="p-5 truncate">{{order.Products.length}}</h1>
                 <form class="mb-5">
                     <select id="countries"
-                        class="  text-gray-900 text-md font-semibold shadow-md rounded-lg  block w-full p-2.5     outline-none ring-0"
+                        class="text-gray-900 text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0"
                         [ngClass]="{
-      'text-[#73c0f3]] bg-[#d7ecfb] ': selectedValue === 'Pending',
-      'bg-[#E4FFE8] text-[#58D46B ]': selectedValue === 'delivered',
-      'bg-[#FFF3E1] text-[#F3A847]': selectedValue === 'shipping'
-    }" (change)="onSelectChange($event)">
+                        'text-[#73c0f3] bg-[#d7ecfb]': order.OrderStatus && selectedValue === 'Pending',
+                        'bg-[#E4FFE8] text-[#58D46B]':order.OrderStatus && selectedValue === 'Delivered',
+                        'bg-[#FFF3E1] text-[#F3A847]': order.OrderStatus &&selectedValue === 'Shipping'
+                    }" (change)="onSelectChange($event, order.id)" [value]="order.OrderStatus">
                         <option value="Pending">Pending</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="shipping">Shipping</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Shipping">Shipping</option>
                     </select>
 
                 </form>
 
-                <h1>5</h1>
+                <h1 class="p-5 truncate">{{order.ShippingAddress}}</h1>
             </div>
+
+
         </div>
 
         <!-- Second Container (4 columns) -->

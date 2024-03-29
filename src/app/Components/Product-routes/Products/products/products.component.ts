@@ -3,7 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
 import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { ProductServiceService } from 'src/app/Services/Product-Service/product-
 })
 export class ProductsComponent implements OnInit {
   products$!: Observable<any[]>;
+  categories: any[]=[];
   // robots: any;
 
   async readProducts() {
@@ -38,6 +40,7 @@ export class ProductsComponent implements OnInit {
 
   currentRoutePath: string = '';
 
+
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -47,21 +50,22 @@ export class ProductsComponent implements OnInit {
   constructor(
     private router: Router,
     private productService: ProductServiceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private catService: CategoriesService,
   ) { }
 
   //routing
-  navigateToProduct(productId: string) {
-    this.router.navigate(['/products', productId]);
+  navigateToProduct(product: string) {
+    this.router.navigate(['/products', product]);
   }
 
   Filterchange(event: Event) {
-
-    const value = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = value.trim().toLowerCase();
-
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value.trim().toLowerCase();
+    this.dataSource.filter = value;
   }
 
+  
   public formatReadableDate(dateString: any) {
 
     const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -97,14 +101,22 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  
+  getAllcategories(): void {
+    from(this.catService.getAllCategories()).subscribe(
+      (res: any[]) => {
+        this.categories = res;
+        console.log(this.categories);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
 
 
   ngOnInit(): void {
-    // const firebaseConfig = this.productService.getFirebaseConfig();
-    // console.log(firebaseConfig);
 
-    // console.log(this.readProducts)
+    this.getAllcategories();
 
     this.productService.getProducts().then(products => {
       console.log('Products:', products);
@@ -119,24 +131,7 @@ export class ProductsComponent implements OnInit {
 
     });
 
-    // this.productService.getProducts().subscribe(
-    //   (res) => {
-
-    //     console.log(res);
-
-    //     this.products = res.data;
-
-    //     this.dataSource.data = this.products;
-
-    //     this.dataSource.paginator = this.paginator;
-
-    //     this.dataSource.sort = this.sort;
-
-    //   },
-    //   (err) => {
-    //     console.error(err);
-    //   }
-    // );
+  
 
 
     this.productService.getProducts().then(products => {
@@ -144,6 +139,7 @@ export class ProductsComponent implements OnInit {
       console.log(products);
   
       this.products = products;
+
 
       this.dataSource.data = this.products;
 
@@ -154,4 +150,6 @@ export class ProductsComponent implements OnInit {
       console.error('Error fetching products:', error);
     });
   }
+
+
 }

@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { from } from 'rxjs';
+import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
 
 @Component({
   selector: 'app-new-product',
@@ -11,149 +13,101 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./new-product.component.css']
 })
 export class NewProductComponent implements OnInit {
-  public productForm: FormGroup;
+  public NewProductForm!: FormGroup;
+  // public ARProductForm: FormGroup;
+  // public ENProductForm: FormGroup;
 
   public imageUrl: string = '';
-
-  private apiUrl = 'http://localhost:3000/api/v1/products';
-
   public categories: any[] = [];
+  public thumbnail: string = '';
 
-  public tags: any[] = [];
+
 
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
+    private Ar:FormBuilder,
+    private En: FormBuilder,
+    private arForm: FormBuilder,
     private toastr: ToastrService,
     private catS: CategoriesService,
-
-
+    private productService: ProductServiceService,
+    private router: Router
   ) {
-    this.productForm = this.fb.group({
-      name: ['', Validators.required],
-      price: ['', Validators.required],
-      image: [''],
-      description: ['', Validators.required],
-      category: ['', Validators.required],
-      quantity: ['', Validators.required],
-      
-    });
+
+
   }
 
   ngOnInit(): void {
 
+    this.NewProductForm = this.fb.group({
+      ar: this.fb.group({
+        brand: [''], 
+        description: ['', Validators.required],
+        title: [''], 
+      }),
+      en: this.fb.group({
+        brand: [''], 
+        description: ['', Validators.required],
+        title: [''], 
+      }),
+      images: [],
+      price: ['', Validators.required],
+      quantityInStock: ['', Validators.required],
+      rating: 5 | 0,
+      ratingQuantity: 10 | 0,
+      sku: ['ssg', Validators.required],
+      sold: null,
+      subCategoryId: ['', Validators.required],
+      thumbnail: ''
+    });
 
-    // this.getAllcategories();
+
+    from(this.catS.getAllCategories()).subscribe((res: any) => {
+      this.categories = res;
+    })
 
   }
 
-
-  //get all categories
-  // getAllcategories() {
-  //   this.catS.getAllCategories().subscribe(
-  //     (data: any[]) => {
-
-  //       this.categories = data;
-
-  //     },
-  //     (error) => {
-
-  //       console.error(error);
-
-  //     }
-  //   );
-  // }
-
-  // //get all tags
-  // getAllTgas() {
-  //   this.tagS.getAllTags().subscribe(
-  //     (data: any[]) => {
-
-  //       this.tags = data;
-
-  //     },
-  //     (error) => {
-
-  //       console.error(error);
-
-  //     }
-  //   );
-  // }
-
-  //date formateur
-  
-  
-  public formatReadableDate(dateString: any) {
-    const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-
-    const date = new Date(dateString);
-
-    return date.toLocaleString('en-US', options);
+  get arTitle() {
+    return this.NewProductForm.get('ar.title');
   }
 
-  onSubmit() {
-    if (this.productForm.valid) {
-      this.productForm.value['image'] = this.imageUrl;
+  // Function to access the form control of en.title
+  get enTitle() {
+    return this.NewProductForm.get('en.title');
+  }
 
-      this.http.post(this.apiUrl, this.productForm.value).subscribe(res => {
-
-
+  public onSubmit() {
+    console.log(this.NewProductForm.value);
+    from(this.productService.addProduct(this.NewProductForm.value)).subscribe(
+      (response) => {
         this.toastr.success('Product added successfully');
-        this.productForm.reset();
-        this.imageUrl = "";
-
-
+        this.router.navigate(['/products']);
       },
-        (err) => {
-          this.toastr.success('a problem accours when adding a products');
-        });
-
-    }
-  }
-
-  //price formatteur
-  public formatPrice(price: any) {
-    if (typeof price === 'string') {
-
-      if (price.includes('$')) {
-
-        return price.replace('$', '') + '$';
-      } else {
-
-        return price + '$';
+      (error) => {
+        console.error('Error:', error);
+        this.toastr.error('Failed to add product');
       }
-    } else if (typeof price === 'number') {
-
-      return price.toString() + '$';
-    } else {
-
-      return 'N/A';
-    }
+    );
   }
-
 
   onImageChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-
-
       const reader = new FileReader();
       reader.onload = (e) => {
-
         this.imageUrl = reader.result as string;
-
       };
-
       reader.readAsDataURL(file);
     }
   }
-
-
-  //function where i click on image it clicks on the image
   openImage() {
     const inputElement = document.getElementById('image');
     if (inputElement) {
       inputElement.click();
     }
   }
+
+
 }

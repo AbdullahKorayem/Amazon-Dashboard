@@ -29,7 +29,9 @@
                             <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
                                 Customer ID</th>
                             <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
-                                Email</th>
+                                Address</th>
+                            <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
+                                Order Status</th>
 
                             <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
                                 Total Amount</th>
@@ -48,7 +50,7 @@
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
                                     {{ i + 1 }}</td>
-                                <td
+                                <!-- <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
                                     <div class="flex items-center gap-2">
                                         <img class="rounded-full  h-[45px] w-[45px]" [src]="order.customer.profileImage"
@@ -56,29 +58,29 @@
                                         <span class="text-lg font-bold underline">{{order.customer.lastName}}
                                             {{order.customer.firstName}}</span>
                                     </div>
-                                </td>
+                                </td> -->
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.customer.email }}</td>
+                                    {{ order.UserId }}</td>
+                                <!-- <td
+                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
+                                    {{ order.FullName }}</td> -->
+                                <!-- <td
+                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
+                                    {{ order.emailTo }}</td> -->
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.FullName }}</td>
-                                <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.emailTo }}</td>
-                                <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.ZipCode }}</td>
-                                <td
+                                    {{ order.ShippingAddress }}</td>
+                                <!-- <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
                                     {{ order.City }}</td>
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.Country }}</td>
+                                    {{ order.Country }}</td> -->
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
                                     <div class="flex items-center gap-2 text-center">
-                                        {{ order.status ? "Verified" : "Pending" }}
+                                        {{ order.OrderStatus }}
                                         <span [ngClass]="{'bg-slate-500': !order.status, 'bg-green-500': order.status}"
                                             class="h-[10px] w-[10px] rounded-full"></span>
                                     </div>
@@ -86,23 +88,24 @@
 
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    ${{ order.totalAmount | number: '1.2-2' }}</td>
+                                    ${{ order.TotalPrice | number: '1.2-2' }}</td>
                                 <td
                                     class="px-2 py-4 text-lg font-normal text-center text-black border-b border-black w-fit ">
                                     <div class="flex items-center gap-2">
-                                        <button (click)="deleteOrderById(order._id)"
-                                            class="flex items-center gap-2 px-2 py-2 font-medium text-white bg-red-600 rounded-md cursor-pointer">
-                                            <i class="  text-[#fff] inline  text-xl fa-solid fa-trash"></i>
-                                            Delete
 
-                                        </button>
-                                        <button (click)="toggleOrderStatusById(order._id)"
-                                            class="bg-[#321fdb] gap-2 flex items-center cursor-pointer text-white font-medium py-2 px-2 rounded-md">
-                                            <i class="  text-[#fff] inline text-xl fa-solid fa-pen-to-square"></i>
-                                            <div *ngIf="order.status; then thenBlock else elseBlock"></div>
-                                            <ng-template #thenBlock>Disactivate</ng-template>
-                                            <ng-template #elseBlock>Activate</ng-template>
-                                        </button>
+                                        <select id="countries"
+                                            class="text-gray-900 text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0 my-custom-select"
+                                            [ngClass]="{
+                              'text-[#73c0f3]] bg-[#d7ecfb] Pending': order?.OrderStatus === 'Pending' && selectedValue === 'Pending',  
+                              'bg-[#E4FFE8] text-[#58D46B ] Delivered': order?.OrderStatus === 'Delivered' && selectedValue === 'Delivered',
+                              'bg-[#FFF3E1] text-[#F3A847] Shipping': order?.OrderStatus === 'Shipping' && selectedValue === 'Shipping'
+                           }" (change)="onSelectChange($event ,order.id)" [value]="order?.OrderStatus">
+                                            <option value="Pending">Pending</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Shipping">Shipping</option>
+                                        </select>
+
+
                                     </div>
                                 </td>
                             </tr>
@@ -141,7 +144,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let product of order.products; let j = index">
+                                                    <tr *ngFor="let product of order.Products; let j = index">
                                                         <td
                                                             class="py-2 text-sm font-normal text-center text-black border-t border-b border-black ">
                                                             {{j+1}}</td>

@@ -37,6 +37,19 @@ export class CustomersComponent implements OnInit {
     );
   }
 
+  deleteUser(id: string) {
+    from(this.costumersService.deleteUserByIdFirebase(id)).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.getAllUsers();
+      },
+      (err: any) => {
+        console.log(err);
+      }
+      
+    )
+  }
+
 
 
 

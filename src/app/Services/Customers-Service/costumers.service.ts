@@ -15,27 +15,41 @@ export class CostumersService {
   constructor(private firestore: Firestore, private http: HttpClient) { }
 
 
-
   async getAllUsersFirebase(): Promise<any[]> {
-    const querySnapshot = await getDocs(query(collection(this.firestore, 'Users')));
-    return querySnapshot.docs.map(Users => Users.data());
+    try {
+      const querySnapshot = await getDocs(query(collection(this.firestore, 'Users')));
+      return querySnapshot.docs.map(user => ({ id: user.id, ...user.data() }));
+    } catch (error) {
+      console.error('Error fetching all users:', error);
+      throw error;
+    }
   }
-  async getUserByIdFirebase(id: string): Promise<any | null> {
-    const UserRef = doc(this.firestore, 'Users', id);
-    const UserSnapshot = await getDoc(UserRef);
 
-    if (UserSnapshot.exists()) {
-      return { id: UserSnapshot.id, ...UserSnapshot.data() };
-    } else {
-      return null;
+  async getUserByIdFirebase(id: string): Promise<any | null> {
+    try {
+      const userRef = doc(this.firestore, 'Users', id);
+      const userSnapshot = await getDoc(userRef);
+
+      if (userSnapshot.exists()) {
+        return { id: userSnapshot.id, ...userSnapshot.data() };
+      } else {
+        return null; // User with given id not found
+      }
+    } catch (error) {
+      console.error('Error fetching user by id:', error);
+      throw error;
     }
   }
 
   async deleteUserByIdFirebase(id: string): Promise<void> {
-    const categoryRef = doc(this.firestore, 'Users', id);
-    await deleteDoc(categoryRef);
+    try {
+      const userRef = doc(this.firestore, 'Users', id);
+      await deleteDoc(userRef);
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      throw error;
+    }
   }
-
 
 
 

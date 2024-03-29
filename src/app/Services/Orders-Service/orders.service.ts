@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Firestore, addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where,onSnapshot } from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -13,44 +13,66 @@ export class OrdersService {
 
   constructor(private firestore: Firestore, private http: HttpClient) { }
 
-
   async getAllOrdersFirebase(): Promise<any[]> {
-    const querySnapshot = await getDocs(query(collection(this.firestore, 'Order')));
-    return querySnapshot.docs.map(Order => Order.data());
-  }
-
-
-
-  async getOrderByIdFirebase(id: string): Promise<any | null> {
-    const OrderRef = doc(this.firestore, 'Order', id);
-    const OrderSnapshot = await getDoc(OrderRef);
-
-    if (OrderSnapshot.exists()) {
-      return { id: OrderSnapshot.id, ...OrderSnapshot.data() };
-    } else {
-      return null; // Order with given id not found
+    try {
+      const querySnapshot = await getDocs(query(collection(this.firestore, 'Order')));
+      return querySnapshot.docs.map(order => ({ id: order.id, ...order.data() }));
+    } catch (error) {
+      console.error('Error fetching all orders:', error);
+      throw error;
     }
   }
-  // Search in Orders
-  async searchOrdersByFieldFirebase(field: string, value: any): Promise<any[]> {
-    const ordersCollectionRef = collection(this.firestore, 'Orders');
-    const querySnapshot = await getDocs(query(ordersCollectionRef, where(field, '==', value)));
-    return querySnapshot.docs.map(order => ({ id: order.id, ...order.data() }));
+
+  async getOrderByIdFirebase(id: string): Promise<any | null> {
+    try {
+      const orderRef = doc(this.firestore, 'Order', id);
+      const orderSnapshot = await getDoc(orderRef);
+
+      if (orderSnapshot.exists()) {
+        return { id: orderSnapshot.id, ...orderSnapshot.data() };
+      } else {
+        return null; // Order with given id not found
+      }
+    } catch (error) {
+      console.error('Error fetching order by id:', error);
+      throw error;
+    }
   }
 
+  async searchOrdersByFieldFirebase(field: string, value: any): Promise<any[]> {
+    try {
+      const ordersCollectionRef = collection(this.firestore, 'Order');
+      const querySnapshot = await getDocs(query(ordersCollectionRef, where(field, '==', value)));
+      return querySnapshot.docs.map(order => ({ id: order.id, ...order.data() }));
+    } catch (error) {
+      console.error('Error searching orders by field:', error);
+      throw error;
+    }
+  }
 
   async deleteOrderByIdFirebase(id: string): Promise<void> {
-    const OrderRef = doc(this.firestore, 'Order', id);
-    await deleteDoc(OrderRef);
+    try {
+      const orderRef = doc(this.firestore, 'Order', id);
+      await deleteDoc(orderRef);
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      throw error;
+    }
   }
 
-  async updateOrderByIdFirebase(id: string, newData: any): Promise<void> {
-    const orderRef = doc(this.firestore, 'Order', id);
-    await updateDoc(orderRef, newData);
+  async updateOrderByIdFirebase(id: string, selectedValue: string): Promise<void> {
+    try {
+      const orderRef = doc(this.firestore, 'Order', id);
+
+      // Update only the OrderStatus property
+      await updateDoc(orderRef, {
+        OrderStatus: selectedValue
+      });
+    } catch (error) {
+      console.error('Error updating order:', error);
+      throw error;
+    }
   }
-
-
-
 
 
 

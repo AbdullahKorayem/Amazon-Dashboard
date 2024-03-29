@@ -17,6 +17,7 @@ export class OverviewComponent implements OnInit {
     chart: any = [];
     doughnutChart: any = [];
     public product: any[] = [];
+    public scaledLength: number = 0;
     public Top5Products: any[] = [];
 
     public FirebaseOrders: any;
@@ -44,7 +45,7 @@ export class OverviewComponent implements OnInit {
         private catS: CategoriesService
     ) { }
     selectedValue: string = 'Pending';
-    LastOrders: string[] = ['ID', 'Name', 'Date', 'Tracking', 'Amount'];
+    LastOrders: string[] = ['ID', 'Name', 'Amount', 'Tracking', 'Address'];
 
     customShuffle<T>(array: T[]): T[] {
         const newArray = [...array];
@@ -55,10 +56,15 @@ export class OverviewComponent implements OnInit {
         return newArray;
     }
 
-    onSelectChange(event: Event) {
+
+    onSelectChange(event: Event, id: string) {
         const target = event.target as HTMLSelectElement;
-        this.selectedValue = target.value;
+        const selectedValue = target.value;
+        this.orderS.updateOrderByIdFirebase(id, selectedValue)
+        this.getOrdersData();
     }
+
+
 
     ngOnInit(): void {
         this.getData();
@@ -66,23 +72,23 @@ export class OverviewComponent implements OnInit {
         this.chart = new Chart('canvas', {
             type: 'line',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow' ,'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [
                     {
                         label: '# of Votes 1',
                         data: [12, 19, 3, 5, 2, 3, 43, 4, 22],
                         borderWidth: 3, // Thicker line
                         borderColor: 'rgba(255, 99, 132, 1)',
-                        hoverBorderColor: 'rgba(255, 99, 132, 0.8)', // Color on hover
+                        hoverBorderColor: 'rgba(255, 99, 1344, 0.8)',
                         tension: 0.4,
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     },
                     {
                         label: '# of Votes 2',
-                        data: [1, 2, 3, 9, 7, 34, 3, 7, 8,32,62,22,1,3],
+                        data: [1, 2, 3, 9, 7, 34, 3, 7, 8, 32, 62, 22, 1, 3],
                         borderWidth: 3, // Thicker line
                         borderColor: 'rgba(54, 162, 235, 1)',
-                        hoverBorderColor: 'rgba(54, 162, 235, 0.8)', // Color on hover
+                        hoverBorderColor: 'rgba(54, 162, 2355, 0.8)', // Color on hover
                         tension: 0.5,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     },
@@ -106,6 +112,7 @@ export class OverviewComponent implements OnInit {
                 }
             },
         });
+      
 
 
 
@@ -140,20 +147,30 @@ export class OverviewComponent implements OnInit {
         this.getCostumersData();
         this.getOrdersData();
     }
-
     getProductData(): void {
         from(this.productService.getProducts()).subscribe(
             (res: any[]) => {
+                // Assign the products to this.product
                 this.product = res;
 
+                // Apply the scale function to the length of the product array
+                this.scaledLength = this.scale(res.length, 0, 100, 0, 100);
+                console.log('Scaled length:', this.scaledLength);
+
+                // Shuffle the products and get the top 5
                 const shuffledProducts = this.customShuffle(res);
                 this.Top5Products = shuffledProducts.slice(0, 5);
-                console.log(this.Top5Products);
+                console.log('Top 5 products:', this.Top5Products);
             },
             (err: any) => {
                 console.error(err);
             }
         );
+    }
+
+    // Scale function
+    scale(num: number, in_min: number, in_max: number, out_min: number, out_max: number): number {
+        return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
     }
 
     getCostumersData(): void {

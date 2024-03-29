@@ -37,7 +37,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   openImage() {
-    const inputElement = document.getElementById('image');
+    const inputElement = document.getElementById('thumbnails');
     if (inputElement) {
       inputElement.click();
     }
@@ -46,13 +46,14 @@ export class CategoriesComponent implements OnInit {
     this.myForm = this.formBuilder.group({
       header: ['', Validators.required],
       description: ['', Validators.required],
-      thumbnails: ['']
+      name: ['', Validators.required],
+      thumbnails: [''],
     });
 
     this.getAllcategories();
   }
 
-  
+
 
   getAllcategories(): void {
     from(this.catService.getAllCategories()).subscribe(
@@ -68,15 +69,18 @@ export class CategoriesComponent implements OnInit {
 
 
   onSubmit() {
+
+    console.log(this.myForm.value);
     if (this.myForm.valid) {
       if (this.editMode) {
         const updatedData = {
-          name: this.myForm.value.header,
+          header: this.myForm.value.header,
           description: this.myForm.value.description,
+          name: this.myForm.value.name,
           thumbnails: this.thumbnails,
         };
 
-        this.catService.updateCategoryById(this.editCat._id, updatedData).subscribe(
+        from(this.catService.updateCategoryByIdFirebase(this.editCat.id, updatedData)).subscribe(
           (data) => {
             console.log(data);
             this.editMode = false;
@@ -95,7 +99,7 @@ export class CategoriesComponent implements OnInit {
           description: this.myForm.value.description,
           thumbnails: this.thumbnails,
         };
-        this.catService.createCategory(cat).subscribe(
+        from(this.catService.addCategories(cat)).subscribe(
           (data) => {
             console.log(data);
             this.loading = false;
@@ -113,7 +117,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   public delete(id: string) {
-    this.catService.deleteCategoryById(id).subscribe(
+    from(this.catService.deleteCategoryByIdFirebase(id)).subscribe(
       (data) => {
         console.log(data);
         this.getAllcategories();
@@ -122,6 +126,7 @@ export class CategoriesComponent implements OnInit {
         console.error(error);
       }
     );
+
   }
 
   public formatPrice(price: any) {
@@ -157,6 +162,7 @@ export class CategoriesComponent implements OnInit {
 
   }
 
+
   // getAllcategories() {
   //   this.catService.getAllCategories().subscribe(
   //     (data: any[]) => {
@@ -178,24 +184,23 @@ export class CategoriesComponent implements OnInit {
   //   });
   // }
 
-  // public update(id: string) {
-  //   this.editMode = true;
-  //   this.catService.getCategoryById(id).subscribe(
-  //     (data: any) => {
-  //       this.editCat = data;
-  //       this.myForm.patchValue({
-  //         header: this.editCat.name,
-  //         description: this.editCat.description
+  public update(id: string) {
+    this.editMode = true;
+    from(this.catService.getCategoryById(id)).subscribe(
+      (data: any) => {
+        this.editCat = data;
+        this.myForm.patchValue({
+          header: this.editCat.name,
+          description: this.editCat.description,
+          name: this.editCat.name,
+          thumbnails: this.editCat.thumbnails
+        });
 
-  //       });
-
-  //       this.thumbnails = this.editCat.image;
-
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //     }
-  //   );
-  // }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
 }

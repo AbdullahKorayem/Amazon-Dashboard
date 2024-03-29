@@ -1,15 +1,15 @@
 <div class="px-5">
     <div *ngIf="currentRoutePath === 'products'; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
-        <div class="mt-5 flex justify-between items-center w-full gap-3 border-b pb-5">
+        <div class="flex items-center justify-between w-full gap-3 pb-5 mt-5 border-b">
             <div>
                 <h2 class="text-3xl font-bold tracking-tight">Products ({{products.length}})</h2>
-                <p class="text-sm text-neutral-500 font-light">
+                <p class="text-sm font-light text-neutral-500">
                     Discover our products.
                 </p>
             </div>
-            <a [routerLink]="['/products', 'new']" class="h-9 rounded-md px-3 bg-black
-             text-white flex items-center gap-3 font-medium">
+            <a [routerLink]="['/products', 'new']"
+                class="flex items-center gap-3 px-3 font-medium text-white bg-black rounded-md h-9">
                 <i class="fa-solid fa-plus"></i>
                 Add New
             </a>
@@ -24,31 +24,32 @@
                         {{ column === '_id' ? '#ID' : column === 'name' ? 'name' : column === 'quantity' ?
                         'quantity' : column }}
                     </th>
-                    <td mat-cell *matCellDef="let element; let i = index;" (click)="navigateToProduct(element._id)">
+                    <td mat-cell *matCellDef="let element; let i = index;" (click)="navigateToProduct(element.id)">
                         <ng-container *ngIf="column === 'image'" class="py-2">
-                            <div class="h-14 w-14 flex items-center rounded-full justify-center ">
-                                <img [src]="element.thumbnail" alt="Product Image" class=" h-12 w-12 object-cover rounded-full">
+                            <div class="flex items-center justify-center rounded-full h-14 w-14 ">
+                                <img [src]="element.thumbnail" alt="Product Image"
+                                    class="object-cover w-12 h-12 rounded-full ">
                             </div>
                         </ng-container>
                         <ng-container *ngIf="column === '_id';">#{{ i + 1 }}</ng-container>
                         <ng-container *ngIf="column === 'name';">
-                            <span class="underline cursor-pointer font-medium">{{ element.title }}</span>
+                            <span class="font-medium underline truncate cursor-pointer">{{ element.en.title }}</span>
                         </ng-container>
-                        <!-- <ng-container *ngIf="column === 'description';">
-                            <p class="text-center">{{ element.description }}</p>
-                        </ng-container> -->
+
                         <ng-container *ngIf="column === 'price';">
-                            <p class="font-bold text-lg">{{formatPrice(element.price)}}</p>
+                            <p class="text-lg font-bold">{{formatPrice(element.price)}}</p>
                         </ng-container>
-                        <!-- <ng-container *ngIf="column === 'discount';">
-                            <p class="font-bold text-lg">{{formatPrice(element.discount)}}</p>
-                        </ng-container> -->
-                        <ng-container *ngIf="column === 'category';">{{element.category}}</ng-container>
-                        <!-- <ng-container *ngIf="column === 'tag';">{{element.tag}}</ng-container> -->
+                        <ng-container *ngIf="column === 'category'">
+                            <ng-container *ngFor="let category of this.categories">
+                                <ng-container *ngIf="element.categoryId === category.id">
+                                    {{ category.link }}
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
                         <ng-container *ngIf="column === 'quantity';">
-                            <p class="font-bold text-lg text-center">{{ element.quantity }}</p>
+                            <p class="text-lg font-bold text-center">{{ element.quantityInStock }}</p>
                         </ng-container>
-                        
+
 
                         <!-- <ng-container
                             *ngIf="column === 'firstDate';">{{formatReadableDate(element.firstDate)}}</ng-container>

@@ -19,32 +19,59 @@ export class ProductServiceService {
 
   async getProducts(): Promise<any[]> {
     const querySnapshot = await getDocs(query(collection(this.firestore, 'Products')));
-    const products = querySnapshot.docs.map(Product => Product.data());
+    const products = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      return { id: doc.id, ...data };
+    });
     return products;
   }
 
  
   async getProductByIdFirebase(id: string): Promise<any | null> {
-    const productRef = doc(this.firestore, 'Products', id);
-    const productSnapshot = await getDoc(productRef);
+    try {
+      const productRef = doc(this.firestore, 'Products', id);
+      const productSnapshot = await getDoc(productRef);
 
-    if (productSnapshot.exists()) {
-      return { id: productSnapshot.id, ...productSnapshot.data() };
-    } else {
-      return null; // Product with given id not found
+      if (productSnapshot.exists()) {
+        return { id: productSnapshot.id, ...productSnapshot.data() };
+      } else {
+        return null; // Product with given id not found
+      }
+    } catch (error) {
+      console.error('Error fetching product:', error);
+      throw error; // Re-throwing the error to be handled by the caller
+    }
+  }
+
+  async addProduct(newProductData: any): Promise<void> {
+    try {
+      const productCollectionRef = collection(this.firestore, 'Products');
+      await addDoc(productCollectionRef, newProductData);
+    } catch (error) {
+      console.error('Error adding product:', error);
+      throw error; // Re-throwing the error to be handled by the caller
     }
   }
 
   async deleteProductByIdFirebase(id: string): Promise<void> {
-    const productRef = doc(this.firestore, 'Products', id);
-    await deleteDoc(productRef);
+    try {
+      const productRef = doc(this.firestore, 'Products', id);
+      await deleteDoc(productRef);
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      throw error; // Re-throwing the error to be handled by the caller
+    }
   }
 
   async updateProductByIdFirebase(id: string, newData: any): Promise<void> {
-    const productRef = doc(this.firestore, 'Products', id);
-    await updateDoc(productRef, newData);
+    try {
+      const productRef = doc(this.firestore, 'Products', id);
+      await updateDoc(productRef, newData);
+    } catch (error) {
+      console.error('Error updating product:', error);
+      throw error; // Re-throwing the error to be handled by the caller
+    }
   }
-
 
 
 
