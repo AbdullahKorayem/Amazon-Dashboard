@@ -34,6 +34,7 @@ export class OrdersComponent implements OnInit {
     from(this.orderService.getAllOrdersFirebase()).subscribe(
       (res: any[]) => {
         this.FirebaseOrders = res;
+        console.log(this.FirebaseOrders);
 
       },
       (err: any) => {

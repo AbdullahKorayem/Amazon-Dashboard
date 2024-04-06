@@ -7,7 +7,8 @@
             </p>
 
         </div>
-        <a [routerLink]="['']" class="flex items-center gap-3 px-3 font-medium text-white bg-black rounded-md h-9">
+        <a [routerLink]="['']"
+            class="flex items-center gap-3 px-3 font-medium text-white bg-[#131921] hover:[#f5a447] rounded-md b h-9">
             <i class="fa-solid fa-backward"></i>
             Back
         </a>
@@ -17,25 +18,25 @@
 
         <div *ngIf="FirebaseOrders.length > 0; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
-            <div class="w-full py-4 overflow-y-auto">
-                <table class="w-[100%]">
-                    <thead>
+            <div id="tableContianer" class="w-full py-4 overflow-y-auto rounded-lg">
+                <table class="w-[100%] bg-[#ffff] ">
+                    <thead class="bg-[#f5a447] ">
                         <tr>
 
-                            <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
+                            <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                             </th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
+                            <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                                 #ID</th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
+                            <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                                 Customer ID</th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
+                            <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                                 Address</th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
+                            <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                                 Order Status</th>
 
-                            <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
+                            <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                                 Total Amount</th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#000] text-white py-4 px-2 text-center">
+                            <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                                 Actions</th>
                         </tr>
                     </thead>
@@ -49,36 +50,18 @@
                                 </td>
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ i + 1 }}</td>
-                                <!-- <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    <div class="flex items-center gap-2">
-                                        <img class="rounded-full  h-[45px] w-[45px]" [src]="order.customer.profileImage"
-                                            alt="image">
-                                        <span class="text-lg font-bold underline">{{order.customer.lastName}}
-                                            {{order.customer.firstName}}</span>
-                                    </div>
-                                </td> -->
+                                    {{ order.id }}</td>
+
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.UserId }}</td>
-                                <!-- <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.FullName }}</td> -->
-                                <!-- <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.emailTo }}</td> -->
+                                    {{ order.userId }}</td>
+
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
                                     {{ order.ShippingAddress }}</td>
-                                <!-- <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.City }}</td>
+
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.Country }}</td> -->
-                                <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
+                                    class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
                                     <div class="flex items-center gap-2 text-center">
                                         {{ order.OrderStatus }}
                                         <span [ngClass]="{'bg-slate-500': !order.status, 'bg-green-500': order.status}"
@@ -87,23 +70,25 @@
                                 </td>
 
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    ${{ order.TotalPrice | number: '1.2-2' }}</td>
+                                    class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
+                                    ${{ order.totalPrice | number: '1.2-2' }}</td>
                                 <td
                                     class="px-2 py-4 text-lg font-normal text-center text-black border-b border-black w-fit ">
                                     <div class="flex items-center gap-2">
 
-                                        <select id="countries"
-                                            class="text-gray-900 text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0 my-custom-select"
-                                            [ngClass]="{
-                              'text-[#73c0f3]] bg-[#d7ecfb] Pending': order?.OrderStatus === 'Pending' && selectedValue === 'Pending',  
-                              'bg-[#E4FFE8] text-[#58D46B ] Delivered': order?.OrderStatus === 'Delivered' && selectedValue === 'Delivered',
-                              'bg-[#FFF3E1] text-[#F3A847] Shipping': order?.OrderStatus === 'Shipping' && selectedValue === 'Shipping'
-                           }" (change)="onSelectChange($event ,order.id)" [value]="order?.OrderStatus">
-                                            <option value="Pending">Pending</option>
-                                            <option value="Delivered">Delivered</option>
-                                            <option value="Shipping">Shipping</option>
-                                        </select>
+                                <select id="countries"
+                                    class="text-gray-900 text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0 my-custom-select"
+                                    [ngClass]="{
+                                        'bg-[#d7ecfb] text-[#73c0f3]': order?.status === 'pending' && selectedValue === 'pending',  
+                                        'bg-[#92ffa2] text-[#58D46B]': order?.status === 'delivered' && selectedValue === 'delivered',
+                                        'bg-[#FFF3E1] text-[#F3A847]': order?.status === 'shipping' && selectedValue === 'shipping',
+                                        'bg-[#e2887a] text-[#f34d47]': order?.status === 'cancelled' && selectedValue === 'cancelled'
+                                    }" (change)="onSelectChange($event, order.id)" [value]="order?.status">
+                                    <option value="pending">Pending</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="shipping">Shipping</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
 
 
                                     </div>

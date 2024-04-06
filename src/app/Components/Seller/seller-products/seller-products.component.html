@@ -1,0 +1,73 @@
+<div class="px-5">
+    <div *ngIf="currentRoutePath === 'products'; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+        <div class="flex items-center justify-between w-full gap-3 pb-5 mt-5 border-b">
+            <div>
+                <h2 class="text-3xl font-bold tracking-tight">Products ({{products.length}})</h2>
+                <p class="text-sm font-light text-neutral-500">
+                    Discover our products.
+                </p>
+            </div>
+            <a [routerLink]="['/products', 'new']"
+                class="flex items-center gap-3 px-3 font-medium text-white bg-black rounded-md h-9">
+                <i class="fa-solid fa-plus"></i>
+                Add New
+            </a>
+        </div>
+        <input matInput (keyup)="Filterchange($event)" placeholder="Search here" class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm
+            rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none
+            w-full sm:w-[320px] p-3 mb-3 mt-3 shadow-md" />
+        <div class="table-container w-[800px] sm:w-full overflow-x-auto ">
+            <table mat-table [dataSource]="dataSource" class="rounded-lg shadow-sm mat-elevation-z8 demo-table">
+                <ng-container *ngFor="let column of displayedColumns; let i = index" [matColumnDef]="column">
+                    <th class="bg-[#f69b35] font-medium" mat-header-cell *matHeaderCellDef>
+                        {{ column === '_id' ? '#ID' : column === 'name' ? 'name' : column === 'quantity' ?
+                        'quantity' : column }}
+                    </th>
+                    <td mat-cell *matCellDef="let element; let i = index;" (click)="navigateToProduct(element.id)">
+                        <ng-container *ngIf="column === 'image'" class="py-2">
+                            <div class="flex items-center justify-center rounded-full h-14 w-14 ">
+                                <img [src]="element.thumbnail" alt="Product Image"
+                                    class="object-cover w-12 h-12 rounded-full ">
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="column === '_id';">#{{ i + 1 }}</ng-container>
+                        <ng-container *ngIf="column === 'name';">
+                            <span class="font-medium underline truncate cursor-pointer">{{ element.en.title }}</span>
+                        </ng-container>
+
+                        <ng-container *ngIf="column === 'price';">
+                            <p class="text-lg font-bold">{{formatPrice(element.price)}}</p>
+                        </ng-container>
+                        <ng-container *ngIf="column === 'category'">
+                            <ng-container *ngFor="let category of this.categories">
+                                <ng-container *ngIf="element.categoryId === category.id">
+                                    {{ category.link }}
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="column === 'quantity';">
+                            <p class="text-lg font-bold text-center">{{ element.quantityInStock }}</p>
+                        </ng-container>
+
+
+                        <!-- <ng-container
+                            *ngIf="column === 'firstDate';">{{formatReadableDate(element.firstDate)}}</ng-container>
+                        <ng-container *ngIf="column === 'updateDate';">
+                            <span [ngClass]="compareDates(element.updateDate, element.firstDate)">
+                                {{ formatReadableDate(element.updateDate) }}
+                            </span>
+                        </ng-container> -->
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of data">
+            </mat-paginator>
+        </div>
+    </ng-template>
+    <ng-template #elseBlock>
+        <router-outlet></router-outlet>
+    </ng-template>
+</div>

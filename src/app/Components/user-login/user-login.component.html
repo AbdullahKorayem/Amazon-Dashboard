@@ -1,0 +1,53 @@
+<div class="flex items-center justify-center h-screen">
+    <div class="container w-full max-w-xl px-5">
+        <header>
+            <img class="mx-auto w-60" src="assets/Amazon-Logo.png" alt="">
+        </header>
+
+        <div class="mt-8">
+            <h1 class="text-2xl font-semibold text-center">Login</h1>
+            <form class="grid grid-cols-1 gap-4 mt-5 " [formGroup]="login" (ngSubmit)="onSubmit()">
+
+                <div class="w-full mb-3">
+                    <label for="email" class="mb-5 text-lg font-medium leading-none">Email</label>
+                    <input type="email" id="email" formControlName="email"
+                        [ngClass]="{ 'border-red-500 placeholder:text-red-500': login.get('email')?.invalid && (login.get('email')?.dirty || login.get('email')?.touched) }"
+                        class="bg-gray-50 border-2  border-gray-300 text-gray-900 text-sm rounded-full focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3"
+                        placeholder="exapmle@ex.com" />
+                    <!-- Display validation errors -->
+                    <div
+                        *ngIf="login.get('email')?.invalid && (login.get('email')?.dirty || login.get('email')?.touched)">
+                        <div class="font-thin text-red-500" *ngIf="login.get('email')?.errors?.['required']">
+                            Email is
+                            required.</div>
+                        <div class="font-thin text-red-500" *ngIf="login.get('email')?.errors?.['email']">
+                            Invalid email
+                            format.</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="mb-5 text-lg font-medium leading-none">Password</label>
+                    <input type="password" id="password" formControlName="password"
+                        [ngClass]="{ 'border-red-500 placeholder:text-red-500': login.get('password')?.invalid && (login.get('password')?.dirty || login.get('password')?.touched) }"
+                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-full focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3"
+                        placeholder="********" />
+                    <!-- Display validation errors -->
+                    <div class="font-thin text-red-500"
+                        *ngIf="login.get('password')?.invalid && (login.get('password')?.dirty || login.get('password')?.touched)">
+                        <div class="font-thin text-red-500" *ngIf="login.get('password')?.errors?.['required']">
+                            Password
+                            is required.</div>
+                    </div>
+                </div>
+
+
+                <button type="submit"
+                    class="mt-4 w-full px-4 py-2 font-bold text-white bg-[#131921] rounded-full hover:bg-[#305b97]">
+                    Login
+                </button>
+            </form>
+            <div class="mt-5 text-center">Do U Have an Account ? <a class="text-blue-500"
+                    routerLink="/toRegister">Register now</a></div>
+        </div>
+    </div>
+</div>

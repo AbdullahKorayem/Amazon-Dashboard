@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import * as _ from 'lodash' ;
+
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,10 +28,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrModule } from 'ngx-toastr';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 // import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
 import { environment } from './environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { UserLoginComponent } from './Components/user-login/user-login.component';
+import { UserRegisterComponent } from './Components/user-register/user-register.component';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './Services/Redux/Store/Admin.reducer';
+import { SellerNewProductsComponent } from './Components/Seller/seller-new-products/seller-new-products.component';
+import { SellerOrdersComponent } from './Components/Seller/seller-orders/seller-orders.component';
+import { SellerProductsComponent } from './Components/Seller/seller-products/seller-products.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +54,14 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     ProductsComponent,
     ProductDetailComponent,
     NewProductComponent,
+    UserLoginComponent,
+    UserRegisterComponent,
+    SellerNewProductsComponent,
+    SellerOrdersComponent,
+    SellerProductsComponent
     
+    
+
   ],
   imports: [
     ChartjsModule,
@@ -54,13 +72,28 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     FormsModule,
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
     HttpClientModule,
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
     MatFormFieldModule,
-    ToastrModule.forRoot()
+    StoreModule.forRoot({ AuthReducer: authReducer }),
+    
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+      progressBar: true,
+      tapToDismiss: true,
+      closeButton: true,
+      resetTimeoutOnDuplicate: true,
+      newestOnTop: true
+    }),
+   
+
+
   ],
   providers: [
     // provideAnimationsAsync()

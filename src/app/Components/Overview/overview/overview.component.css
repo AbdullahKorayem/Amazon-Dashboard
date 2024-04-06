@@ -1,0 +1,27 @@
+#countries option {
+    background-color: #fff;
+    /* Default background color */
+    color: #000;
+    /* Default text color */
+}
+
+/* Define the styles for each option based on their classes */
+#countries .pending {
+    background-color: #d7ecfb;
+    color: #73c0f3;
+}
+
+#countries .delivered {
+    background-color: #92ffa2;
+    color: #58D46B;
+}
+
+#countries .shipping {
+    background-color: #FFF3E1;
+    color: #F3A847;
+}
+
+#countries .cancelled {
+    background-color: #e2887a;
+    color: #f34d47;
+}

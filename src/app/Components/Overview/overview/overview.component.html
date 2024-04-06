@@ -10,7 +10,7 @@
     </div>
 
     <!-- First Container (6 columns) -->
-    <div class="col-span-7 ">
+    <div class="col-span-7">
         <!-- First Component -->
         <div class="grid grid-cols-3 col-span-6 p-10 bg-white border shadow-md rounded-xl">
             <!-- Content of the first grid container -->
@@ -31,9 +31,8 @@
             <ng-container>
                 <a routerLink="/orders" class="px-4 pt-4">
                     <div class="flex items-center justify-start">
-
-                        <div class="p-1 bg-[#FFF3E1] rounded-xl inline-flex items-center  justify-center">
-                            <img src="assets/shopping-cart.svg" class="h-auto max-h-[5em]  p-1" alt="" />
+                        <div class="p-1 bg-[#FFF3E1] rounded-xl inline-flex items-center justify-center">
+                            <img src="assets/shopping-cart.svg" class="h-auto max-h-[5em] p-1" alt="" />
                         </div>
                         <div class="ml-4">
                             <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Orders</span>
@@ -112,84 +111,83 @@
                 </h1>
             </div>
             <!-- content -->
-            <div class="flex justify-around grid-cols-5 my-3 border-b-2" *ngFor="let order of nbOrders , index as i">
-                <h1 class="p-5 truncate"># {{i+1}} </h1>
-                <h1 class="p-5 truncate">{{order.UserId}}</h1>
-                <h1 class="p-5 truncate">{{order.Products.length}}</h1>
+            <div class="flex justify-around grid-cols-5 my-3 border-b-2" *ngFor="let order of nbOrders; index as i">
+                <h1 class="p-5 truncate"># {{ i + 1 }}</h1>
+                <h1 class="p-5 truncate">{{ order.userId }}</h1>
+                <h1 class="p-5 truncate">{{ order.Products.length }}</h1>
                 <form class="mb-5">
                     <select id="countries"
-                        class="text-gray-900 text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0"
-                        [ngClass]="{
-                        'text-[#73c0f3] bg-[#d7ecfb]': order.OrderStatus && selectedValue === 'Pending',
-                        'bg-[#E4FFE8] text-[#58D46B]':order.OrderStatus && selectedValue === 'Delivered',
-                        'bg-[#FFF3E1] text-[#F3A847]': order.OrderStatus &&selectedValue === 'Shipping'
-                    }" (change)="onSelectChange($event, order.id)" [value]="order.OrderStatus">
-                        <option value="Pending">Pending</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Shipping">Shipping</option>
+                        class="text-gray-900 text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0 my-custom-select"
+                        [ngStyle]="{
+              'bg-[#d7ecfb] text-[#73c0f3]':
+                order?.status === 'pending' && selectedValue === 'pending',
+              'bg-[#92ffa2] text-[#58D46B]':
+                order?.status === 'delivered' && selectedValue === 'delivered',
+              'bg-[#FFF3E1] text-[#F3A847]':
+                order?.status === 'shipping' && selectedValue === 'shipping',
+              'bg-[#e2887a] text-[#f34d47]':
+                order?.status === 'cancelled' && selectedValue === 'cancelled'
+            }" (change)="onSelectChange($event, order.id)" [value]="order?.status">
+                        <option value="pending">Pending</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="shipping">Shipping</option>
+                        <option value="cancelled">Cancelled</option>
                     </select>
-
                 </form>
 
-                <h1 class="p-5 truncate">{{order.ShippingAddress}}</h1>
+                <h1 class="p-5 truncate">{{ order.ShippingAddress }}</h1>
             </div>
-
-
         </div>
 
         <!-- Second Container (4 columns) -->
-
     </div>
 
     <div class="col-span-3">
         <!-- Additional content goes here -->
 
-        <div class="p-10 my-5 bg-white border shadow-md rounded-xl">
+        <div class="p-10 bg-white border shadow-md rounded-xl">
             <div class="">
                 <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
                     Top Products
                 </h1>
-                <h5 class="text-[##8B909A]">
-                    Total 9.5k Sellers
-                </h5>
+                <h5 class="text-[##8B909A]">Total 9.5k Sellers</h5>
             </div>
-            <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10 ">
+            <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10" />
 
-            <div class="gap-5 mt-5 ">
+            <div class="gap-5 mt-5">
                 <ng-container *ngFor="let item of Top5Products">
                     <div class="flex justify-around py-3">
-                        <img class="w-[46px] h-[46px] rounded-lg" [src]="item.thumbnail" alt="">
+                        <img class="w-[46px] h-[46px] rounded-lg" [src]="item.thumbnail" alt="" />
                         <div class="flex flex-col">
-                            <h1 class="truncate w-[150px] font-semibold">{{ item.en.title }}</h1>
-                            <h5 class="text-xs ">Rating ⭐: {{ item.rating }} <span>({{item.ratingQuantity}})</span></h5>
+                            <h1 class="truncate w-[150px] font-semibold">
+                                {{ item.en.title }}
+                            </h1>
+                            <h5 class="text-xs">
+                                Rating ⭐: {{ item.rating }}
+                                <span>({{ item.ratingQuantity }})</span>
+                            </h5>
                         </div>
-                        <div>${{ item.price }} </div>
+                        <div>${{ item.price }}</div>
                     </div>
                 </ng-container>
-
-
             </div>
-
-
         </div>
         <!-- Countries -->
-
-
 
         <div class="p-10 my-5 bg-white border shadow-md rounded-xl">
             <div class="">
                 <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
-                    Top Countries
+                    Total Visitors
                 </h1>
                 <div>
-                    <h1>Customers</h1>
-                    <h2>234252</h2>
+                    <h2 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
+                        {{ total }}
+                    </h2>
                 </div>
-                <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10 ">
-
+                <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10" />
 
                 <canvas id="canvas2" width="400" height="400"></canvas>
             </div>
-
         </div>
     </div>
+</div>

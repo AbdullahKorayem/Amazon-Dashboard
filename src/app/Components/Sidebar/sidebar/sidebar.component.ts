@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { from } from 'rxjs';
+import { UsersService } from 'src/app/Services/Users/users.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,99 +9,83 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  public links: any = [
-    {
-      title: 'Dashboard',
-      items: [
-        {
-          name: 'overview',
-          icon: 'fa-solid fa-house',
-         },
-         {
-          name: 'products',
-          icon: 'fa-solid fa-bag-shopping',
-        }, {
-          name: 'orders',
-          icon: 'fa-solid fa-cart-shopping',
-        },
-        {
-          name: 'categories',
-          icon: 'fa-solid fa-dumpster-fire',
-        },
-        {
-          name: 'customers',
-          icon: 'fa-solid fa-users',
-        }
-        
-      ],
-    }
-  ]
+  theAdmins: any;
+  userUid: any = sessionStorage.getItem('userUID');
+  public currentPath: string | undefined;
+  activeItem: string | null = null;
+  public sidebarisOpen: boolean = true;
+  links: any;
 
-  activeItem: string | null = null; // Property to keep track of the active item
+  constructor(
+    private router: Router,
+    private user: UsersService
+  ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentPath = event.url.slice(1);
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    this.toGetUser();
+  }
+
+  toGetUser() {
+    from(this.user.getUserByUid(this.userUid)).subscribe(
+      (res: any) => {
+        this.theAdmins = res;
+
+        // Check if user is admin and set links accordingly
+        if (this.theAdmins.isAdmin === true) {
+          this.links = [
+            {
+              title: 'Dashboard',
+              items: [
+                { name: 'overview', icon: 'fa-solid fa-house' },
+                { name: 'products', icon: 'fa-solid fa-bag-shopping' },
+                { name: 'orders', icon: 'fa-solid fa-cart-shopping' },
+                { name: 'categories', icon: 'fa-solid fa-dumpster-fire' },
+                { name: 'customers', icon: 'fa-solid fa-users' }
+              ]
+            }
+          ];
+        } else {
+          this.links = [
+            {
+              title: 'Dashboard',
+              items: [
+                { name: 'productsS', icon: 'fa-solid fa-bag-shopping' },
+                { name: 'ordersS', icon: 'fa-solid fa-cart-shopping' }
+              ]
+            }
+          ];
+        }
+      },
+      error => {
+        console.error('Error retrieving user:', error);
+      }
+    );
+  }
 
   // Function to set the active item
   setActiveItem(itemName: string): void {
     this.activeItem = itemName;
   }
-//date formateur
-public formatReadableDate(dateString: any) {
-  const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
 
-  const date = new Date(dateString);
-
-  return date.toLocaleString('en-US', options);
-}
-
-
-//price formatteur
-public formatPrice(price: any) {
-  if (typeof price === 'string') {
-
-    if (price.includes('$')) {
-
-      return price.replace('$', '') + '$';
-    } else {
-
-      return price + '$';
-    }
-  } else if (typeof price === 'number') {
-
-    return price.toString() + '$';
-  } else {
-
-    return 'N/A';
+  // Navigate to specified route
+  public navigateTo(item: string): void {
+    this.router.navigate(['/', item]);
   }
-}
 
+  // Toggle sidebar visibility
+  public toggleSideBar(): void {
+    this.sidebarisOpen = !this.sidebarisOpen;
+  }
 
-// [routerLink]="['/', item.name]
-public currentPath: string | undefined;
-
-public navigateTo(item: string) {
-
-  this.router.navigate(['/', item]);
-
-}
-
-constructor(
-  private router: Router
-) {
-  this.router.events.subscribe((event) => {
-
-    if (event instanceof NavigationEnd) {
-
-      this.currentPath = event.url.slice(1);
-
-    }
-  });
-}
-
-public sidebarisOpen: boolean = true;
-
-public toggleSideBar() {
-
-  this.sidebarisOpen = false;
-  console.log(this.sidebarisOpen);
-
-}
+  // Logout user
+  public logOut(): void {
+    localStorage.removeItem('userUID');
+    this.router.navigate(['login']);
+  }
 }

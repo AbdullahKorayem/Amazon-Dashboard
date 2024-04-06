@@ -12,32 +12,10 @@
       width: 100%; /* Ensure the table takes the full width of the div */
     }
   }
+
+    #tableContianer{
+    border-radius: 10px;
+  }
   
 
-    .my-custom-select {
-      padding: 5px 10px;
-      /* Base styles */
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      -webkit-appearance: none;
-         -moz-appearance: none;
-              appearance: none;
-      cursor: pointer;
-    }
   
-    .my-custom-select.Pending {
-      /* Pending state */
-      background-color: #d7ecfb;
-    }
-  
-    .my-custom-select.Shipping {
-      /* Delivered state */
-      color: #38A169;
-      /* Green text */
-    }
-  
-    .my-custom-select.Delivered {
-      /* Shipping state */
-      color: #F97316;
-      /* Orange text */
-    }

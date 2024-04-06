@@ -8,3 +8,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import 'ngx-toastr/toastr';
+
+@layer base {
+
+    /* Scrollbar customization */
+    ::-webkit-scrollbar {
+        @apply w-2.5;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-gray-300;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-pink-200 dark:bg-[#131921] rounded-xl;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-[#4d5760];
+    }
+
+
+
+}

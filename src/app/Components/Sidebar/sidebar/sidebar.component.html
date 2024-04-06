@@ -1,23 +1,31 @@
 <div class="sm:w-72 shadow-lg bg-[#131921] z-20 h-[100%]">
-    <div class="sm:flex text-center justify-between items-center p-5">
-        <a routerLink="/overview"  class="sm:block text-[#fff] hidden text-4xl font-extrabold tracking-tight ">
-            <img src="./assets/f6500de260a82d9d60e03a1d32b25e45.png" alt="Amazon" class="m-8 h-16 w-160 object-cover rounded">
+    <div class="items-center justify-between p-5 text-center sm:flex">
+        <a routerLink="/overview" class="sm:block text-[#fff] hidden text-4xl font-extrabold tracking-tight ">
+            <img src="./assets/f6500de260a82d9d60e03a1d32b25e45.png" alt="Amazon"
+                class="object-cover h-16 m-8 rounded w-160">
         </a>
     </div>
 
     <div class="mt-10">
         <div *ngFor="let link of links" class="">
-            <ul class="flex gap-1 flex-col">
-                <li *ngFor="let item of link.items" 
-                  class="p-3  focus:outline-none focus:ring focus:ring-violet-300 active:bg-violet-700 hover:bg-[#F2F3F3] ">
-                    <a  class="flex gap-3 items-center text-gray-200 active:bg-violet-700 hover:text-[#777B7B]" 
-                        [class.active]="activeItem === item.name"
-                        (click)="setActiveItem(item.name); navigateTo(item.name)">
-                        <i class="{{item.icon}} text-xl sm:w-5 hover:text-[#F3A847]"></i>
-                        <span class="sm:block hidden   text-lg">{{item.name ? item.name:"overview"}}</span>
+            <ul class="flex flex-col gap-1">
+                <li *ngFor="let item of link.items" [class.active]="activeItem === item.name"
+                    class="p-3 transition duration-200 ease-in-out focus:outline-none  hover:bg-[#F2F3F3] hover:shadow-sm"
+                    (click)="setActiveItem(item.name); navigateTo(item.name)">
+                    <a routerLinkActive="active" class="flex gap-3 items-center text-[#c7d7d7] hover:text-black  ">
+                        <i class="{{item.icon}} text-xl sm:w-5"></i>
+                        <span class="hidden text-lg sm:block">{{item.name ? item.name : 'overview'}}</span>
                     </a>
                 </li>
             </ul>
         </div>
-    </div>    
+    </div>
+
+    <!-- Logout Button -->
+    <div class="absolute bottom-0 left-0 right-0 p-5">
+        <button (click)="logOut()" class="flex items-center text-[#c7d7d7] hover:text-orange-300">
+            <i class="text-xl fas fa-sign-out-alt"></i>
+            <span class="ml-2">Logout</span>
+        </button >
+    </div>
 </div>

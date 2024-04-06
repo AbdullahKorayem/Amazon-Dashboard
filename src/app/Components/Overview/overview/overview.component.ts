@@ -31,6 +31,9 @@ export class OverviewComponent implements OnInit {
     public errorMsg: any[] = [];
 
     public cats: any[] = [];
+    public data: any[] = [];
+    public updatedData: number[] = [];
+    public total=0
 
     // public tags: any[] = [];
 
@@ -63,6 +66,25 @@ export class OverviewComponent implements OnInit {
         this.orderS.updateOrderByIdFirebase(id, selectedValue)
         this.getOrdersData();
     }
+
+    updateChart(updatedData: number[]): void {
+        // Assuming this.doughnutChart is defined as a property in your class
+        this.doughnutChart.data.datasets[0].data = updatedData;
+        this.doughnutChart.update();
+    }
+
+    randomlyIncrement(arr: number[], callback: (updatedData: number[]) => void): void {
+        const interval = setInterval(() => {
+            
+            for (let i = 0; i < arr.length; i++) {
+                if (Math.random() < 0.5) { 
+                    arr[i]++;
+                }
+            }
+            callback(arr); 
+        }, 8000);
+    }
+    
 
 
 
@@ -112,20 +134,18 @@ export class OverviewComponent implements OnInit {
                 }
             },
         });
-      
-
-
 
         //  Dought Chart
 
+        this.data = [300, 50, 100, 244];
         this.doughnutChart = new Chart('canvas2', {
             type: 'doughnut',
             data: {
-                labels: ['Egypt ', 'Blue', 'Yellow'],
+                labels: ['Egypt', 'Saudi Arabia', 'Qatar', 'Kuwait'], // Add new label
                 datasets: [
                     {
                         label: 'My First Dataset',
-                        data: [300, 50, 100, 444],
+                        data: this.data,
                         backgroundColor: [
                             'rgb(255, 99, 132)',
                             'rgb(54, 162, 235)',
@@ -140,6 +160,14 @@ export class OverviewComponent implements OnInit {
                 // You can add additional options here if needed
             },
         });
+
+        this.randomlyIncrement(this.data, (updatedData) => {
+            this.updateChart(updatedData);
+            this.total = updatedData.reduce((acc, curr) => acc + curr, 0);
+        });
+         
+    
+        
     }
 
     getData(): void {
@@ -150,14 +178,14 @@ export class OverviewComponent implements OnInit {
     getProductData(): void {
         from(this.productService.getProducts()).subscribe(
             (res: any[]) => {
-                // Assign the products to this.product
+              
                 this.product = res;
 
-                // Apply the scale function to the length of the product array
+               
                 this.scaledLength = this.scale(res.length, 0, 100, 0, 100);
                 console.log('Scaled length:', this.scaledLength);
 
-                // Shuffle the products and get the top 5
+              
                 const shuffledProducts = this.customShuffle(res);
                 this.Top5Products = shuffledProducts.slice(0, 5);
                 console.log('Top 5 products:', this.Top5Products);
@@ -168,10 +196,13 @@ export class OverviewComponent implements OnInit {
         );
     }
 
-    // Scale function
+    // ------------------------------Scale function
     scale(num: number, in_min: number, in_max: number, out_min: number, out_max: number): number {
         return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
     }
+    // ----------------------------------
+ 
+
 
     getCostumersData(): void {
         from(this.costumerS.getAllUsersFirebase()).subscribe(
@@ -194,7 +225,13 @@ export class OverviewComponent implements OnInit {
             }
         );
     }
+
+
+
+    
 }
+
+
 
 // this.fetchProducts();
 

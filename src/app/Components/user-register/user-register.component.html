@@ -1,0 +1,65 @@
+<div class="flex items-center justify-center h-screen">
+    <div class="container max-w-xl px-5">
+        <header class="mb-8">
+            <img class="mx-auto w-60" src="assets/Amazon-Logo.png" alt="">
+        </header>
+
+        <h1 class="text-2xl font-semibold text-center">Register</h1>
+        <form class="mt-5" [formGroup]="User" (ngSubmit)="onSubmit()">
+            <div class="w-full mb-3">
+                <label for="username" class="mb-5 text-lg font-medium leading-none">User Name</label>
+                <input type="text" id="username" formControlName="username"
+                    [ngClass]="{ 'border-red-500 placeholder:text-red-500': User.get('username')?.invalid && (User.get('username')?.dirty || User.get('username')?.touched) }"
+                    class="block w-full p-3 text-sm text-gray-900 border-2 border-gray-300 rounded-full bg-gray-50 focus:outline-none"
+                    placeholder="User Name" />
+                <!-- Display validation errors -->
+                <div
+                    *ngIf="User.get('username')?.invalid && (User.get('username')?.dirty || User.get('username')?.touched)">
+                    <div class="font-thin text-red-500" *ngIf="User.get('username')?.errors?.['required']">Username is
+                        required.</div>
+                </div>
+            </div>
+
+            <div class="w-full mb-3">
+                <label for="email" class="mb-5 text-lg font-medium leading-none ">Email</label>
+                <input type="email" id="email" formControlName="email"
+                    [ngClass]="{ 'border-red-500 placeholder:text-red-500': User.get('email')?.invalid && (User.get('email')?.dirty || User.get('email')?.touched) }"
+                    class="block w-full p-3 text-sm text-gray-900 border-2 border-gray-300 rounded-full bg-gray-50 focus:outline-none"
+                    placeholder="example@example.com" />
+                <!-- Display validation errors -->
+                <div *ngIf="User.get('email')?.invalid && (User.get('email')?.dirty || User.get('email')?.touched)">
+                    <div class="font-thin text-red-500" *ngIf="User.get('email')?.errors?.['required']">Email is
+                        required.</div>
+                    <div class="font-thin text-red-500" *ngIf="User.get('email')?.errors?.['email']">Invalid email
+                        format.</div>
+                </div>
+            </div>
+
+            <div class="w-full mb-3">
+                <label for="password" class="mb-5 text-lg font-medium leading-none">Password</label>
+                <input type="password" id="password" formControlName="password"
+                    [ngClass]="{ 'border-red-500 placeholder:text-red-500': User.get('password')?.invalid && (User.get('password')?.dirty || User.get('password')?.touched) }"
+                    class="block w-full p-3 text-sm text-gray-900 border-2 border-gray-300 rounded-full bg-gray-50 focus:outline-none"
+                    placeholder="********" />
+                <!-- Display validation errors -->
+                <div
+                    *ngIf="User.get('password')?.invalid && (User.get('password')?.dirty || User.get('password')?.touched)">
+                    <div class="font-thin text-red-500" *ngIf="User.get('password')?.errors?.['required']">Password is
+                        required.</div>
+                </div>
+            </div>
+            <div class="flex items-center mb-3">
+                <input type="checkbox" id="isAdmin" formControlName="isAdmin"
+                    class="h-4 w-4 border-gray-300 rounded-full accent-[#131921] checked:bg-blue-500 checked:border-transparent focus:ring-[#321fdb] focus:border-[#321fdb] text-blue-600" />
+                <label for="isAdmin" class="ml-2 text-lg font-medium leading-none">Are you an Admin?</label>
+            </div>
+            <button type="submit"
+                class="mt-4 w-full px-4 py-2 font-bold text-white bg-[#131921] rounded-full hover:bg-[#305b97]">
+                Sign up
+            </button>
+        </form>
+        <div class="mt-5 text-center">Do U Have an Account ? <a class="text-blue-500" routerLink="/login">Login</a>
+        </div>
+
+    </div>
+</div>

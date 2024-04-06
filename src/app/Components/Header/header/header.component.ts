@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
+import { Store } from '@ngrx/store';
+import { Observable, from } from 'rxjs';
+import { AuthState } from 'src/app/Services/Redux/Store/Admin.reducer';
+import { SellersService } from 'src/app/Services/Users/sellers.service';
+import { UsersService } from 'src/app/Services/Users/users.service';
 
 @Component({
   selector: 'app-header',
@@ -9,63 +13,44 @@ import { ProductServiceService } from 'src/app/Services/Product-Service/product-
 export class HeaderComponent implements OnInit {
   public errorMsg: any[] = [];
   public divTop = '-200px';
+  public user$!: Observable<any>;
+  public admin: any;
 
-
-  constructor(
-    private productService: ProductServiceService
-  ) { }
-
-  //date formateur
-  public formatReadableDate(dateString: any) {
-    const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-
-    const date = new Date(dateString);
-
-    return date.toLocaleString('en-US', options);
-  }
+  constructor(private store: Store<{ auth: AuthState }>, private userService: UsersService, private sellerService: SellersService) { }
 
   togglePosition() {
     this.divTop = this.divTop === '-200px' ? '60px' : '-200px';
   }
 
   ngOnInit(): void {
-    //   this.productService.getProducts().subscribe(res=>{
-    //     //console.log(res.data.filter((product:any)=>product.quantity === 0));
+    this.toGetTheUser();
+  };
 
-    //     this.errorMsg = res.data.filter((product:any) => product.quantity === 0)
-    //     .map((product:any) => ({
-
-    //       name: product.name,
-    //       id: product._id,
-    //       image:product.image,
-    //       errorMessage: `Error: Quantity for ${product.name} is 0. Please update the quantity.`,
-
-    //     }));
-    //     //console.log(this.errorMsg);
-
-    //   })
-    // }
-
-    //price formatteur
-    // public formatPrice(price:any) {
-    //   if (typeof price === 'string') {
-
-    //     if (price.includes('$')) {
-
-    //       return price.replace('$', '') + '$';
-    //     } else {
-
-    //       return price + '$';
-    //     }
-    //   } else if (typeof price === 'number') {
-
-    //     return price.toString() + '$';
-    //   } else {
-
-    //     return 'N/A';
-    //   }
-    // }
-
+  toGetTheUser() {
+    const uid = sessionStorage.getItem('userUID');
+    if (uid) {
+      let user$: Observable<any> = from(this.userService.getUserByUid(uid));
+      user$.subscribe(
+        (userRes: any) => {
+          if (userRes && userRes.isAdmin === true) {
+            this.admin = userRes;
+          } else {
+            from(this.sellerService.getSellerByUid(uid)).subscribe(
+              (sellerRes: any) => {
+                this.admin = sellerRes;
+                console.log(this.admin);
+              },
+              (err: any) => {
+                console.error(err);
+              }
+            );
+          }
+        },
+        (err: any) => {
+          console.error(err);
+        }
+      );
+    }
   }
-}
 
+}

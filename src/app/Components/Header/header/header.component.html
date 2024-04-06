@@ -1,35 +1,28 @@
-<Header class="relative z-40 py-3 shadow-sm ">
+<Header class="relative z-40 py-5 shadow-sm ">
     <div class="px-5 mx-auto">
         <div class="flex items-center justify-between w-full">
-            <div class="relative items-center space-x-40">
-                <i class="absolute text-muted-foreground top-[50%] translate-y-[-50%]
-                 left-[166px] fa-solid fa-magnifying-glass"></i>
-                <input class="flex w-[200px] md:w-[350px] sm:w-[250px] bg-white rounded-md border border-input
-                    bg-transparent px-7 py-2 text-sm ring-offset-background
-                    file:border-0 file:bg-transparent file:text-sm
-                    file:font-medium placeholder:text-muted-foreground
-                    focus-visible:outline-none pr-6" type="text" placeholder="Search...">
 
+            <div>
+                <h1 class="text-3xl font-semibold">Welcome Mr: {{admin.UserName}}</h1>
             </div>
+            <div class="relative items-center">
+                <i
+                    class="absolute text-muted-foreground top-[50%] transform -translate-y-1/2 left-5 fa-solid fa-magnifying-glass"></i>
+                <input class="flex w-[200px] md:w-[350px] sm:w-[250px] bg-white rounded-full border border-input
+                            bg-transparent  py-2 p-7 text-sm ring-offset-background
+                            file:border-0 file:bg-transparent file:text-sm
+                            file:font-medium placeholder:text-muted-foreground
+                            focus-visible:outline-none pl-12" type="text" placeholder="Search...">
+            </div>
+
             <div class="flex items-center space-x-4">
                 <span (click)="togglePosition()"
                     class="relative grid w-10 h-10 bg-black rounded-full cursor-pointer place-content-center ">
                     <i class="text-xl text-white text-muted-foreground fa-solid fa-bell"></i>
-                    <span class="bg-red-500 fly-item">{{errorMsg.length}}</span>
-                    <div class="z-1  absolute errors transition-all right-0  xs:w-[150px] w-[270px] p-3
-                     bg-black
-                     rounded-lg " [style.top]="divTop">
-                        <ul>
-                            <li class="my-1" *ngFor="let err of errorMsg">
-                                <a class="flex items-center gap-2 font-medium text-white"
-                                    [routerLink]="['/products', err.id]">
-                                    <img [src]="err.image" class="h-[30px] w-[30px]" alt="">
-                                    reaches 0 in stock
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <span class="bg-red-500 fly-item"></span>
+                  
                 </span>
+
                 <span class="relative grid w-10 h-10 bg-black rounded-full place-content-center ">
                     <i class="text-xl text-white text-muted-foreground fa-solid fa-user"></i>
                 </span>

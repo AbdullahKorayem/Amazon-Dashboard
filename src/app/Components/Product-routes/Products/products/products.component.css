@@ -1,13 +1,11 @@
 .table-container {
     overflow-x: auto;
     max-width: 100%; /* Adjust the maximum width as needed */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0.1, 0.1);
   }
   
-  
-  .mat-mdc-header-cell{
-    background-color: black;
-    
-  }
+ 
   
   
   .overscroll-x {

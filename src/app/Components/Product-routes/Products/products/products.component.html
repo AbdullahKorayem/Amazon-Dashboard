@@ -16,11 +16,11 @@
         </div>
         <input matInput (keyup)="Filterchange($event)" placeholder="Search here" class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm
             rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none
-            w-full sm:w-[320px] p-3 mb-3 mt-3" />
+            w-full sm:w-[320px] p-3 mb-3 mt-3 shadow-md"  />
         <div class="table-container w-[800px] sm:w-full overflow-x-auto ">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table ">
+            <table mat-table [dataSource]="dataSource" class="rounded-lg shadow-sm mat-elevation-z8 demo-table">
                 <ng-container *ngFor="let column of displayedColumns; let i = index" [matColumnDef]="column">
-                    <th class="bg-[#000] font-medium" mat-header-cell *matHeaderCellDef>
+                    <th class="bg-[#f69b35] font-medium" mat-header-cell *matHeaderCellDef>
                         {{ column === '_id' ? '#ID' : column === 'name' ? 'name' : column === 'quantity' ?
                         'quantity' : column }}
                     </th>

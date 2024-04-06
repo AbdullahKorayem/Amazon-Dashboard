@@ -15,7 +15,7 @@ export class OrdersService {
 
   async getAllOrdersFirebase(): Promise<any[]> {
     try {
-      const querySnapshot = await getDocs(query(collection(this.firestore, 'Order')));
+      const querySnapshot = await getDocs(query(collection(this.firestore, 'Orders')));
       return querySnapshot.docs.map(order => ({ id: order.id, ...order.data() }));
     } catch (error) {
       console.error('Error fetching all orders:', error);
@@ -25,7 +25,7 @@ export class OrdersService {
 
   async getOrderByIdFirebase(id: string): Promise<any | null> {
     try {
-      const orderRef = doc(this.firestore, 'Order', id);
+      const orderRef = doc(this.firestore, 'Orders', id);
       const orderSnapshot = await getDoc(orderRef);
 
       if (orderSnapshot.exists()) {
@@ -41,7 +41,7 @@ export class OrdersService {
 
   async searchOrdersByFieldFirebase(field: string, value: any): Promise<any[]> {
     try {
-      const ordersCollectionRef = collection(this.firestore, 'Order');
+      const ordersCollectionRef = collection(this.firestore, 'Orders');
       const querySnapshot = await getDocs(query(ordersCollectionRef, where(field, '==', value)));
       return querySnapshot.docs.map(order => ({ id: order.id, ...order.data() }));
     } catch (error) {
@@ -52,7 +52,7 @@ export class OrdersService {
 
   async deleteOrderByIdFirebase(id: string): Promise<void> {
     try {
-      const orderRef = doc(this.firestore, 'Order', id);
+      const orderRef = doc(this.firestore, 'Orders', id);
       await deleteDoc(orderRef);
     } catch (error) {
       console.error('Error deleting order:', error);
@@ -62,11 +62,11 @@ export class OrdersService {
 
   async updateOrderByIdFirebase(id: string, selectedValue: string): Promise<void> {
     try {
-      const orderRef = doc(this.firestore, 'Order', id);
+      const orderRef = doc(this.firestore, 'Orders', id);
 
       // Update only the OrderStatus property
       await updateDoc(orderRef, {
-        OrderStatus: selectedValue
+        status: selectedValue
       });
     } catch (error) {
       console.error('Error updating order:', error);
