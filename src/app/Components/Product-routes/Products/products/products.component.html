@@ -9,13 +9,13 @@
                 </p>
             </div>
             <a [routerLink]="['/products', 'new']"
-                class="flex items-center gap-3 px-3 font-medium text-white bg-black rounded-md h-9">
+                class="flex items-center gap-3 px-3 font-medium text-white bg-[#131921] hover:bg-[#f5a447] rounded-full h-9">
                 <i class="fa-solid fa-plus"></i>
                 Add New
             </a>
         </div>
         <input matInput (keyup)="Filterchange($event)" placeholder="Search here" class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm
-            rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none
+            rounded-full focus:ring-[#321fdb] focus:border-[#321fdb] outline-none
             w-full sm:w-[320px] p-3 mb-3 mt-3 shadow-md"  />
         <div class="table-container w-[800px] sm:w-full overflow-x-auto ">
             <table mat-table [dataSource]="dataSource" class="rounded-lg shadow-sm mat-elevation-z8 demo-table">

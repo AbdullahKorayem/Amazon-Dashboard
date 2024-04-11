@@ -6,7 +6,7 @@
         Manage [ <span class="text-lg font-normal">{{product.en.title}}</span> ] product.
       </p>
     </div>
-    <a [routerLink]="['/products']" class="flex items-center gap-3 px-3 font-medium text-white bg-black rounded-md h-9">
+    <a [routerLink]="['/products']" class="flex items-center gap-3 px-3 font-medium text-white bg-[#131921] hover:bg-[#f5a447] rounded-full h-9">
       <i class="fa-solid fa-backward"></i>
       Back
     </a>
@@ -39,9 +39,10 @@
         </div>
 
         <div class="flex items-center gap-3 mt-5">
-          <button class="w-32 p-2 text-lg font-medium text-center text-white bg-green-500 rounded-md"
+          <button
+            class="w-32 p-2 text-lg font-medium text-center text-white bg-green-500 rounded-full hover:bg-green-700"
             (click)="editProduct(product.id)">Update</button>
-          <button class="w-32 p-2 text-lg font-medium text-center text-white bg-red-500 rounded-md"
+          <button class="w-32 p-2 text-lg font-medium text-center text-white bg-red-500 rounded-full hover:bg-red-700"
             (click)="deleteProduct(product.id)">delete</button>
         </div>
       </div>
@@ -68,7 +69,7 @@
       </div>
     </div>
     <!--  -->
-      <div>
+    <div>
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div class="mb-3 " formGroupName="en">
           <label for="enTitle" class="text-lg font-medium leading-none">brand In English</label>
@@ -85,9 +86,9 @@
           <input type="text" id="enTitle" formControlName="description" name="en.description"
             class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
         </div>
-        </div>
       </div>
-  
+    </div>
+
 
     <div class="mb-3 form-group">
       <label for="quantity" class="text-lg font-medium leading-none">Quantity</label>
@@ -116,7 +117,7 @@
         </ng-template>
       </div>
     </div>
-   
+
     <div class="mb-3 form-group">
       <label for="category" class="text-lg font-medium leading-none">Category</label>
       <select id="category" formControlName="subCategoryId"
@@ -126,9 +127,9 @@
       </select>
     </div>
 
-<div class="w-full">
-  <!-- <button type="submit"
+    <div class="w-full">
+      <!-- <button type="submit"
         class="h-12 sm:w-[180px] w-full rounded-md px-3 bg-[#321fdb] text-white flex items-center gap-3 font-medium">Update</button> -->
-</div>
-</form>
+    </div>
+  </form>
 </div>

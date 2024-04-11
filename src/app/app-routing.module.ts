@@ -12,6 +12,10 @@ import { SellerNewProductsComponent } from './Components/Seller/seller-new-produ
 import { SellerOrdersComponent } from './Components/Seller/seller-orders/seller-orders.component';
 import { SellerAuthGuard } from './guards/seller-auth.guard';
 import { UserRegisterComponent } from './Components/user-register/user-register.component';
+import { CategoriesComponent } from './Components/Categories/categories/categories.component';
+import { CustomersComponent } from './Components/Customers/customers/customers.component';
+import { SellerProductDetailsComponent } from './Components/Seller/seller-product-details/seller-product-details.component';
+import { ProductDetailComponent } from './Components/Product-routes/Product-details/product-detail/product-detail.component';
 
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent },
@@ -26,22 +30,26 @@ const routes: Routes = [
       { path: 'products', component: ProductsComponent },
       { path: 'products/new', component: NewProductComponent },
       { path: 'orders', component: OrdersComponent },
+      { path: 'categories', component: CategoriesComponent },
+      { path: 'customers', component: CustomersComponent },
+      {path: 'products/:id', component: ProductDetailComponent}
     ]
   },
 
   {
-    path: 'seller',
-    canActivate: [SellerAuthGuard], 
+    path: '',
+    canActivate: [SellerAuthGuard],
     children: [
-      { path: 'productsS', component: SellerProductsComponent },
-      { path: 'productsS/new', component: SellerNewProductsComponent },
-      { path: 'ordersS', component: SellerOrdersComponent },
+      { path: 'seller-productsS', component: SellerProductsComponent },
+      { path: 'seller-productsS/new', component: SellerNewProductsComponent },
+      { path: 'seller-ordersS', component: SellerOrdersComponent },
+      {path: 'seller-productsS/:id', component: SellerProductDetailsComponent}
     ]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+exports: [RouterModule]
 })
 export class AppRoutingModule { }

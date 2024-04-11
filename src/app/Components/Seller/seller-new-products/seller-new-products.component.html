@@ -1,5 +1,11 @@
-<div class="container max-w-xl px-5">
-    <form class="mt-5" [formGroup]="NewProductForm" (ngSubmit)="onSubmit()">
+<div class="container items-center justify-center px-5 max-w-70 ">
+
+    <a [routerLink]="['/seller-productsS']"
+        class="flex items-center gap-3 px-3 font-medium text-white bg-[#131921] hover:bg-[#f5a447] rounded-full b h-9 w-28 right-0">
+        <i class="fa-solid fa-backward"></i>
+        Back
+    </a>
+    <form class="mt-5 shadow-sm" [formGroup]="NewProductFormSeller" (ngSubmit)="onSubmit()">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <!--  -->
             <div>
@@ -8,17 +14,17 @@
                 <div class="mb-3 " formGroupName="ar">
                     <label for="arTitle" class="text-lg font-medium leading-none">brand In Arabic</label>
                     <input type="text" id="arTitle" formControlName="brand" name="ar.brand"
-                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
+                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
                 </div>
                 <div class="mb-3 " formGroupName="ar">
                     <label for="arTitle" class="text-lg font-medium leading-none">Title In Arabic</label>
                     <input type="text" id="arTitle" formControlName="title" name="ar.title"
-                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
+                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
                 </div>
                 <div class="mb-3 " formGroupName="ar">
                     <label for="arTitle" class="text-lg font-medium leading-none">description In Arabic</label>
                     <input type="text" id="arTitle" formControlName="description" name="ar.description"
-                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
+                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
                 </div>
             </div>
             <!--  -->
@@ -27,34 +33,34 @@
                 <div class="mb-3 " formGroupName="en">
                     <label for="enTitle" class="text-lg font-medium leading-none">brand In English</label>
                     <input type="text" id="enTitle" formControlName="brand" name="en.brand"
-                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
+                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
                 </div>
                 <div class="mb-3 " formGroupName="en">
                     <label for="enTitle" class="text-lg font-medium leading-none">Title In English</label>
                     <input type="text" id="enTitle" formControlName="title" name="en.title"
-                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
+                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
                 </div>
                 <div class="mb-3 " formGroupName="en">
                     <label for="enTitle" class="text-lg font-medium leading-none">description In English</label>
                     <input type="text" id="enTitle" formControlName="description" name="en.description"
-                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
+                        class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
                 </div>
             </div>
 
             <div class="mb-3 form-group">
                 <label for="quantityInStock" class="text-lg font-medium leading-none">Quantity</label>
                 <input type="text" id="quantityInStock" formControlName="quantityInStock"
-                    class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
+                    class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
             </div>
             <div class="mb-3 form-group">
                 <label for="price" class="text-lg font-medium leading-none">Price</label>
                 <input type="text" id="price" formControlName="price"
-                    class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
+                    class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
             </div>
             <div class="mb-3 form-group">
                 <label for="subCategoryId" class="text-lg font-medium leading-none">Category</label>
                 <select id="subCategoryId" formControlName="subCategoryId"
-                    class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3">
+                    class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3">
                     <option value="">Select a category</option>
                     <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
                 </select>
@@ -64,10 +70,10 @@
                     <label for="image" class="text-lg font-medium leading-none">Image</label>
                     <input type="file" id="image" formControlName="thumbnail" (change)="onImageChange($event)"
                         accept="image/*"
-                        class="bg-gray-50 hidden border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none w-full p-3" />
+                        class="bg-gray-50 hidden border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none w-full p-3" />
                 </div>
                 <div (click)="openImage()"
-                    class="cursor-pointer relative bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] w-full p-3 h-72 flex justify-center items-center">
+                    class="cursor-pointer relative bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] w-full p-3 h-72 flex justify-center items-center">
                     <ng-container *ngIf="thumbnail; else noImage">
                         <img [src]="thumbnail" [alt]="thumbnail" class="object-contain w-full h-full" />
                     </ng-container>
@@ -81,7 +87,7 @@
         </div>
         <div class="w-full">
             <button type="submit"
-                class="h-12 sm:w-[180px] w-full rounded-md px-3 bg-[#321fdb] text-white flex items-center gap-3 font-medium">Submit</button>
+                class="h-12 sm:w-[180px] w-full rounded-full px-3 bg-[#f5a447] text-white hover:bg-[#f69b35] text-center items-center  font-medium">Add Product</button>
         </div>
     </form>
 </div>

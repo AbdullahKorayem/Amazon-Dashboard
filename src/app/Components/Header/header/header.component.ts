@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, from } from 'rxjs';
 import { AuthState } from 'src/app/Services/Redux/Store/Admin.reducer';
@@ -15,8 +15,19 @@ export class HeaderComponent implements OnInit {
   public divTop = '-200px';
   public user$!: Observable<any>;
   public admin: any;
+  public darkMode: boolean = false; // Initialize darkMode property
+  public moonImgSrc = "assets/moon.svg";
+  public sunImgSrc = "assets/sun.svg";
 
-  constructor(private store: Store<{ auth: AuthState }>, private userService: UsersService, private sellerService: SellersService) { }
+  @HostBinding('class.dark') get mode() {
+    return this.darkMode;
+  }
+
+  constructor(
+    private store: Store<{ auth: AuthState }>,
+    private userService: UsersService,
+    private sellerService: SellersService
+  ) { }
 
   togglePosition() {
     this.divTop = this.divTop === '-200px' ? '60px' : '-200px';
@@ -24,7 +35,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.toGetTheUser();
-  };
+    // Retrieve theme choice from localStorage
+   
+  }
 
   toGetTheUser() {
     const uid = sessionStorage.getItem('userUID');
@@ -51,6 +64,14 @@ export class HeaderComponent implements OnInit {
         }
       );
     }
+  }
+
+  // Function to toggle between dark and light themes
+  toggleTheme() {
+    // Toggle dark mode
+    this.darkMode = !this.darkMode;
+    // Save theme choice to localStorage
+    localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
   }
 
 }

@@ -12,7 +12,7 @@ import { ProductServiceService } from 'src/app/Services/Product-Service/product-
   styleUrl: './seller-new-products.component.css'
 })
 export class SellerNewProductsComponent implements OnInit {
-  public NewProductForm!: FormGroup;
+  public NewProductFormSeller!: FormGroup;
   public imageUrl: string = '';
   public categories: any[] = [];
   public thumbnail: string = '';
@@ -30,7 +30,7 @@ export class SellerNewProductsComponent implements OnInit {
   ngOnInit(): void {
     let uid = sessionStorage.getItem('userUID');
 
-    this.NewProductForm = this.fb.group({
+    this.NewProductFormSeller = this.fb.group({
       ar: this.fb.group({
         brand: [''],
         description: ['', Validators.required],
@@ -61,20 +61,20 @@ export class SellerNewProductsComponent implements OnInit {
   }
 
   get arTitle() {
-    return this.NewProductForm.get('ar.title');
+    return this.NewProductFormSeller.get('ar.title');
   }
 
   // Function to access the form control of en.title
   get enTitle() {
-    return this.NewProductForm.get('en.title');
+    return this.NewProductFormSeller.get('en.title');
   }
 
   public onSubmit() {
-    console.log(this.NewProductForm.value);
-    from(this.productService.addProduct(this.NewProductForm.value)).subscribe(
+    console.log(this.NewProductFormSeller.value);
+    from(this.productService.addProduct(this.NewProductFormSeller.value)).subscribe(
       (response) => {
         this.toastr.success('Product added successfully');
-        this.router.navigate(['/products']);
+        this.router.navigate(['/seller-productsS']);
       },
       (error) => {
         console.error('Error:', error);

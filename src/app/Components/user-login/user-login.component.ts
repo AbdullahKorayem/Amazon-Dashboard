@@ -116,7 +116,7 @@ export class UserLoginComponent {
 							sessionStorage.setItem('userUID', user.uid);
 							sessionStorage.setItem('user', JSON.stringify(this.theSeller));
 							this.toastr.success('Seller logged in successfully');
-							this.router.navigateByUrl('seller/productsS');
+							this.router.navigateByUrl('seller-productsS');
 						} else {
 
 							this.toastr.error('Sign in failed: User is not an admin or a seller');

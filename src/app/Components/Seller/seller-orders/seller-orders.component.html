@@ -8,7 +8,7 @@
 
         </div>
         <a [routerLink]="['']"
-            class="flex items-center gap-3 px-3 font-medium text-white bg-[#131921] hover:[#f5a447] rounded-md b h-9">
+            class="flex items-center gap-3 px-3 font-medium text-white bg-[#131921] hover:bg-[#f5a447] rounded-full b h-9">
             <i class="fa-solid fa-backward"></i>
             Back
         </a>
@@ -18,19 +18,19 @@
 
         <div *ngIf="FirebaseOrders.length > 0; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
-            <div id="tableContianer" class="w-full py-4 overflow-y-auto rounded-lg">
-                <table class="w-[100%] bg-[#ffff] ">
+            <div id="tableContianer" class="w-full py-4 overflow-y-auto ">
+                <table class="w-[100%] bg-[#ffff] rounded-lg shadow-md ">
                     <thead class="bg-[#f5a447] ">
                         <tr>
 
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                             </th>
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
-                                #ID</th>
+                                #Order ID</th>
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                                 Customer ID</th>
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
-                                Address</th>
+                                Product Name</th>
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                                 Order Status</th>
 
@@ -49,7 +49,7 @@
                                         class="cursor-pointer  text-[#000] text-2xl fa-solid fa-caret-down"></i>
                                 </td>
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
+                                    class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
                                     {{ order.id }}</td>
 
                                 <td
@@ -57,8 +57,8 @@
                                     {{ order.userId }}</td>
 
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
-                                    {{ order.ShippingAddress }}</td>
+                                    class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
+                                    {{ order.name }}</td>
 
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
@@ -71,24 +71,26 @@
 
                                 <td
                                     class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
-                                    ${{ order.totalPrice | number: '1.2-2' }}</td>
+                                    ${{ order.price | number: '1.2-2' }}</td>
                                 <td
                                     class="px-2 py-4 text-lg font-normal text-center text-black border-b border-black w-fit ">
                                     <div class="flex items-center gap-2">
-
-                                        <select id="countries"
-                                            class="text-gray-900 text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0 my-custom-select"
-                                            [ngClass]="{
-                                        'bg-[#d7ecfb] text-[#73c0f3]': order?.status === 'pending' && selectedValue === 'pending',  
-                                        'bg-[#92ffa2] text-[#58D46B]': order?.status === 'delivered' && selectedValue === 'delivered',
-                                        'bg-[#FFF3E1] text-[#F3A847]': order?.status === 'shipping' && selectedValue === 'shipping',
-                                        'bg-[#e2887a] text-[#f34d47]': order?.status === 'cancelled' && selectedValue === 'cancelled'
-                                    }" (change)="onSelectChange($event, order.id)" [value]="order?.status">
-                                            <option value="pending">Pending</option>
-                                            <option value="delivered">Delivered</option>
-                                            <option value="shipping">Shipping</option>
-                                            <option value="cancelled">Cancelled</option>
-                                        </select>
+                                        <form class="mb-5">
+                                            <select id="countries"
+                                                class=" text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0 my-custom-select"
+                                                [ngClass]="{
+                                                                                    'bg-[#d7ecfb] text-[#73c0f3]': order?.status === 'pending' ,  
+                                                                                    'bg-[#92ffa2] text-[#58D46B]': order?.status === 'delivered' ,
+                                                                                    'bg-[#FFF3E1] text-[#F3A847]': order?.status === 'shipping' ,
+                                                                                    'bg-[#e2887a] text-[#b52f2a]': order?.status === 'cancelled'
+                                                                                }"
+                                                (change)="onSelectChange($event, order.id)" [value]="order?.status">
+                                                <option value="pending">Pending</option>
+                                                <option value="delivered">Delivered</option>
+                                                <option value="shipping">Shipping</option>
+                                                <option value="cancelled">Cancelled</option>
+                                            </select>
+                                        </form>
 
 
                                     </div>

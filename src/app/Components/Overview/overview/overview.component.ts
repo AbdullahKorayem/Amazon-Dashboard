@@ -48,7 +48,7 @@ export class OverviewComponent implements OnInit {
         private catS: CategoriesService
     ) { }
     selectedValue: string = 'Pending';
-    LastOrders: string[] = ['ID', 'Name', 'Amount', 'Tracking', 'Address'];
+    LastOrders: string[] = ['ID','Date',  'Amount', 'Tracking', 'Payment Method'];
 
     customShuffle<T>(array: T[]): T[] {
         const newArray = [...array];
@@ -58,6 +58,15 @@ export class OverviewComponent implements OnInit {
         }
         return newArray;
     }
+
+     timestampToDate(timestamp: number): string {
+    const date = new Date(timestamp);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+}
+
 
 
     onSelectChange(event: Event, id: string) {
@@ -219,6 +228,7 @@ export class OverviewComponent implements OnInit {
         from(this.orderS.getAllOrdersFirebase()).subscribe(
             (res: any[]) => {
                 this.nbOrders = res;
+                console.log(this.nbOrders);
             },
             (err: any) => {
                 console.log(err);

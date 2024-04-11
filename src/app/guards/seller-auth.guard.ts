@@ -25,7 +25,7 @@ export class SellerAuthGuard implements CanActivate {
         const seller = await this.sellersService.getSellerByUid(userUID);
         if (seller) {
           // Allow access only to seller-related routes
-          if (state.url.includes('productsS') || state.url.includes('ordersS') || state.url.includes('new')) {
+          if (state.url.includes('/seller-productsS') || state.url.includes('/seller-ordersS') || state.url.includes('/seller-productsS/new')) {
             return true;
           } else {
             console.error('Seller does not have access to this route:', state.url);

@@ -28,7 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrModule } from 'ngx-toastr';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 // import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideAuth, getAuth , } from '@angular/fire/auth';
 
 import { environment } from './environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -40,6 +40,9 @@ import { authReducer } from './Services/Redux/Store/Admin.reducer';
 import { SellerNewProductsComponent } from './Components/Seller/seller-new-products/seller-new-products.component';
 import { SellerOrdersComponent } from './Components/Seller/seller-orders/seller-orders.component';
 import { SellerProductsComponent } from './Components/Seller/seller-products/seller-products.component';
+import { SellerProductDetailsComponent } from './Components/Seller/seller-product-details/seller-product-details.component';
+
+import { Store } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -58,10 +61,9 @@ import { SellerProductsComponent } from './Components/Seller/seller-products/sel
     UserRegisterComponent,
     SellerNewProductsComponent,
     SellerOrdersComponent,
-    SellerProductsComponent
+    SellerProductsComponent,
+    SellerProductDetailsComponent
     
-    
-
   ],
   imports: [
     ChartjsModule,
@@ -96,8 +98,13 @@ import { SellerProductsComponent } from './Components/Seller/seller-products/sel
 
   ],
   providers: [
-    // provideAnimationsAsync()
+    
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+  constructor(private store: Store) { }
+
+  
+}

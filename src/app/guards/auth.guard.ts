@@ -58,14 +58,6 @@ export class AuthGuard implements CanActivate {
           // console.log(user);
           return true; // Allow access for admins
         }
-
-        // Check for seller users (assuming SellersService exists)
-        const seller = await this.sellersService.getSellerByUid(userUID);
-        if (seller) {
-          // console.log(seller);
-          return seller.isAdmin === false; // Allow non-admin sellers
-        }
-
         // If no valid user or seller found, redirect to login
         console.error('Invalid user or seller data for UID:', userUID);
         return this.router.parseUrl('/login');

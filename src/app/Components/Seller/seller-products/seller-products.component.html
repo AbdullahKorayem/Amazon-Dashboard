@@ -1,5 +1,5 @@
 <div class="px-5">
-    <div *ngIf="currentRoutePath === 'products'; then thenBlock else elseBlock"></div>
+    <div *ngIf="currentRoutePath === 'seller/productsS'; then elseBlock  else thenBlock"></div>
     <ng-template #thenBlock>
         <div class="flex items-center justify-between w-full gap-3 pb-5 mt-5 border-b">
             <div>
@@ -8,17 +8,17 @@
                     Discover our products.
                 </p>
             </div>
-            <a [routerLink]="['/products', 'new']"
-                class="flex items-center gap-3 px-3 font-medium text-white bg-black rounded-md h-9">
+            <a [routerLink]="['/seller-productsS', 'new']"
+                class="flex items-center gap-3 px-3 font-medium text-white bg-black rounded-full h-9 hover:bg-[#f5a447]">
                 <i class="fa-solid fa-plus"></i>
                 Add New
             </a>
         </div>
         <input matInput (keyup)="Filterchange($event)" placeholder="Search here" class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm
-            rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none
+             focus:ring-[#321fdb] focus:border-[#321fdb] outline-none rounded-full
             w-full sm:w-[320px] p-3 mb-3 mt-3 shadow-md" />
-        <div class="table-container w-[800px] sm:w-full overflow-x-auto ">
-            <table mat-table [dataSource]="dataSource" class="rounded-lg shadow-sm mat-elevation-z8 demo-table">
+        <div class="table-container rounded-lg shadow-md  w-[800px] sm:w-full overflow-x-auto ">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
                 <ng-container *ngFor="let column of displayedColumns; let i = index" [matColumnDef]="column">
                     <th class="bg-[#f69b35] font-medium" mat-header-cell *matHeaderCellDef>
                         {{ column === '_id' ? '#ID' : column === 'name' ? 'name' : column === 'quantity' ?
@@ -68,6 +68,7 @@
         </div>
     </ng-template>
     <ng-template #elseBlock>
-        <router-outlet></router-outlet>
+        <!-- <router-outlet></router-outlet> -->
+        <h1>hhhhhh</h1>
     </ng-template>
 </div>

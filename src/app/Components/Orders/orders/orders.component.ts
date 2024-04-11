@@ -55,6 +55,14 @@ export class OrdersComponent implements OnInit {
   }
 
 
+  public formatReadableDate(dateString: any) {
+
+    const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+
+    const date = new Date(dateString);
+
+    return date.toLocaleString('en-US', options);
+  }
 
 
 
@@ -79,15 +87,7 @@ export class OrdersComponent implements OnInit {
     this.selectedOrder = null;
   }
 
-  public formatReadableDate(dateString: any) {
-
-    const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-
-    const date = new Date(dateString);
-
-    return date.toLocaleString('en-US', options);
-  }
-
+ 
   public deleteAllOrders() {
     this.orderService.deleteAllOrders().subscribe(
       (res) => {

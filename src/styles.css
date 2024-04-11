@@ -11,6 +11,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 
 @import 'ngx-toastr/toastr';
 
+* {
+    transition: background-color 1s;
+}
+.dark {
+    /* Define styles for dark mode here */
+    background-color: #222;
+    /* color: #fff; */
+}
+
 @layer base {
 
     /* Scrollbar customization */

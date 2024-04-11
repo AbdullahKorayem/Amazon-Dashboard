@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { from } from 'rxjs';
+import { OrdersService } from 'src/app/Services/Orders-Service/orders.service';
 import { SellersServiceService } from 'src/app/Services/Seller-Service/sellers-service.service';
 
 
@@ -14,7 +15,7 @@ export class SellerOrdersComponent {
   statusOrder: boolean = false;
   selectedValue: string = 'Pending';
   constructor(
-    private sellerService: SellersServiceService
+    private sellerService: SellersServiceService, private orderService: OrdersService,
   ) { };
   ngOnInit(): void {
 
@@ -49,9 +50,21 @@ export class SellerOrdersComponent {
   getOrdersData(uid: string): void {
     from(this.sellerService.getAllOrdersSeller(uid)).subscribe(
       (res: any[]) => {
-        this.FirebaseOrders = res;
-        console.log(this.FirebaseOrders);
+        // Applying the logic from res.map to manipulate each order's items
+        const modifiedOrders = res.map(obj => {
+          return {
+            ...obj,
+            item: obj.item.map((item: any) => ({ ...item, status: obj.status })),
+            orderDate: obj.orderDate
+          };
+        });
 
+        // Flattening the modified orders array and filtering by SellerUid
+        this.FirebaseOrders = modifiedOrders.reduce((acc: any, order: any) => {
+          return [...acc, ...order.item];
+        }, []).filter((order: any) => order.SellerUid == uid);
+
+        console.log(this.FirebaseOrders);
       },
       (err: any) => {
         console.log(err);
@@ -60,17 +73,16 @@ export class SellerOrdersComponent {
   }
 
 
-
-
-
   onSelectChange(event: Event, id: string) {
-    let uid=sessionStorage.getItem('userUID');
     const target = event.target as HTMLSelectElement;
     const selectedValue = target.value;
-    this.sellerService.updateOrderByIdFirebase(id, selectedValue)
-    this.getOrdersData(uid!);
-  }
+    this.orderService.updateOrderByIdFirebase(id, selectedValue)
 
+    let uid = sessionStorage.getItem('userUID');
+
+    this.getOrdersData(uid!);
+
+  }
 
 
 

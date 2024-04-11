@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, from } from 'rxjs';
+import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
 import { SellersServiceService } from 'src/app/Services/Seller-Service/sellers-service.service';
 
 @Component({
@@ -15,11 +16,12 @@ export class SellerProductsComponent {
   products$!: Observable<any[]>;
   categories: any[] = [];
   // robots: any;
+  uid = sessionStorage.getItem('userUID')
 
-  // async readProducts() {
-  //   this.products = await this.SellersServiceService.getProductSeller();
-  //   console.log(this.products);
-  // }
+  async readProducts() {
+    this.products = await this.sellerService.getProductSeller(this.uid!);
+    console.log(this.products);
+  }
 
   displayedColumns: string[] = [
     '_id',
@@ -49,13 +51,13 @@ export class SellerProductsComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private sellersService: SellersServiceService
-
+    private catService: CategoriesService,
+    private sellerService: SellersServiceService
   ) { }
 
   //routing
   navigateToProduct(product: string) {
-    this.router.navigate(['/products', product]);
+    this.router.navigate(['/seller-productsS', product]);
   }
 
   Filterchange(event: Event) {
@@ -100,13 +102,25 @@ export class SellerProductsComponent {
     }
   }
 
+  getAllcategories(): void {
+    from(this.catService.getAllCategories()).subscribe(
+      (res: any[]) => {
+        this.categories = res;
+        console.log(this.categories);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
 
 
   ngOnInit(): void {
+    let uid = sessionStorage.getItem('userUID')
 
-    let uid = sessionStorage.getItem('userUID');
+    this.getAllcategories();
 
-    this.sellersService.getProductSeller(uid!).then(products => {
+    this.sellerService.getProductSeller(this.uid!).then(products => {
       console.log('Products:', products);
     }).catch(error => {
       console.error('Error fetching products:', error);
@@ -122,7 +136,7 @@ export class SellerProductsComponent {
 
 
 
-    this.sellersService.getProductSeller(uid!).then(products => {
+    this.sellerService.getProductSeller(this.uid!).then(products => {
       console.log('Products:', products);
       console.log(products);
 

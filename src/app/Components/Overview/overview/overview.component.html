@@ -1,4 +1,4 @@
-<div class="grid grid-cols-10 gap-5 px-5 py-5">
+<div class="grid grid-cols-10 gap-5 px-5 py-5 ">
     <div *ngFor="let item of errorMsg">
         {{ item }}
     </div>
@@ -10,7 +10,7 @@
     </div>
 
     <!-- First Container (6 columns) -->
-    <div class="col-span-7">
+    <div class="col-span-7 ">
         <!-- First Component -->
         <div class="grid grid-cols-3 col-span-6 p-10 bg-white border shadow-md rounded-xl">
             <!-- Content of the first grid container -->
@@ -105,29 +105,26 @@
             </div>
 
             <!-- header -->
-            <div class="flex justify-around grid-cols-5 mt-5 border-b-2">
-                <h1 *ngFor="let order of LastOrders" class="mb-1 font-semibold">
+            <div class="flex justify-around grid-cols-5 mt-5 mr-4 text-center border-b-2">
+                <h1 *ngFor="let order of LastOrders" class="mb-1 font-semibold text-center">
                     {{ order }}
                 </h1>
             </div>
-            <!-- content -->
+            <!-- content'ID','Date',  'Amount', 'Tracking', 'Payment Method' -->
             <div class="flex justify-around grid-cols-5 my-3 border-b-2" *ngFor="let order of nbOrders; index as i">
                 <h1 class="p-5 truncate"># {{ i + 1 }}</h1>
-                <h1 class="p-5 truncate">{{ order.userId }}</h1>
-                <h1 class="p-5 truncate">{{ order.Products.length }}</h1>
+                <h1 class="p-5 text-center truncate">{{ timestampToDate(order.orderDate) }}</h1>
+                <h1 class="p-5 text-center truncate">{{ order.item.length }}</h1>
                 <form class="mb-5">
                     <select id="countries"
-                        class="text-gray-900 text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0 my-custom-select"
-                        [ngStyle]="{
-              'bg-[#d7ecfb] text-[#73c0f3]':
-                order?.status === 'pending' && selectedValue === 'pending',
-              'bg-[#92ffa2] text-[#58D46B]':
-                order?.status === 'delivered' && selectedValue === 'delivered',
-              'bg-[#FFF3E1] text-[#F3A847]':
-                order?.status === 'shipping' && selectedValue === 'shipping',
-              'bg-[#e2887a] text-[#f34d47]':
-                order?.status === 'cancelled' && selectedValue === 'cancelled'
-            }" (change)="onSelectChange($event, order.id)" [value]="order?.status">
+                        class="text-md font-semibold shadow-md rounded-lg block w-full p-2.5 outline-none ring-0 my-custom-select"
+                        [ngClass]="{
+                                                        'bg-[#d7ecfb] text-[#73c0f3]': order?.status === 'pending' ,  
+                                                        'bg-[#92ffa2] text-[#58D46B]': order?.status === 'delivered' ,
+                                                        'bg-[#FFF3E1] text-[#F3A847]': order?.status === 'shipping' ,
+                                                        'bg-[#e2887a] text-[#f34d47]': order?.status === 'cancelled'
+                                                    }" (change)="onSelectChange($event, order.id)"
+                        [value]="order?.status">
                         <option value="pending">Pending</option>
                         <option value="delivered">Delivered</option>
                         <option value="shipping">Shipping</option>
@@ -135,7 +132,7 @@
                     </select>
                 </form>
 
-                <h1 class="p-5 truncate">{{ order.ShippingAddress }}</h1>
+                <h1 class="p-5 font-semibold truncate">{{ order.paymentMethod }}</h1>
             </div>
         </div>
 

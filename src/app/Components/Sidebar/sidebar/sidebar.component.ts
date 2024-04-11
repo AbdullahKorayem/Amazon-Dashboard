@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { from } from 'rxjs';
+import { SellersServiceService } from 'src/app/Services/Seller-Service/sellers-service.service';
 import { UsersService } from 'src/app/Services/Users/users.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class SidebarComponent {
 
   constructor(
     private router: Router,
-    private user: UsersService
+    private user: UsersService,
+    private sellerService: SellersServiceService
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -50,20 +52,30 @@ export class SidebarComponent {
               ]
             }
           ];
-        } else {
+        }
+      },
+      error => {
+        console.error('Error retrieving user:', error);
+      }
+    );
+
+    from(this.sellerService.getSellerByUid(this.userUid)).subscribe(
+      (res: any) => {
+        this.theAdmins = res;
+        if (this.theAdmins.isAdmin === false) {
           this.links = [
             {
               title: 'Dashboard',
               items: [
-                { name: 'productsS', icon: 'fa-solid fa-bag-shopping' },
-                { name: 'ordersS', icon: 'fa-solid fa-cart-shopping' }
+                { name: 'seller-productsS', icon: 'fa-solid fa-bag-shopping' },
+                { name: 'seller-ordersS', icon: 'fa-solid fa-cart-shopping' },
               ]
             }
           ];
         }
       },
       error => {
-        console.error('Error retrieving user:', error);
+        console.error('Error retrieving seller:', error);
       }
     );
   }

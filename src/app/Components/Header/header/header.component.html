@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between w-full">
 
             <div>
-                <h1 class="text-3xl font-semibold">Welcome Mr: {{admin.UserName}}</h1>
+                <h1 class="text-3xl font-semibold dark:text-white dark:bg-[]">Welcome Mr: {{admin.UserName}}</h1>
             </div>
             <div class="relative items-center">
                 <i
@@ -16,12 +16,11 @@
             </div>
 
             <div class="flex items-center space-x-4">
-                <span (click)="togglePosition()"
-                    class="relative grid w-10 h-10 bg-black rounded-full cursor-pointer place-content-center ">
-                    <i class="text-xl text-white text-muted-foreground fa-solid fa-bell"></i>
-                    <span class="bg-red-500 fly-item"></span>
-                  
-                </span>
+            <span (click)="toggleTheme()"
+                class="relative grid w-10 h-10 transition duration-300 ease-in-out bg-blue-300 rounded-full cursor-pointer place-content-center hover:bg-blue-400 hover:scale-125 hover:-rotate-[20deg] ">
+                <img *ngIf="darkMode" [src]="moonImgSrc" class="size-7" alt="">
+                <img *ngIf="!darkMode" [src]="sunImgSrc" alt="">
+            </span>
 
                 <span class="relative grid w-10 h-10 bg-black rounded-full place-content-center ">
                     <i class="text-xl text-white text-muted-foreground fa-solid fa-user"></i>
