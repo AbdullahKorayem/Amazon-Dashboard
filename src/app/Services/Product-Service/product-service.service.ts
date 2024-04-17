@@ -13,9 +13,9 @@ export class ProductServiceService {
 
 
   private apiUrl = 'https://fakestoreapi.com/products?limit=5';
-  
+
   // 
-  constructor(private firestore:Firestore,private http: HttpClient) { }
+  constructor(private firestore: Firestore, private http: HttpClient) { }
 
   async getProducts(): Promise<any[]> {
     const querySnapshot = await getDocs(query(collection(this.firestore, 'Products')));
@@ -26,7 +26,7 @@ export class ProductServiceService {
     return products;
   }
 
- 
+
   async getProductByIdFirebase(id: string): Promise<any | null> {
     try {
       const productRef = doc(this.firestore, 'Products', id);
@@ -44,6 +44,7 @@ export class ProductServiceService {
   }
 
   async addProduct(newProductData: any): Promise<void> {
+    console.log(newProductData)
     try {
       const productCollectionRef = collection(this.firestore, 'Products');
       await addDoc(productCollectionRef, newProductData);
@@ -84,7 +85,7 @@ export class ProductServiceService {
   }
 
 
-  
+
   // async getProducts() {
   //   return (
   //    await getDocs(query(collection(this.firestore, 'Product')))
@@ -97,10 +98,10 @@ export class ProductServiceService {
   //     await getDocs(query(collection(this.firestore, 'robots')))
   //    ).docs.map((robots) => robots.data());
   // }
-  
+
   // public getProducts(): Observable<any> {
   //   return this.http.get(this.apiUrl);
-    
+
   // }
 
   public postProduct(productData: any): Observable<any> {

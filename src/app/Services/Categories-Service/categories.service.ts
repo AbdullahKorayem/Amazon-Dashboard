@@ -41,6 +41,7 @@ export class CategoriesService {
   }
 
   async addCategories(newCategoryData: any): Promise<void> {
+    console.log(newCategoryData)
     try {
       const CategoryCollectionRef = collection(this.firestore, 'Categories');
       await addDoc(CategoryCollectionRef, newCategoryData);

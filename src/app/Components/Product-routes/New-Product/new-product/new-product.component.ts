@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from } from 'rxjs';
 import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
+import { DarkModeService } from 'src/app/Services/DarkMode/dark-mode-service.service';
 
 @Component({
   selector: 'app-new-product',
@@ -17,22 +18,24 @@ export class NewProductComponent implements OnInit {
   // public ARProductForm: FormGroup;
   // public ENProductForm: FormGroup;
 
-  public imageUrl: string = '';
+  
   public categories: any[] = [];
   public thumbnail: string = '';
-
+  @HostBinding('class.dark') isDarkMode: boolean = false;
 
 
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
-    private Ar:FormBuilder,
+    private Ar: FormBuilder,
     private En: FormBuilder,
     private arForm: FormBuilder,
     private toastr: ToastrService,
     private catS: CategoriesService,
     private productService: ProductServiceService,
-    private router: Router
+    private router: Router,
+    private darkModeService: DarkModeService,
+    private cdr: ChangeDetectorRef 
   ) {
 
 
@@ -40,16 +43,21 @@ export class NewProductComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.darkModeService.darkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
+
+
     this.NewProductForm = this.fb.group({
       ar: this.fb.group({
-        brand: [''], 
+        brand: [''],
         description: ['', Validators.required],
-        title: [''], 
+        title: [''],
       }),
       en: this.fb.group({
-        brand: [''], 
+        brand: [''],
         description: ['', Validators.required],
-        title: [''], 
+        title: [''],
       }),
       images: [],
       price: ['', Validators.required],
@@ -59,7 +67,7 @@ export class NewProductComponent implements OnInit {
       sku: ['ssg', Validators.required],
       sold: null,
       subCategoryId: ['', Validators.required],
-      thumbnail: ''
+      thumbnail: this.thumbnail,
     });
 
 
@@ -73,13 +81,27 @@ export class NewProductComponent implements OnInit {
     return this.NewProductForm.get('ar.title');
   }
 
-  // Function to access the form control of en.title
   get enTitle() {
     return this.NewProductForm.get('en.title');
   }
 
+  onImageChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        console.log(reader.result);
+        this.thumbnail = e.target?.result as string;
+        console.log(this.thumbnail);
+        this.cdr.detectChanges();
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   public onSubmit() {
     console.log(this.NewProductForm.value);
+    this.NewProductForm.value.thumbnail = this.thumbnail;
     from(this.productService.addProduct(this.NewProductForm.value)).subscribe(
       (response) => {
         this.toastr.success('Product added successfully');
@@ -92,18 +114,8 @@ export class NewProductComponent implements OnInit {
     );
   }
 
-  onImageChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.imageUrl = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    }
-  }
   openImage() {
-    const inputElement = document.getElementById('image');
+    const inputElement = document.getElementById('thumbnail');
     if (inputElement) {
       inputElement.click();
     }

@@ -1,18 +1,18 @@
-<div class="w-full px-5">
+<div class="w-full px-5 dark:text-white">
     <div class="w-full gap-3 pb-5 mt-5 border-b border-black">
-        <h2 class="text-3xl font-bold tracking-tight">Categories</h2>
-        <p class="text-sm font-light text-neutral-500">Manage Categories</p>
+        <h2 class="text-3xl font-bold tracking-tight">{{"Categories" |translate}}</h2>
+        <p class="mt-4 text-sm font-normal text-neutral-500">{{"ManageCategories"|translate}}</p>
     </div>
     <div class="w-[100%]">
         <h1 class="flex items-center justify-between mt-10 mb-5 text-4xl font-bold">
-            All Categories
+           {{"AllCategories"|translate}}
         </h1>
         <div class="mt-8 grid-container">
-            <div class="p-2 bg-white rounded-lg shadow-lg">
+            <div class="p-2 bg-white rounded-lg shadow-lg dark:bg-[#131921] ">
                 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
                     <div class="mb-3 form-group">
                         <input type="text" id="Title" formControlName="header"
-                            class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-2"
+                            class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg mb-3 focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-2"
                             placeholder="Enter a Title" />
                         <input type="text" id="name" formControlName="name"
                             class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-2"
@@ -26,8 +26,7 @@
                     </div>
                     <div class="mb-3">
                         <div class="form-group">
-                            <input type="file" id="thumbnails" formControlName="thumbnails"
-                                (change)="onImageChange($event)" accept="image/*"
+                            <input type="file" id="thumbnails" formControlName="thumbnails" (change)="onImageChange($event)" accept="image/*"
                                 class="bg-gray-50 hidden border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] outline-none w-full p-2" />
                         </div>
 
@@ -42,37 +41,32 @@
                             </ng-template>
                         </div>
                     </div>
-                    <button class="w-full py-1 font-medium text-white bg-[#131921] rounded-full hover:bg-gray-600" type="submit">
-                        {{ editMode ? "Edit" : loading ? "adding.../" : "Add New" }}
+                    <button class="w-full py-1 font-medium text-white bg-[#131921] dark:bg-[#f5a447] dark:hover:bg-[#966935] rounded-full hover:bg-gray-600" type="submit">
+                        {{ editMode ? "Edit" : loading ? "adding..." : "Add New" }}
                     </button>
                 </form>
             </div>
-            <div class="flex flex-col p-2 bg-white rounded-lg shadow-lg" *ngFor="let cat of categories">
+            <!--  -->
+            <div class="flex flex-col p-2 bg-white rounded-lg shadow-lg dark:bg-[#131921] " *ngFor="let cat of categories">
                 <div
-                    class="cursor-pointer relative bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] w-full overflow-hidden h-[150px] flex justify-center items-center">
+                    class="cursor-pointer relative bg-gray-50 border-2  text-gray-900 text-sm rounded-lg focus:ring-[#321fdb] focus:border-[#321fdb] w-full overflow-hidden h-[150px] flex justify-center items-center">
                     <img [src]="cat.thumbnails" [alt]="cat.name" class="object-cover w-full h-full" />
                 </div>
 
                 <div class="flex flex-col flex-1 pb-2 border-b info">
                     <h1 class="text-xl font-medium">{{ cat.name }}</h1>
-                    <p class="text-lg font-light text-slate-600">{{ cat.description }}</p>
+                    <p class="text-lg font-normal text-slate-600 dark:text-slate-400">{{ cat.description }}</p>
                 </div>
-                <div class="flex items-center justify-between pt-2">
-                    <span class="text-xs text-slate-500">{{
-                        formatReadableDate(cat.createdAt)
-                        }}</span>
-                    <div class="flex items-center gap-3">
-                        <button class="p-2 font-bold text-white bg-green-500 rounded-md hover:bg-green-700"
-                            (click)="update(cat.id)">
-                            <!-- <button class="p-2 font-bold text-white bg-green-500 rounded-md"> -->
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button class="p-2 font-bold text-white bg-red-500 rounded-md hover:bg-green-700"
-                            (click)="delete(cat.id)">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
+            <div class="flex items-center gap-4 pt-2 ">
+                <button class="flex-grow p-2 font-normal text-white bg-green-500 rounded-full hover:bg-green-700"
+                    (click)="update(cat.id)"> 
+                    <i class="fa-solid fa-pen-to-square"></i>{{"Update"|translate}}
+                </button>
+                <button class="flex-grow p-2 font-normal text-white bg-red-500 rounded-full hover:bg-red-700" (click)="delete(cat.id)">
+                    <i class="fa-solid fa-trash"></i> {{"Delete"|translate}}
+                </button>
+            </div>
+
             </div>
         </div>
     </div>

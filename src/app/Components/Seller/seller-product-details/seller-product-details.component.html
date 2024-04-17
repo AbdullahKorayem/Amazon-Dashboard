@@ -1,20 +1,21 @@
-<div class="px-5">
+<div class=" dark:text-white">
+<div class="px-5 " >
     <div class="flex items-center justify-between w-full gap-3 pb-5 mt-5 border-b">
         <div>
-            <h2 class="text-3xl font-bold tracking-tight">Product details</h2>
+            <h2 class="text-3xl font-bold tracking-tight">{{"ProductDetails" | translate}}</h2>
             <p class="text-sm font-light text-neutral-500">
-                Manage [ <span class="text-lg font-normal">{{product.en.title}}</span> ] product.
+                {{"ManageProduct"|translate}} [ <span class="text-lg font-normal">{{product.en.title}}</span> ] .
             </p>
         </div>
         <a [routerLink]="['/seller-productsS']"
             class="flex items-center gap-3 px-3 font-medium text-white bg-[#131921] rounded-full h-9 hover:bg-[#f5a447] ">
             <i class="fa-solid fa-backward"></i>
-            Back
+        {{"Back"|translate}}
         </a>
     </div>
     <div class="mt-10">
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <div class=" h-[400px] flex justify-center items-center p-5 bg-white">
+            <div class=" h-[400px] flex justify-center items-center p-5 bg-white rounded-md">
                 <img class="w-full h-full object-fit-contain" [src]="product.thumbnail" alt="">
             </div>
             <div>
@@ -42,9 +43,9 @@
 
                 <div class="flex items-center gap-3 mt-5">
                     <button class="w-32 p-2 text-lg font-medium text-center text-white bg-green-500 rounded-full hover:bg-green-700"
-                        (click)="editProduct(product.id)">Update</button>
+                        (click)="editProduct(product.id)">{{"Update"|translate}}</button>
                     <button class="w-32 p-2 text-lg font-medium text-center text-white bg-red-500 rounded-full hover:bg-red-700"
-                        (click)="deleteProduct(product.id)">delete</button>
+                        (click)="deleteProduct(product.id)">{{"Delete"|translate}}</button>
                 </div>
             </div>
         </div>
@@ -54,17 +55,17 @@
     <form class="mt-5" [formGroup]="productForm" (ngSubmit)="onSubmit()">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div class="mb-3 " formGroupName="ar">
-                <label for="arTitle" class="text-lg font-medium leading-none">brand In Arabic</label>
+                <label for="arTitle" class="text-lg font-medium leading-none">{{"brandArabic"|translate}}</label>
                 <input type="text" id="arTitle" formControlName="brand" name="ar.brand"
                     class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
             </div>
             <div class="mb-3 " formGroupName="ar">
-                <label for="arTitle" class="text-lg font-medium leading-none">Title In Arabic</label>
+                <label for="arTitle" class="text-lg font-medium leading-none">{{"TitleArabic"|translate}}</label>
                 <input type="text" id="arTitle" formControlName="title" name="ar.title"
                     class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
             </div>
             <div class="mb-3 " formGroupName="ar">
-                <label for="arTitle" class="text-lg font-medium leading-none">description In Arabic</label>
+                <label for="arTitle" class="text-lg font-medium leading-none">{{"DescriptionArabic" | translate}}</label>
                 <input type="text" id="arTitle" formControlName="description" name="ar.description"
                     class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
             </div>
@@ -73,17 +74,17 @@
         <div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div class="mb-3 " formGroupName="en">
-                    <label for="enTitle" class="text-lg font-medium leading-none">brand In English</label>
+                    <label for="enTitle" class="text-lg font-medium leading-none">{{"brandEnglish"|translate}}</label>
                     <input type="text" id="enTitle" formControlName="brand" name="en.brand"
                         class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
                 </div>
                 <div class="mb-3 " formGroupName="en">
-                    <label for="enTitle" class="text-lg font-medium leading-none">Title In English</label>
+                    <label for="enTitle" class="text-lg font-medium leading-none">{{"TitleEnglish"|translate}}</label>
                     <input type="text" id="enTitle" formControlName="title" name="en.title"
                         class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
                 </div>
                 <div class="mb-3 " formGroupName="en">
-                    <label for="enTitle" class="text-lg font-medium leading-none">description In English</label>
+                    <label for="enTitle" class="text-lg font-medium leading-none">{{"DescriptionEnglish"| translate}}</label>
                     <input type="text" id="enTitle" formControlName="description" name="en.description"
                         class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
                 </div>
@@ -92,19 +93,19 @@
 
 
         <div class="mb-3 form-group">
-            <label for="quantity" class="text-lg font-medium leading-none">Quantity</label>
+            <label for="quantity" class="text-lg font-medium leading-none">{{"Quantity"|translate}}</label>
             <input type="text" id="quantity" formControlName="quantityInStock"
                 class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
         </div>
         <div class="mb-3 form-group">
-            <label for="price" class="text-lg font-medium leading-none">Price</label>
+            <label for="price" class="text-lg font-medium leading-none">{{"Price"|translate}}</label>
             <input type="text" id="price" formControlName="price"
                 class="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none block w-full p-3" />
         </div>
 
         <div class="mb-3">
             <div class="form-group">
-                <label for="image" class="text-lg font-medium leading-none">Image</label>
+                <label for="image" class="text-lg font-medium leading-none">{{"Image"|translate}}</label>
                 <input type="file" id="image" formControlName="thumbnail" (change)="onImageChange($event)"
                     accept="image/*"
                     class="bg-gray-50 hidden border-2 border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-[#321fdb] focus:border-[#321fdb] outline-none w-full p-3" />
@@ -135,4 +136,5 @@
         class="h-12 sm:w-[180px] w-full rounded-md px-3 bg-[#321fdb] text-white flex items-center gap-3 font-medium">Update</button> -->
         </div>
     </form>
+</div>
 </div>

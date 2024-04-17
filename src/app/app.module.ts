@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import * as _ from 'lodash' ;
+import * as _ from 'lodash';
 
 
 
@@ -19,7 +19,11 @@ import { NewProductComponent } from './Components/Product-routes/New-Product/new
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -28,7 +32,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrModule } from 'ngx-toastr';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 // import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideAuth, getAuth , } from '@angular/fire/auth';
+import { provideAuth, getAuth, } from '@angular/fire/auth';
 
 import { environment } from './environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -43,6 +47,11 @@ import { SellerProductsComponent } from './Components/Seller/seller-products/sel
 import { SellerProductDetailsComponent } from './Components/Seller/seller-product-details/seller-product-details.component';
 
 import { Store } from '@ngrx/store';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 
 @NgModule({
   declarations: [
@@ -63,7 +72,7 @@ import { Store } from '@ngrx/store';
     SellerOrdersComponent,
     SellerProductsComponent,
     SellerProductDetailsComponent
-    
+
   ],
   imports: [
     ChartjsModule,
@@ -82,7 +91,16 @@ import { Store } from '@ngrx/store';
     MatCardModule,
     MatFormFieldModule,
     StoreModule.forRoot({ AuthReducer: authReducer }),
-    
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps:[HttpClient]
+      }
+      
+    }),
+
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-center',
@@ -93,18 +111,18 @@ import { Store } from '@ngrx/store';
       resetTimeoutOnDuplicate: true,
       newestOnTop: true
     }),
-   
+
 
 
   ],
   providers: [
-    
+
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 
   constructor(private store: Store) { }
 
-  
+
 }

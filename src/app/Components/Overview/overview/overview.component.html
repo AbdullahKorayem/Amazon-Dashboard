@@ -1,18 +1,18 @@
-<div class="grid grid-cols-10 gap-5 px-5 py-5 ">
+<div class="grid grid-cols-10 gap-5 px-5 py-5 dark:text-white ">
     <div *ngFor="let item of errorMsg">
         {{ item }}
     </div>
     <div class="col-span-7 mt-5">
-        <h2 class="text-3xl font-bold tracking-tight">Overview</h2>
-        <p class="text-sm font-light text-neutral-500">
-            Welcome to the dashboard and stay up-to-date with the latest information.
+        <h2 class="text-3xl font-bold tracking-tight">{{"Overview"| translate}}</h2>
+        <p class="text-sm font-normal text-neutral-500">
+            {{"OverviewDescription"| translate}}
         </p>
     </div>
 
     <!-- First Container (6 columns) -->
     <div class="col-span-7 ">
         <!-- First Component -->
-        <div class="grid grid-cols-3 col-span-6 p-10 bg-white border shadow-md rounded-xl">
+        <div class="grid grid-cols-3 col-span-6 p-10 bg-white  shadow-md rounded-xl dark:bg-[#131921]">
             <!-- Content of the first grid container -->
             <ng-container>
                 <a routerLink="/products" class="px-4 pt-4">
@@ -21,7 +21,8 @@
                             <img src="assets/chart.line.uptrend.xyaxis.svg" class="h-auto max-h-[5em] p-1" alt="" />
                         </div>
                         <div class="ml-4">
-                            <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Products</span>
+                            <span
+                                class="text-[#9a9a9a]  font-normal text-[16px] leading-6">{{"TotalProducts"|translate}}</span>
                             <p class="text-[2em] text-right">{{ product.length }}</p>
                         </div>
                     </div>
@@ -35,7 +36,8 @@
                             <img src="assets/shopping-cart.svg" class="h-auto max-h-[5em] p-1" alt="" />
                         </div>
                         <div class="ml-4">
-                            <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Orders</span>
+                            <span
+                                class="text-[#9a9a9a] font-normal text-[16px] leading-6">{{"TotalOrders"|translate}}</span>
                             <p class="text-[2em] text-right">{{ nbOrders.length }}</p>
                         </div>
                     </div>
@@ -45,11 +47,12 @@
             <ng-container>
                 <a routerLink="/customers" class="px-4 pt-4">
                     <div class="flex items-center justify-start">
-                        <div class="inline-flex items-center justify-center p-1 bg-white rounded-xl">
+                        <div class="inline-flex items-center justify-center p-1 rounded-xl">
                             <img src="assets/Frame 1597881674.svg" class="h-auto max-h-[3.5em] p-1" alt="" />
                         </div>
                         <div class="ml-4">
-                            <span class="text-[#9a9a9a] font-light text-[16px] leading-6">Total Customers</span>
+                            <span
+                                class="text-[#9a9a9a] font-normal text-[16px] leading-6">{{"TotalCustomers"|translate}}</span>
                             <p class="text-[2em] text-right">{{ Costumers.length }}</p>
                         </div>
                     </div>
@@ -58,11 +61,11 @@
         </div>
 
         <!-- Second Component -->
-        <div class="grid col-span-6 p-10 my-5 bg-white border shadow-md rounded-xl">
+        <div class="grid col-span-6 p-10 my-5 bg-white  shadow-md rounded-xl dark:bg-[#131921]">
             <!-- Content of the second grid container -->
             <div class="col-span-6">
-                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
-                    Status of amazon growth
+                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide dark:text-white">
+                    {{"Status" | translate}}
                 </h1>
             </div>
 
@@ -72,32 +75,23 @@
         </div>
 
         <!-- Third Component -->
-        <div class="col-span-6 p-10 bg-white border shadow-md rounded-xl">
+        <div class="col-span-6 p-10 bg-white shadow-md rounded-xl dark:bg-[#131921]">
             <div class="flex justify-between col-span-6">
-                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
-                    Last Orders
+                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide dark:text-white">
+                    {{"LatestOrders"| translate}}
                 </h1>
                 <!-- search -->
                 <div class="flex justify-between col-span-5 align-baseline">
                     <input type="text" name="q"
-                        class="w-full h-12 p-4 mr-4 border rounded-full shadow focus:border-transparent focus:ring-0"
+                        class="w-full h-12 p-4 mr-4 border rounded-full shadow focus:border-transparent focus:ring-0 dark:bg-[#19212B] dark:border-none"
                         placeholder="search" />
-                    <button type="submit">
-                        <svg class="text-teal-400 h-5 w-5 absolute top-3.5 right-3 fill-current"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-                            x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background: new 0 0 56.966 56.966"
-                            xml:space="preserve">
-                            <path
-                                d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z">
-                            </path>
-                        </svg>
-                    </button>
+
                     <div
-                        class="w-[100px] h-10 px-3.5 py-2.5 bg-white rounded-xl border border-zinc-200 justify-center items-center gap-2 inline-flex">
-                        <button class="relative flex items-center gap-2">
+                        class="w-[100px] h-10 px-3.5 py-2.5 bg-white rounded-xl border border-zinc-200 justify-center items-center gap-2 inline-flex dark:bg-[#19212B] dark:border-none dark:text-white">
+                        <button class="relative flex items-center gap-2 dark:text-white ">
                             <img src="assets/slider.svg" alt="" />
-                            <div class="text-zinc-500 text-sm font-normal font-['Arial']">
-                                Filters
+                            <div class="text-zinc-500 text-sm font-normal font-['Arial'] dark:text-white">
+                                {{"Filter" | translate}}
                             </div>
                         </button>
                     </div>
@@ -105,13 +99,14 @@
             </div>
 
             <!-- header -->
-            <div class="flex justify-around grid-cols-5 mt-5 mr-4 text-center border-b-2">
-                <h1 *ngFor="let order of LastOrders" class="mb-1 font-semibold text-center">
-                    {{ order }}
+            <div class="flex justify-around grid-cols-5 mt-5 mr-4 text-center border-b-2 dark:border-[#19212B]">
+                <h1 *ngFor="let key of LastOrders" class="mb-1 font-semibold text-center">
+                    {{ lastOrdersTranslations[key] }}
                 </h1>
             </div>
             <!-- content'ID','Date',  'Amount', 'Tracking', 'Payment Method' -->
-            <div class="flex justify-around grid-cols-5 my-3 border-b-2" *ngFor="let order of nbOrders; index as i">
+            <div class="flex justify-around grid-cols-5 my-3 border-b-2 dark:border-[#19212B]"
+                *ngFor="let order of nbOrders; index as i">
                 <h1 class="p-5 truncate"># {{ i + 1 }}</h1>
                 <h1 class="p-5 text-center truncate">{{ timestampToDate(order.orderDate) }}</h1>
                 <h1 class="p-5 text-center truncate">{{ order.item.length }}</h1>
@@ -142,14 +137,14 @@
     <div class="col-span-3">
         <!-- Additional content goes here -->
 
-        <div class="p-10 bg-white border shadow-md rounded-xl">
+        <div class="p-10 bg-white  shadow-md rounded-xl dark:bg-[#131921]">
             <div class="">
-                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
-                    Top Products
+                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide dark:text-white">
+                    {{"TopProducts"|translate}}
                 </h1>
                 <h5 class="text-[##8B909A]">Total 9.5k Sellers</h5>
             </div>
-            <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10" />
+            <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10 dark:bg-[#19212B]" />
 
             <div class="gap-5 mt-5">
                 <ng-container *ngFor="let item of Top5Products">
@@ -160,7 +155,7 @@
                                 {{ item.en.title }}
                             </h1>
                             <h5 class="text-xs">
-                                Rating ⭐: {{ item.rating }}
+                                {{"Rating"|translate}} ⭐: {{ item.rating }}
                                 <span>({{ item.ratingQuantity }})</span>
                             </h5>
                         </div>
@@ -171,17 +166,17 @@
         </div>
         <!-- Countries -->
 
-        <div class="p-10 my-5 bg-white border shadow-md rounded-xl">
+        <div class="p-10 my-5 bg-white  shadow-md rounded-xl dark:bg-[#131921] dark:text-white">
             <div class="">
-                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
-                    Total Visitors
+                <h1 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide dark:text-white">
+                    {{"TotalVisitors" | translate}}
                 </h1>
                 <div>
-                    <h2 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide">
+                    <h2 class="text-slate-800 text-xl font-bold font-['Arial'] tracking-wide dark:text-white">
                         {{ total }}
                     </h2>
                 </div>
-                <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10" />
+                <hr class="h-1 mx-auto my-4 bg-gray-200 border-0 rounded w-60 md:my-10 dark:bg-[#19212B]" />
 
                 <canvas id="canvas2" width="400" height="400"></canvas>
             </div>

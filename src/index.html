@@ -15,23 +15,11 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<body class="mat-typography">
+<body class="mat-typography " >
   <app-root></app-root>
 
   <script>
-    if (localStorage.theme === 'dark' ||(!('theme' in localStorage))) {
-
-      if (document && document.documentElement) {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      }
-    } else {
-
-      if (document && document.documentElement) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      }
-    }
+   
   </script>
 </body>
 

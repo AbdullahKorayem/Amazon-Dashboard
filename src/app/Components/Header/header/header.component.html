@@ -1,26 +1,26 @@
-<Header class="relative z-40 py-5 shadow-sm ">
+<Header class="relative z-40 p-5 my-5 shadow-sm">
     <div class="px-5 mx-auto">
         <div class="flex items-center justify-between w-full">
 
             <div>
-                <h1 class="text-3xl font-semibold dark:text-white dark:bg-[]">Welcome Mr: {{admin.UserName}}</h1>
+                <h1 class="text-3xl font-semibold dark:text-white ">{{ "Welcome" | translate}} :{{admin.UserName}}</h1>
             </div>
             <div class="relative items-center">
                 <i
-                    class="absolute text-muted-foreground top-[50%] transform -translate-y-1/2 left-5 fa-solid fa-magnifying-glass"></i>
-                <input class="flex w-[200px] md:w-[350px] sm:w-[250px] bg-white rounded-full border border-input
+                    class="absolute text-muted-foreground top-[50%] transform -translate-y-1/2 left-5 fa-solid fa-magnifying-glass dark:text-white"></i>
+                <input class="flex w-[200px] md:w-[350px] sm:w-[250px] bg-white rounded-full border-none dark:bg-[#131921] shadow-sm
                             bg-transparent  py-2 p-7 text-sm ring-offset-background
-                            file:border-0 file:bg-transparent file:text-sm
+                            file:border-0 file:bg-transparent file:text-sm dark:text-white
                             file:font-medium placeholder:text-muted-foreground
                             focus-visible:outline-none pl-12" type="text" placeholder="Search...">
             </div>
 
             <div class="flex items-center space-x-4">
-            <span (click)="toggleTheme()"
-                class="relative grid w-10 h-10 transition duration-300 ease-in-out bg-blue-300 rounded-full cursor-pointer place-content-center hover:bg-blue-400 hover:scale-125 hover:-rotate-[20deg] ">
-                <img *ngIf="darkMode" [src]="moonImgSrc" class="size-7" alt="">
-                <img *ngIf="!darkMode" [src]="sunImgSrc" alt="">
-            </span>
+                <span (click)="toggleTheme()"
+                    class="relative grid w-10 h-10 transition duration-300 ease-in-out bg-blue-300 rounded-full cursor-pointer place-content-center hover:bg-blue-400 hover:scale-125 hover:-rotate-[20deg] ">
+                    <img *ngIf="!isDarkMode" src="assets/moon.svg" class="size-7" alt="">
+                    <img *ngIf="isDarkMode" src="assets/sun.svg" alt="">
+                </span>
 
                 <span class="relative grid w-10 h-10 bg-black rounded-full place-content-center ">
                     <i class="text-xl text-white text-muted-foreground fa-solid fa-user"></i>

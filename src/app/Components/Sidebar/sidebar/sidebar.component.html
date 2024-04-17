@@ -9,26 +9,22 @@
     <div class="mt-10">
         <div *ngFor="let link of links" class="">
             <ul class="flex flex-col gap-1">
-            <li *ngFor="let item of link.items" [class.active]="activeItem === item.name"
-                class="p-3 transition duration-200 ease-in-out focus:outline-none hover:bg-[#F2F3F3] hover:shadow-sm hover:border-l-4 border-[#f5a447]"
-                (click)="setActiveItem(item.name); navigateTo(item.name)">
-                <a [ngClass]="{'active:bg-[#F2F3F3]': activeItem === item.name}" [routerLink]="['/', item.name]"
-                    class="flex gap-3 items-center text-[#c7d7d7] hover:text-black">
-                    <i class="{{item.icon}} text-xl sm:w-5"></i>
-                    <span class="hidden text-lg sm:block">{{item.name ? item.name : 'overview'}}</span>
-                </a>
-            </li>
-
-
+                <li *ngFor="let item of link.items" [class.active]="currentPath === item.path"
+                    class="p-3 transition duration-200 ease-in-out focus:outline-none hover:bg-[#F2F3F3] hover:shadow-sm hover:border-l-4 border-[#f5a447]">
+                    <a [routerLink]="['/', item.path]" class="flex gap-3 items-center text-[#c7d7d7] hover:text-black">
+                        <i class="{{ item.icon }} text-xl sm:w-5"></i>
+                        <span class="hidden text-lg sm:block">{{ item.title |translate }}</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
 
     <!-- Logout Button -->
-    <div class="absolute bottom-0 left-0 right-0 p-4 hover:border-l-4 border-[#f5a447]  ">
-        <button (click)="logOut()" class="flex items-center text-[#c7d7d7] ">
+    <div class="absolute bottom-0 left-0 right-0 p-4 hover:border-l-4 border-[#f5a447]">
+        <button (click)="logOut()" class="flex items-center text-[#c7d7d7]">
             <i class="text-xl fas fa-sign-out-alt"></i>
-            <span class="ml-2">Logout</span>
-        </button >
+            <span class="ml-2">{{"LogOut" |translate}}</span>
+        </button>
     </div>
 </div>

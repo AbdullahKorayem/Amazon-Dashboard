@@ -1,20 +1,20 @@
-<div class="w-full px-5">
+<div class="w-full px-5 dark:text-white">
     <div class="flex items-center justify-between w-full gap-3 pb-5 mt-5 border-b border-black">
         <div>
-            <h2 class="text-3xl font-bold tracking-tight">Orders ({{FirebaseOrders.length}})</h2>
-            <p class="text-sm font-light text-neutral-500">
-                Manage your orders
+            <h2 class="text-3xl font-bold tracking-tight">{{"Orders"|translate}} ({{FirebaseOrders.length}})</h2>
+            <p class="text-sm font-normal text-neutral-500">
+            {{"Manageyourorders"|translate}}
             </p>
 
         </div>
         <a [routerLink]="['']"
             class="flex items-center gap-3 px-3 font-medium text-white bg-[#131921] hover:bg-[#f5a447] rounded-full b h-9">
             <i class="fa-solid fa-backward"></i>
-            Back
+        {{"Back"|translate}}
         </a>
     </div>
     <div class="w-[100%]">
-        <h1 class="flex items-center justify-between mt-10 mb-5 text-4xl font-bold">All Pending Orders</h1>
+        <h1 class="flex items-center justify-between mt-10 mb-5 text-4xl font-bold">{{"AllOrders"|translate}}</h1>
 
         <div *ngIf="FirebaseOrders.length > 0; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
@@ -26,54 +26,53 @@
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
                             </th>
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
-                                #Order ID</th>
+                            #{{"ID"|translate}}</th>
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
-                                Customer ID</th>
+                            {{"CustomerID"|translate}}</th>
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
-                                Product Name</th>
+                                {{"ProductName"|translate}}</th>
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
-                                Order Status</th>
+                                {{"OrderDate" |translate}}</th>
 
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
-                                Total Amount</th>
+                            {{"TotalAmount"|translate}}</th>
                             <th class="px-2 py-4 text-center text-white capitalize text-md whitespace-nowrap">
-                                Actions</th>
+                            {{"Actions"|translate}}</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="dark:bg-[#131921] dark:text-white">
                         <ng-container *ngFor="let order of FirebaseOrders; let i = index">
                             <tr>
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
+                                    class="py-4 text-lg font-normal text-center border-t border-b border-black">
                                     <i (click)="showProductDetails(i)"
                                         class="cursor-pointer  text-[#000] text-2xl fa-solid fa-caret-down"></i>
                                 </td>
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
+                                    class="py-4 text-lg font-normal text-center truncate border-t border-b border-black">
                                     {{ order.id }}</td>
 
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black">
+                                    class="py-4 text-lg font-normal text-center border-t border-b border-black">
                                     {{ order.userId }}</td>
 
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
+                                    class="py-4 text-lg font-normal text-center truncate border-t border-b border-black">
                                     {{ order.name }}</td>
 
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
+                                    class="py-4 text-lg font-normal text-center truncate border-t border-b border-black">
                                     <div class="flex items-center gap-2 text-center">
-                                        {{ order.OrderStatus }}
-                                        <span [ngClass]="{'bg-slate-500': !order.status, 'bg-green-500': order.status}"
-                                            class="h-[10px] w-[10px] rounded-full"></span>
+                                        {{ timestampToDate(order.orderDate) }}
+                                        
                                     </div>
                                 </td>
 
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black truncate border-t border-b border-black">
+                                    class="py-4 text-lg font-normal text-center truncate border-t border-b border-black">
                                     ${{ order.price | number: '1.2-2' }}</td>
                                 <td
-                                    class="px-2 py-4 text-lg font-normal text-center text-black border-b border-black w-fit ">
+                                    class="px-2 py-4 text-lg font-normal text-center border-b border-black w-fit ">
                                     <div class="flex items-center gap-2">
                                         <form class="mb-5">
                                             <select id="countries"
@@ -133,10 +132,10 @@
                                                 <tbody>
                                                     <tr *ngFor="let product of order.Products; let j = index">
                                                         <td
-                                                            class="py-2 text-sm font-normal text-center text-black border-t border-b border-black ">
+                                                            class="py-2 text-sm font-normal text-center border-t border-b border-black ">
                                                             {{j+1}}</td>
                                                         <td
-                                                            class="py-2 text-sm font-normal text-center text-black border-t border-b border-black ">
+                                                            class="py-2 text-sm font-normal text-center border-t border-b border-black ">
                                                             <div class="flex items-center gap-3">
                                                                 <img class="h-[25px]" [src]="product.product.image"
                                                                     alt="">
@@ -144,13 +143,13 @@
                                                             </div>
                                                         </td>
                                                         <td
-                                                            class="text-center min-w-[100px] text-black font-normal text-sm py-2 border-b border-black border-t ">
+                                                            class="text-center min-w-[100px]  font-normal text-sm py-2 border-b border-black border-t ">
                                                             {{ product.product.price | number: '1.2-2' }}</td>
                                                         <td
-                                                            class="text-center min-w-[100px] text-black font-normal text-sm py-2 border-b border-black border-t ">
+                                                            class="text-center min-w-[100px]  font-normal text-sm py-2 border-b border-black border-t ">
                                                             {{ product.quantity }}</td>
                                                         <td
-                                                            class="text-center min-w-[100px] text-black font-normal text-sm py-2 border-b border-black border-t ">
+                                                            class="text-center min-w-[100px]  font-normal text-sm py-2 border-b border-black border-t ">
                                                             {{ product.product.quantity }}</td>
                                                     </tr>
                                                 </tbody>

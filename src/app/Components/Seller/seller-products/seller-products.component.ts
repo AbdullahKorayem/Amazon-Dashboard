@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, HostBinding, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, from } from 'rxjs';
 import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
+import { DarkModeService } from 'src/app/Services/DarkMode/dark-mode-service.service';
 import { SellersServiceService } from 'src/app/Services/Seller-Service/sellers-service.service';
 
 @Component({
@@ -47,12 +48,13 @@ export class SellerProductsComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @ViewChild(MatSort) sort!: MatSort;
-
+  @HostBinding('class.dark') isDarkMode: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private catService: CategoriesService,
-    private sellerService: SellersServiceService
+    private sellerService: SellersServiceService,
+    private darkModeService: DarkModeService
   ) { }
 
   //routing
@@ -116,6 +118,11 @@ export class SellerProductsComponent {
 
 
   ngOnInit(): void {
+
+    this.darkModeService.darkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
+
     let uid = sessionStorage.getItem('userUID')
 
     this.getAllcategories();

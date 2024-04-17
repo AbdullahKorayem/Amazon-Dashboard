@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { from } from 'rxjs';
 import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
+import { DarkModeService } from 'src/app/Services/DarkMode/dark-mode-service.service';
 import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
+
 
 @Component({
   selector: 'app-seller-new-products',
@@ -16,18 +18,28 @@ export class SellerNewProductsComponent implements OnInit {
   public imageUrl: string = '';
   public categories: any[] = [];
   public thumbnail: string = '';
+  @HostBinding('class.dark') isDarkMode: boolean = false;
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private catS: CategoriesService,
     private productService: ProductServiceService,
-    private router: Router
+    private router: Router,
+    private darkModeService: DarkModeService,
+   
+
   ) {
 
 
   }
 
+
   ngOnInit(): void {
+
+    this.darkModeService.darkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
+
     let uid = sessionStorage.getItem('userUID');
 
     this.NewProductFormSeller = this.fb.group({
@@ -49,7 +61,7 @@ export class SellerNewProductsComponent implements OnInit {
       sku: ['ssg', Validators.required],
       sold: null,
       subCategoryId: ['', Validators.required],
-      thumbnail: '',
+      thumbnail: this.thumbnail,
       SellerUid: uid,
     });
 
@@ -71,6 +83,7 @@ export class SellerNewProductsComponent implements OnInit {
 
   public onSubmit() {
     console.log(this.NewProductFormSeller.value);
+    this.NewProductFormSeller.value.thumbnail = this.thumbnail;   
     from(this.productService.addProduct(this.NewProductFormSeller.value)).subscribe(
       (response) => {
         this.toastr.success('Product added successfully');
@@ -88,13 +101,13 @@ export class SellerNewProductsComponent implements OnInit {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.imageUrl = reader.result as string;
+        this.thumbnail = reader.result as string;
       };
       reader.readAsDataURL(file);
     }
   }
   openImage() {
-    const inputElement = document.getElementById('image');
+    const inputElement = document.getElementById('thumbnail');
     if (inputElement) {
       inputElement.click();
     }

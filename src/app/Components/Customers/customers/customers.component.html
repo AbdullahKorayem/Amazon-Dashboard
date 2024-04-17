@@ -1,68 +1,66 @@
-<div class="px-5">
-    <div class="flex items-center justify-between w-full gap-3 pb-5 mt-5 border-b">
+<div class="px-5 dark:text-white">
+    <div class="flex items-center justify-between w-full gap-3 pb-5 mt-5 border-b ">
         <div>
-            <h2 class="text-3xl font-bold tracking-tight">customers {{FirebaseUsers.length}}</h2>
+            <h2 class="text-3xl font-bold tracking-tight">{{"Customers"|translate}} ({{FirebaseUsers.length}})</h2>
             <p class="text-sm font-light text-neutral-500">
-                Manage Custumers.
+                {{"ManageCustumers"|translate}}
             </p>
 
         </div>
     </div>
     <div class="w-[100%]">
-        <h1 class="flex items-center justify-between mt-10 mb-5 text-4xl font-bold">All Customerss</h1>
+        <h1 class="flex items-center justify-between mt-10 mb-5 text-4xl font-bold">{{"AllCustomerss" |translate}}</h1>
 
         <div *ngIf="FirebaseUsers.length > 0; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
             <div class="w-full py-4 overflow-y-auto rounded-md">
-                <table class="w-[100%] rounded-md">
+                <table class="w-[100%] rounded-md dark:text-white">
                     <thead>
 
                         <tr>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center ">
-                                #ID</th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center">
-                                Profile Image</th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center">
-                                Full Name</th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center">
-                                User Name</th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center">
-                                Phone Number</th>
-                            <th class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center">
-                                Delete</th>
+                            <th
+                                class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center ">
+                                #{{"ID"|translate}}</th>
+
+                            <th
+                                class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center">
+                                "{{"FullName"|translate}}"</th>
+                            <th
+                                class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center">
+                                "{{"UserName"|translate}}"</th>
+                            <th
+                                class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center">
+                                "{{"PhoneNumber"|translate}}"</th>
+                            <th
+                                class="text-md capitalize whitespace-nowrap bg-[#f5a447] text-white py-4 px-2 text-center">
+                                {{"Delete"|translate}}</th>
 
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="dark:text-white">
                         <ng-container *ngFor="let costumer of FirebaseUsers; let i = index">
                             <tr>
                                 <td
-                                    class="py-4 text-lg font-normal text-center text-black underline border-t border-b border-black ">
+                                    class="py-4 text-lg font-normal text-center underline border-t border-b border-black ">
                                     {{ i + 1 }}</td>
 
-                                <td
-                                    class="py-4 text-lg font-normal text-center text-black underline border-t border-b border-black ">
-                                    <div class="flex items-center gap-2">
-                                        <img class="rounded-full  h-[45px] w-[45px]" [src]="costumer.profileImage"
-                                            alt="image">
-                                    </div>
-                                </td>
+
                                 <td (click)="navigateTo(costumer.id)"
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black ">
+                                    class="py-4 text-lg font-normal text-center border-t border-b border-black ">
                                     {{costumer.UserInformation[0].fullName }}</td>
                                 <td (click)="navigateTo(costumer._id)"
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black ">
+                                    class="py-4 text-lg font-normal text-center border-t border-b border-black ">
                                     {{costumer.UserName }}</td>
                                 <td (click)="navigateTo(costumer._id)"
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black ">
+                                    class="py-4 text-lg font-normal text-center border-t border-b border-black ">
                                     {{costumer.UserInformation[0].phoneNumber }}</td>
 
                                 <td (click)="deleteUser(costumer.id)"
-                                    class="py-4 text-lg font-normal text-center text-black border-t border-b border-black ">
+                                    class="py-4 text-lg font-normal text-center border-t border-b border-black ">
                                     <button
                                         class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-full bg-red-600 hover:bg-red-800  text-white shadow-md shadow-red-900/10 hover:shadow-lg hover:shadow-red-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                                         type="button">
-                                        Delete
+                                        {{"Delete"|translate}}
                                     </button>
                                 </td>
                             </tr>
@@ -71,7 +69,7 @@
             </div>
         </ng-template>
         <ng-template #elseBlock>
-            <h1 class="text-xl font-medium capitalize">No Costumers yet.</h1>
+            <h1 class="text-xl font-medium capitalize">{{"NoCust"|translate}}</h1>
         </ng-template>
 
     </div>

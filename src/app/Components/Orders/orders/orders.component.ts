@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { OrdersService } from 'src/app/Services/Orders-Service/orders.service';
 import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
 import { from } from 'rxjs';
+import { DarkModeService } from 'src/app/Services/DarkMode/dark-mode-service.service';
 
 @Component({
   selector: 'app-orders',
@@ -14,18 +15,23 @@ export class OrdersComponent implements OnInit {
   FirebaseOrders: any;
   statusOrder: boolean = false;
   selectedValue: string = 'Pending';
+  @HostBinding('class.dark') isDarkMode: boolean = false;
   constructor(
     private http: HttpClient,
     private orderService: OrdersService,
-    private productS: ProductServiceService
+    private productS: ProductServiceService,
+    private darkModeService: DarkModeService
 
   ) { };
   ngOnInit(): void {
 
+    this.darkModeService.darkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
 
     this.getOrdersData();
 
-   
+
   }
 
 
@@ -43,7 +49,7 @@ export class OrdersComponent implements OnInit {
     );
   }
 
- 
+
 
 
 
@@ -87,7 +93,7 @@ export class OrdersComponent implements OnInit {
     this.selectedOrder = null;
   }
 
- 
+
   public deleteAllOrders() {
     this.orderService.deleteAllOrders().subscribe(
       (res) => {

@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
 import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
 import { ToasterService } from '@coreui/angular';
 import { from } from 'rxjs';
+import { DarkModeService } from 'src/app/Services/DarkMode/dark-mode-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-product-detail',
@@ -18,12 +20,16 @@ export class ProductDetailComponent implements OnInit {
 	public thumbnail: string = '';
 	public loading: boolean = false;
 
+	@HostBinding('class.dark') isDarkMode: boolean = false;
+
 	constructor(
 		private productService: ProductServiceService,
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
 		private router: Router,
-		private catS: CategoriesService
+		private catS: CategoriesService,
+		private darkModeService: DarkModeService,
+		private toastr: ToastrService,
 	) {
 		this.productForm = this.fb.group({
 			ar: this.fb.group({
@@ -49,6 +55,11 @@ export class ProductDetailComponent implements OnInit {
 	categories: any[] = [];
 
 	ngOnInit() {
+
+		this.darkModeService.darkMode$.subscribe(isDark => {
+			this.isDarkMode = isDark;
+		});
+
 		this.route.paramMap.subscribe((params) => {
 			const productId = params.get('id');
 			console.log(productId);
@@ -103,9 +114,11 @@ export class ProductDetailComponent implements OnInit {
 		from(this.productService.deleteProductByIdFirebase(id)).subscribe(
 			(res) => {
 				console.log(res);
+				this.toastr.success('The Product Deleted Successfully');
 				this.router.navigate(['/products']);
 			},
 			(err) => {
+				this.toastr.error('Operation Failed');
 				console.log(err);
 			}
 		);
@@ -117,10 +130,12 @@ export class ProductDetailComponent implements OnInit {
 	public editProduct(productId: string) {
 		from(this.productService.updateProductByIdFirebase(productId, this.productForm.value)).subscribe(
 			(res) => {
+				this.toastr.success('The Product Updated Successfully');
 				console.log(res);
 				this.router.navigate(['/products']);
 			},
 			(err) => {
+				this.toastr.error('Operation Failed');
 				console.log(err);
 			}
 		)

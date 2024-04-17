@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
 import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
+import { DarkModeService } from 'src/app/Services/DarkMode/dark-mode-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-categories',
@@ -22,8 +24,12 @@ export class CategoriesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private catService: CategoriesService,
-    private router: Router
+    private router: Router,
+    private darkModeService: DarkModeService,
+    private toastr: ToastrService,
   ) { }
+
+  @HostBinding('class.dark') isDarkMode: boolean = false;
 
   onImageChange(event: any) {
     const file = event.target.files[0];
@@ -43,6 +49,11 @@ export class CategoriesComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+
+    this.darkModeService.darkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
+
     this.myForm = this.formBuilder.group({
       header: ['', Validators.required],
       description: ['', Validators.required],
@@ -119,46 +130,15 @@ export class CategoriesComponent implements OnInit {
   public delete(id: string) {
     from(this.catService.deleteCategoryByIdFirebase(id)).subscribe(
       (data) => {
+        this.toastr.success('The Category Deleted Successfully');
         console.log(data);
         this.getAllcategories();
       },
       (error) => {
+        this.toastr.error('The Operation Failed', error);
         console.error(error);
       }
     );
-
-  }
-
-  public formatPrice(price: any) {
-    if (typeof price === 'string') {
-
-      if (price.includes('$')) {
-
-        return price.replace('$', '') + '$';
-      } else {
-
-        return price + '$';
-      }
-    } else if (typeof price === 'number') {
-
-      return price.toString() + '$';
-    } else {
-
-      return 'N/A';
-    }
-  }
-
-  public formatReadableDate(dateString: any) {
-    const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-
-    const date = new Date(dateString);
-
-    return date.toLocaleString('en-US', options);
-  }
-
-  public navigateTo(id: string) {
-
-    this.router.navigate(['customers', id]);
 
   }
 

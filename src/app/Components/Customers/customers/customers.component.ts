@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
 import { CostumersService } from 'src/app/Services/Customers-Service/costumers.service';
-
+import { DarkModeService } from 'src/app/Services/DarkMode/dark-mode-service.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
@@ -16,12 +17,20 @@ export class CustomersComponent implements OnInit {
   constructor(
     private router: Router,
     private costumersService: CostumersService,
-    private http: HttpClient
+    private http: HttpClient,
+    private darkModeService: DarkModeService,
+    private toastr: ToastrService,
+    
   ) { }
-
+  @HostBinding('class.dark') isDarkMode: boolean = false;
 
   ngOnInit(): void {
     this.getAllUsers();
+
+    this.darkModeService.darkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
+
   }
 
  
@@ -40,10 +49,12 @@ export class CustomersComponent implements OnInit {
   deleteUser(id: string) {
     from(this.costumersService.deleteUserByIdFirebase(id)).subscribe(
       (res: any) => {
+        this.toastr.success('User Deleted!');
         console.log(res);
         this.getAllUsers();
       },
       (err: any) => {
+        this.toastr.error('Operation Failed!');
         console.log(err);
       }
       

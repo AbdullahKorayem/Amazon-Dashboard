@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { from } from 'rxjs';
+import { DarkModeService } from 'src/app/Services/DarkMode/dark-mode-service.service';
 import { OrdersService } from 'src/app/Services/Orders-Service/orders.service';
 import { SellersServiceService } from 'src/app/Services/Seller-Service/sellers-service.service';
 
@@ -13,18 +14,33 @@ export class SellerOrdersComponent {
   orders: any;
   FirebaseOrders: any;
   statusOrder: boolean = false;
-  selectedValue: string = 'Pending';
+  selectedValue: string = '';
+  @HostBinding('class.dark') isDarkMode: boolean = false;
   constructor(
     private sellerService: SellersServiceService, private orderService: OrdersService,
+    private darkModeService: DarkModeService
   ) { };
   ngOnInit(): void {
 
     let uid = sessionStorage.getItem('userUID');
 
     this.getOrdersData(uid!);
+    this.darkModeService.darkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
+
 
 
   }
+
+  timestampToDate(timestamp: number): string {
+    const date = new Date(timestamp);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+  }
+
 
 
   selectedOrder: any;
@@ -54,8 +70,8 @@ export class SellerOrdersComponent {
         const modifiedOrders = res.map(obj => {
           return {
             ...obj,
-            item: obj.item.map((item: any) => ({ ...item, status: obj.status })),
-            orderDate: obj.orderDate
+            item: obj.item.map((item: any) => ({ ...item, status: obj.status, orderDate: obj.orderDate ,userId: obj.userId})),
+            
           };
         });
 

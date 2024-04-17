@@ -10,16 +10,16 @@ import { UsersService } from 'src/app/Services/Users/users.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  theAdmins: any;
+  theUser: any;
   userUid: any = sessionStorage.getItem('userUID');
   public currentPath: string | undefined;
-  activeItem: string | null = null;
   public sidebarisOpen: boolean = true;
-  links: any;
+  public links: any;
+  theAdmins: any;
 
   constructor(
     private router: Router,
-    private user: UsersService,
+    private userService: UsersService,
     private sellerService: SellersServiceService
   ) {
     this.router.events.subscribe((event) => {
@@ -34,7 +34,7 @@ export class SidebarComponent {
   }
 
   toGetUser() {
-    from(this.user.getUserByUid(this.userUid)).subscribe(
+    from(this.userService.getUserByUid(this.userUid)).subscribe(
       (res: any) => {
         this.theAdmins = res;
 
@@ -44,11 +44,11 @@ export class SidebarComponent {
             {
               title: 'Dashboard',
               items: [
-                { name: 'overview', icon: 'fa-solid fa-house' },
-                { name: 'products', icon: 'fa-solid fa-bag-shopping' },
-                { name: 'orders', icon: 'fa-solid fa-cart-shopping' },
-                { name: 'categories', icon: 'fa-solid fa-dumpster-fire' },
-                { name: 'customers', icon: 'fa-solid fa-users' }
+                { title: 'Overview', icon: 'fa-solid fa-house', path: 'overview' },
+                { title: 'Products', icon: 'fa-solid fa-bag-shopping', path: 'products' },
+                { title: 'Orders', icon: 'fa-solid fa-cart-shopping', path: 'orders' },
+                { title: 'Categories', icon: 'fa-solid fa-dumpster-fire', path: 'categories' },
+                { title: 'Customers', icon: 'fa-solid fa-users', path: 'customers' }
               ]
             }
           ];
@@ -67,8 +67,8 @@ export class SidebarComponent {
             {
               title: 'Dashboard',
               items: [
-                { name: 'seller-productsS', icon: 'fa-solid fa-bag-shopping' },
-                { name: 'seller-ordersS', icon: 'fa-solid fa-cart-shopping' },
+                { title: 'Products', icon: 'fa-solid fa-bag-shopping', path: 'seller-productsS' },
+                { title: 'Orders', icon: 'fa-solid fa-cart-shopping', path: 'seller-ordersS' },
               ]
             }
           ];
@@ -82,12 +82,12 @@ export class SidebarComponent {
 
   // Function to set the active item
   setActiveItem(itemName: string): void {
-    this.activeItem = itemName;
+    this.currentPath = itemName;
   }
 
   // Navigate to specified route
-  public navigateTo(item: string): void {
-    this.router.navigate(['/', item]);
+  public navigateTo(path: string): void {
+    this.router.navigate(['/', path]);
   }
 
   // Toggle sidebar visibility

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoriesService } from 'src/app/Services/Categories-Service/categories.service';
 import { CostumersService } from 'src/app/Services/Customers-Service/costumers.service';
@@ -7,6 +7,7 @@ import { OrdersService } from 'src/app/Services/Orders-Service/orders.service';
 import { ProductServiceService } from 'src/app/Services/Product-Service/product-service.service';
 import { from } from 'rxjs';
 import { Chart } from 'chart.js/auto';
+import { DarkModeService } from 'src/app/Services/DarkMode/dark-mode-service.service';
 
 @Component({
     selector: 'app-overview',
@@ -38,17 +39,26 @@ export class OverviewComponent implements OnInit {
     // public tags: any[] = [];
 
     // public comments: any[] = [];
-
+    @HostBinding('class.dark') isDarkMode: boolean = false;
     constructor(
         private productService: ProductServiceService,
         private orderS: OrdersService,
         private costumerS: CostumersService,
         private http: HttpClient,
         private router: Router,
-        private catS: CategoriesService
+        private catS: CategoriesService,
+        private darkModeService: DarkModeService
     ) { }
     selectedValue: string = 'Pending';
-    LastOrders: string[] = ['ID','Date',  'Amount', 'Tracking', 'Payment Method'];
+    lastOrdersTranslations: { [key: string]: string } = {
+        'ID': 'الرقم المعرف',
+        'Date': 'التاريخ',
+        'Amount': 'العدد',
+        'Tracking': 'التتبع',
+        'Payment Method': 'طريقة الدفع'
+    };
+
+    LastOrders: string[] = ['ID', 'Date', 'Amount', 'Tracking', 'Payment Method'];
 
     customShuffle<T>(array: T[]): T[] {
         const newArray = [...array];
@@ -93,6 +103,8 @@ export class OverviewComponent implements OnInit {
             callback(arr); 
         }, 8000);
     }
+
+    
     
 
 
@@ -100,8 +112,13 @@ export class OverviewComponent implements OnInit {
     ngOnInit(): void {
         this.getData();
 
+        this.darkModeService.darkMode$.subscribe(isDark => {
+            this.isDarkMode = isDark;
+        });
+
         this.chart = new Chart('canvas', {
             type: 'line',
+            
             data: {
                 labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [
@@ -122,6 +139,7 @@ export class OverviewComponent implements OnInit {
                         hoverBorderColor: 'rgba(54, 162, 2355, 0.8)', // Color on hover
                         tension: 0.5,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        
                     },
                 ],
             },
