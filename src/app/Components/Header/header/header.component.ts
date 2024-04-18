@@ -6,6 +6,7 @@ import { AuthState } from 'src/app/Services/Redux/Store/Admin.reducer';
 import { SellersService } from 'src/app/Services/Users/sellers.service';
 import { UsersService } from 'src/app/Services/Users/users.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Direction } from '@angular/cdk/bidi';
 
 @Component({
   selector: 'app-header',
@@ -20,8 +21,17 @@ export class HeaderComponent implements OnInit {
 
   public moonImgSrc = "assets/moon.svg";
   public sunImgSrc = "assets/sun.svg";
+  selectedLanguage: string = 'en';
+  supportedLanguages = [
+    { name: 'English', code: 'en' },
+    { name: 'Arabic', code: 'ar' },
+    // Add more languages as needed
+  ];
+
+  @HostBinding('attr.dir') dirAttribute: Direction = 'ltr';
 
   @HostBinding('class.dark') isDarkMode: boolean = false;
+
 
   toggleTheme() {
     this.darkModeService.toggleDarkMode(!this.isDarkMode);
@@ -33,8 +43,8 @@ export class HeaderComponent implements OnInit {
     private userService: UsersService,
     private sellerService: SellersService,
     private darkModeService: DarkModeService,
-    private translateService:TranslateService
-    
+    private translateService: TranslateService
+
   ) { }
 
   togglePosition() {
@@ -46,7 +56,12 @@ export class HeaderComponent implements OnInit {
     this.darkModeService.darkMode$.subscribe(isDark => {
       this.isDarkMode = isDark;
     });
-   
+
+    this.translateService.setDefaultLang(this.selectedLanguage);
+    this.translateService.use(this.selectedLanguage);
+    this.updateDirectionality(this.selectedLanguage);
+
+
   }
 
   toGetTheUser() {
@@ -76,5 +91,12 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  changeLanguage() {
+    this.translateService.use(this.selectedLanguage);
+    this.updateDirectionality(this.selectedLanguage);
+  }
 
+  private updateDirectionality(languageCode: string) {
+    this.dirAttribute = languageCode === 'ar' ? 'rtl' : 'ltr';
+  }
 }

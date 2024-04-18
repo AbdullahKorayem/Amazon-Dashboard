@@ -25,6 +25,13 @@
                 <span class="relative grid w-10 h-10 bg-black rounded-full place-content-center ">
                     <i class="text-xl text-white text-muted-foreground fa-solid fa-user"></i>
                 </span>
+                <span class="relative w-10 h-10 text-black rounded-full dark:text-white place-content-center ">
+                    <select class="block w-full font-semibold rounded-lg shadow-md outline-none text-md ring-0 dark:text-black" [(ngModel)]="selectedLanguage" (change)="changeLanguage()">
+                        <option *ngFor="let lang of supportedLanguages" [value]="lang.code">{{ lang.name }}</option>
+                    </select>
+                </span>
+
+
             </div>
         </div>
     </div>

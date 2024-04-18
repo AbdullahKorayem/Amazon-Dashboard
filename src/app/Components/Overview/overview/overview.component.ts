@@ -34,7 +34,7 @@ export class OverviewComponent implements OnInit {
     public cats: any[] = [];
     public data: any[] = [];
     public updatedData: number[] = [];
-    public total=0
+    public total = 0
 
     // public tags: any[] = [];
 
@@ -69,13 +69,13 @@ export class OverviewComponent implements OnInit {
         return newArray;
     }
 
-     timestampToDate(timestamp: number): string {
-    const date = new Date(timestamp);
-    const day = date.getDate();
-    const month = date.toLocaleString('default', { month: 'long' });
-    const year = date.getFullYear();
-    return `${day} ${month} ${year}`;
-}
+    timestampToDate(timestamp: number): string {
+        const date = new Date(timestamp);
+        const day = date.getDate();
+        const month = date.toLocaleString('default', { month: 'long' });
+        const year = date.getFullYear();
+        return `${day} ${month} ${year}`;
+    }
 
 
 
@@ -94,18 +94,19 @@ export class OverviewComponent implements OnInit {
 
     randomlyIncrement(arr: number[], callback: (updatedData: number[]) => void): void {
         const interval = setInterval(() => {
-            
+
             for (let i = 0; i < arr.length; i++) {
-                if (Math.random() < 0.5) { 
+                if (Math.random() < 0.5) {
                     arr[i]++;
                 }
             }
-            callback(arr); 
+            callback(arr);
         }, 8000);
     }
 
+
     
-    
+
 
 
 
@@ -118,13 +119,20 @@ export class OverviewComponent implements OnInit {
 
         this.chart = new Chart('canvas', {
             type: 'line',
-            
+
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: [
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December',
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December',
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                ],
                 datasets: [
                     {
                         label: '# of Votes 1',
-                        data: [12, 19, 3, 5, 2, 3, 43, 4, 22],
+                        data: [12, 19, 3, 5, 2, 3, 43, 4, 22,5,43,62,133,1,23,6,42,6,2,26,3,7,8,32,62,22,1,3],
                         borderWidth: 3, // Thicker line
                         borderColor: 'rgba(255, 99, 132, 1)',
                         hoverBorderColor: 'rgba(255, 99, 1344, 0.8)',
@@ -133,13 +141,13 @@ export class OverviewComponent implements OnInit {
                     },
                     {
                         label: '# of Votes 2',
-                        data: [1, 2, 3, 9, 7, 34, 3, 7, 8, 32, 62, 22, 1, 3],
+                        data: [1, 2, 3, 9, 7, 34, 3, 7, 8, 32, 62, 22, 1, 3,66,3,22,62,88,99,44],
                         borderWidth: 3, // Thicker line
                         borderColor: 'rgba(54, 162, 235, 1)',
                         hoverBorderColor: 'rgba(54, 162, 2355, 0.8)', // Color on hover
                         tension: 0.5,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        
+
                     },
                 ],
             },
@@ -192,9 +200,9 @@ export class OverviewComponent implements OnInit {
             this.updateChart(updatedData);
             this.total = updatedData.reduce((acc, curr) => acc + curr, 0);
         });
-         
-    
-        
+
+
+
     }
 
     getData(): void {
@@ -205,14 +213,14 @@ export class OverviewComponent implements OnInit {
     getProductData(): void {
         from(this.productService.getProducts()).subscribe(
             (res: any[]) => {
-              
+
                 this.product = res;
 
-               
+
                 this.scaledLength = this.scale(res.length, 0, 100, 0, 100);
                 console.log('Scaled length:', this.scaledLength);
 
-              
+
                 const shuffledProducts = this.customShuffle(res);
                 this.Top5Products = shuffledProducts.slice(0, 5);
                 console.log('Top 5 products:', this.Top5Products);
@@ -228,7 +236,7 @@ export class OverviewComponent implements OnInit {
         return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
     }
     // ----------------------------------
- 
+
 
 
     getCostumersData(): void {
@@ -256,7 +264,7 @@ export class OverviewComponent implements OnInit {
 
 
 
-    
+
 }
 
 
