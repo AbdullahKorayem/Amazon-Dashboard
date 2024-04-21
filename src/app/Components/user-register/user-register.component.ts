@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-Register-login',
   templateUrl: './user-register.component.html',
-  styleUrls: ['./user-Register.component.css']
+  
 })
 export class UserRegisterComponent {
   public User: FormGroup;
