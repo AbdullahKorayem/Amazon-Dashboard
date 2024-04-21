@@ -38,7 +38,6 @@ import { environment } from './environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { UserLoginComponent } from './Components/user-login/user-login.component';
-import { UserRegisterComponent } from './Components/user-register/user-register.component';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './Services/Redux/Store/Admin.reducer';
 import { SellerNewProductsComponent } from './Components/Seller/seller-new-products/seller-new-products.component';
@@ -47,6 +46,7 @@ import { SellerProductsComponent } from './Components/Seller/seller-products/sel
 import { SellerProductDetailsComponent } from './Components/Seller/seller-product-details/seller-product-details.component';
 
 import { Store } from '@ngrx/store';
+import { UserRegisterComponent } from './Components/user-register/user-register.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
