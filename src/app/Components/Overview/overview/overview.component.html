@@ -1,4 +1,4 @@
-<div class="grid grid-cols-10 gap-5 px-5 py-5 dark:text-white ">
+<div class="gap-5 px-5 py-5 xl:grid-cols-10 xl:grid sm:grid-cols-2 md:grid-cols-3 dark:text-white ">
     <div *ngFor="let item of errorMsg">
         {{ item }}
     </div>
@@ -10,7 +10,7 @@
     </div>
 
     <!-- First Container (6 columns) -->
-    <div class="xl:col-span-7 lg:col-span-2">
+    <div class="xl:col-span-7 lg:col-span-3 ">
         <!-- First Component -->
         <div class="grid grid-cols-3 col-span-6 p-10 bg-white  shadow-md rounded-xl dark:bg-[#131921]">
             <!-- Content of the first grid container -->
@@ -134,7 +134,7 @@
         <!-- Second Container (4 columns) -->
     </div>
 
-    <div class="col-span-3">
+    <div class="col-span-3 md:col-span-3">
         <!-- Additional content goes here -->
 
         <div class="p-10 bg-white  shadow-md rounded-xl dark:bg-[#131921]">
