@@ -45,7 +45,7 @@ export class UserRegisterComponent {
     if (this.User.valid) {
       const formData = this.User.value;
       try {
-        if (formData.isAdmin && this.Admins.length >= 2) {
+        if (formData.isAdmin && this.Admins.length < 2) {
           formData.isAdmin = true;
           const user = await this.user.createUser(formData.email, formData.password);
           await setDoc(doc(this.firestore, 'Admins', user?.uid), {

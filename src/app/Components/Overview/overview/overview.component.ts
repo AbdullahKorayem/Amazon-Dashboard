@@ -51,14 +51,14 @@ export class OverviewComponent implements OnInit {
     ) { }
     selectedValue: string = 'Pending';
     lastOrdersTranslations: { [key: string]: string } = {
-        'ID': 'الرقم المعرف',
-        'Date': 'التاريخ',
-        'Amount': 'العدد',
-        'Tracking': 'التتبع',
-        'Payment Method': 'طريقة الدفع'
+        'ID': 'ID',
+        'Date': 'OrderDate',
+        'Amount': 'TotalAmount',
+        'Tracking': 'Tracking',
+        'PaymentMethod': 'PaymentMethod'
     };
 
-    LastOrders: string[] = ['ID', 'Date', 'Amount', 'Tracking', 'Payment Method'];
+    LastOrders: string[] = ['ID', 'Date', 'Amount', 'Tracking', 'PaymentMethod'];
 
     customShuffle<T>(array: T[]): T[] {
         const newArray = [...array];

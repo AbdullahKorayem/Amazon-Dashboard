@@ -101,7 +101,7 @@
             <!-- header -->
             <div class="flex justify-around grid-cols-5 mt-5 mr-4 text-center border-b-2 dark:border-[#19212B]">
                 <h1 *ngFor="let key of LastOrders" class="mb-1 font-semibold text-center">
-                    {{ lastOrdersTranslations[key] }}
+                    {{ lastOrdersTranslations [key] | translate }}
                 </h1>
             </div>
             <!-- content'ID','Date',  'Amount', 'Tracking', 'Payment Method' -->
